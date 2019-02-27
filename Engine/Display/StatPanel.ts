@@ -53,10 +53,10 @@ export class StatPanel extends ScreenElement<HTMLDivElement> {
 
     private update() {
         if (this.statCurrentElement) {
-            this.statCurrentElement.innerHTML = this.statValue.toString();
+            this.statCurrentElement.textContent = this.statValue.toString();
             if (this.statBarElement) {
                 if (this.statMaxElement && this.statMax >= 0) {
-                    this.statMaxElement.innerHTML = this.statMax.toString();
+                    this.statMaxElement.textContent = this.statMax.toString();
                 }
                 if (this.statMax <= 0 || this.statValue <= 0)
                     this.statBarElement.style.width = "0%";

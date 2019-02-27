@@ -98,26 +98,28 @@ export class PhoukaWhiskey extends Consumable {
         const intChange: number = -(character.stats.int < 20 ? character.stats.int : 20);
         const phoukaWhiskeyEffect = character.effects.getByName(EffectType.PhoukaWhiskeyAffect);
         if (phoukaWhiskeyEffect) {
-            const drinksSoFar: number = phoukaWhiskeyEffect.values.other!.drinksSoFar;
+            if (!phoukaWhiskeyEffect.values.drinksSoFar)
+                phoukaWhiskeyEffect.values.drinksSoFar = 0;
+            const drinksSoFar = phoukaWhiskeyEffect.values.drinksSoFar;
             if (drinksSoFar < 4)
-                phoukaWhiskeyEffect.values.other!.drinksSoFar = 8 - (2 * drinksSoFar);
+                phoukaWhiskeyEffect.values.drinksSoFar = 8 - (2 * drinksSoFar);
             else
-                phoukaWhiskeyEffect.values.other!.drinksSoFar = 1; // Always get at least one more hour of drunkenness
-            phoukaWhiskeyEffect.values.expireCountdown = 1;
-            phoukaWhiskeyEffect.values.lib.total.flat = libidoChange;
-            phoukaWhiskeyEffect.values.sens.total.flat = sensChange;
-            phoukaWhiskeyEffect.values.spe.total.flat = speedChange;
-            phoukaWhiskeyEffect.values.int.total.flat = intChange;
+                phoukaWhiskeyEffect.values.drinksSoFar = 1; // Always get at least one more hour of drunkenness
+            phoukaWhiskeyEffect.values.combatExpire = 1;
+            phoukaWhiskeyEffect.values.lib = libidoChange;
+            phoukaWhiskeyEffect.values.sens = sensChange;
+            phoukaWhiskeyEffect.values.spe = speedChange;
+            phoukaWhiskeyEffect.values.int = intChange;
             CView.text("\n\nOh, it tastes so good.  This stuff just slides down your throat.");
         }
         else { // First time
             character.effects.create(EffectType.PhoukaWhiskeyAffect, {
-                expireCountdown: 1,
-                lib: { total: { flat: libidoChange } },
-                sens: { total: { flat: sensChange } },
-                spe: { total: { flat: speedChange } },
-                int: { total: { flat: intChange } },
-                other: { drinksSoFar: 8 },
+                hourExpire: 1,
+                lib: libidoChange,
+                sens: sensChange,
+                spe: speedChange,
+                int: intChange,
+                drinksSoFar: 8,
             });
             // The four stats we’re affecting get paired together to save space. This way we don’t need a second StatusAffect to store more info.
         }
@@ -126,7 +128,9 @@ export class PhoukaWhiskey extends Consumable {
     public phoukaWhiskeyExpires(character: Character) {
         const phoukaWhiskeyEffect = character.effects.getByName(EffectType.PhoukaWhiskeyAffect);
         if (phoukaWhiskeyEffect) {
-            const numDrunk: number = phoukaWhiskeyEffect.values.other!.drinksSoFar;
+            if (!phoukaWhiskeyEffect.values.drinksSoFar)
+                phoukaWhiskeyEffect.values.drinksSoFar = 0;
+            const numDrunk = phoukaWhiskeyEffect.values.drinksSoFar;
             // Get back all the stats you lost
             character.effects.removeByName(EffectType.PhoukaWhiskeyAffect);
             if (numDrunk > 3)

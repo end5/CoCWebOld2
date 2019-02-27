@@ -16,8 +16,8 @@ import { randInt } from 'Engine/Utilities/SMath';
 import { PlayerResponses } from './PlayerResponses';
 import { PlayerAction } from './CombatActions/PlayerActionPerform';
 import { ItemDict } from 'Engine/Items/ItemDict';
-import { Settings } from 'Content/Settings';
-import { IConcreteStatEffect } from 'Engine/Character/Stats/Stat/StatEffect';
+import { PlayerStats } from 'Content/Player/PlayerStats';
+import { PlayerBody } from 'Content/Player/PlayerBody';
 
 class BlankEndScenes extends EndScenes { }
 
@@ -27,16 +27,18 @@ export class Player extends Character {
     protected combatContainer: CombatContainer;
     public constructor() {
         super(CharacterType.Player);
+        this.body = new PlayerBody(this);
+        this.stats = new PlayerStats(this);
         this.desc.isPlayer = true;
-        this.stats.base.str.raw = 15;
-        this.stats.base.tou.raw = 15;
-        this.stats.base.spe.raw = 15;
-        this.stats.base.int.raw = 15;
-        this.stats.base.sens.raw = 15;
-        this.stats.base.lib.raw = 15;
-        this.stats.base.cor.raw = 0;
-        this.stats.base.lust.raw = 15;
-        this.stats.base.fatigue.raw = 0;
+        this.stats.str = 15;
+        this.stats.tou = 15;
+        this.stats.spe = 15;
+        this.stats.int = 15;
+        this.stats.sens = 15;
+        this.stats.lib = 15;
+        this.stats.cor = 0;
+        this.stats.lust = 15;
+        this.stats.fatigue = 0;
         this.stats.level = 1;
 
         this.body.skin.type = SkinType.PLAIN;
@@ -62,96 +64,5 @@ export class Player extends Character {
             }
         });
         this.combatContainer.useAI = false;
-
-        this.effects.create("Easy Mode", {
-            lust: {
-                delta: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (Settings.easyMode && this.stats.base.lust.delta > 0)
-                            values.multi = 0.5;
-                        else
-                            values.multi = 1;
-                    }
-                }
-            }
-        });
-        this.effects.create("Lust Resistance", {
-            lust: {
-                delta: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (this.stats.base.lust.delta > 0)
-                            values.multi = this.stats.lustPercent() / 100;
-                        else
-                            values.multi = 1;
-                    }
-                }
-            }
-        });
-        this.effects.create("Sensitivity", {
-            sens: {
-                delta: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (this.stats.base.sens.value <= 50)
-                            values.multi = 1;
-                        else {
-                            if (this.stats.base.sens.delta > 0)
-                                values.multi = 0.5;
-                            else if (this.stats.base.sens.delta < 0)
-                                values.multi = 2;
-                        }
-                        if (this.stats.base.sens.value > 75) {
-                            if (this.stats.base.sens.delta > 0)
-                                values.multi *= 0.5;
-                            if (this.stats.base.sens.delta < 0)
-                                values.multi *= 2;
-                        }
-                        if (this.stats.base.sens.value > 90) {
-                            if (this.stats.base.sens.delta > 0)
-                                values.multi *= 0.5;
-                            if (this.stats.base.sens.delta < 0)
-                                values.multi *= 2;
-                        }
-                    }
-                }
-            }
-        });
-        this.effects.create("Gender", {
-            lib: {
-                min: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (this.gender > 0)
-                            values.flat = 15;
-                        else if (this.gender === 0)
-                            values.flat = 10;
-                        else
-                            values.flat = 0;
-                    }
-                }
-            }
-        });
-        this.effects.create("Lust", {
-            lib: {
-                min: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (this.stats.lib < this.stats.base.lust.min * 2 / 3)
-                            values.flat = this.stats.base.lust.min * 2 / 3;
-                        else
-                            values.flat = 0;
-                    }
-                }
-            }
-        });
-        this.effects.create("Level", {
-            lustResist: {
-                total: {
-                    recalculate: (values: IConcreteStatEffect) => {
-                        if (this.stats.level < 21)
-                            values.flat = -(this.stats.level - 1) * 3;
-                        else
-                            values.flat = 40;
-                    }
-                }
-            }
-        });
     }
 }

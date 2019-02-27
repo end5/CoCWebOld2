@@ -79,24 +79,26 @@ export class MouseCocoa extends Consumable {
             // adds some lust
             character.stats.lust += character.stats.sens / 5;
             if (character.vaginalCapacity() < 100 && character.body.vaginas.length > 0) {
-                if (!character.effects.has(EffectType.BonusVCapacity))
-                    character.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 0 });
-                character.effects.getByName(EffectType.BonusVCapacity)!.values.vaginalCapacity = 5;
+                let bonusVCapacity = character.effects.getByName(EffectType.BonusVCapacity);
+                if (!bonusVCapacity)
+                    bonusVCapacity = character.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 0 });
+                bonusVCapacity.values.vaginalCapacity = 5;
             }
             else {
-                if (!character.effects.has(EffectType.BonusACapacity))
-                    character.effects.create(EffectType.BonusACapacity, { analCapacity: 0 });
-                character.effects.getByName(EffectType.BonusACapacity)!.values.analCapacity = 5;
+                let bonusACapacity = character.effects.getByName(EffectType.BonusACapacity);
+                if (!bonusACapacity)
+                    bonusACapacity = character.effects.create(EffectType.BonusACapacity, { analCapacity: 0 });
+                bonusACapacity.values.analCapacity = 5;
             }
             changes++;
         }
         // fem fertility up and heat (suppress if pregnant)
         // not already in heat (add heat and lust)
-        const intensified = character.effects.has(EffectType.Heat);
-        if (intensified && character.effects.getByName(EffectType.Heat)!.values.lib.total.flat < 30 && randInt(2) === 0 && changes < changeLimit) {
+        const heat = character.effects.getByName(EffectType.Heat);
+        if (heat && heat.values.lib && heat.values.lib < 30 && randInt(2) === 0 && changes < changeLimit) {
             if (character.canGoIntoHeat()) {
                 displayGoIntoHeat(character);
-                if (intensified) {
+                if (heat) {
                     CView.text("\n\nYour womb feels achingly empty, and your temperature shoots up.  Try as you might, you can't stop fantasizing about being filled with semen, drenched inside and out with it, enough to make a baker's dozen offspring.  ");
                     // [(no mino cum in inventory)]
                     if (!character.inventory.items.has(ConsumableName.MinotaurCum)) {

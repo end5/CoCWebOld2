@@ -25,7 +25,6 @@ import { Antennae, IAntennae } from './Antennae';
 import { Womb, IWomb } from './Pregnancy/Womb';
 import { Ovipositor, IOvipositor } from './Pregnancy/Ovipositor';
 import { ButtWomb } from './Pregnancy/ButtWomb';
-import { IRangedStat, RangedStat } from 'Engine/Character/Stats/Stat/RangedStat';
 
 export interface IBody {
     antennae: IAntennae;
@@ -53,8 +52,8 @@ export interface IBody {
     thickness: number;
     tone: number;
     cumMultiplier: number;
-    femininity: IRangedStat;
-    fertility: IRangedStat;
+    femininity: number;
+    fertility: number;
     wombs: Womb[];
     buttWomb: IWomb | void;
     ovipositor: IOvipositor;
@@ -90,26 +89,15 @@ export class Body implements ISerializable<IBody> {
     public thickness: number = 0;
     public tone: number = 0;
 
-    public cumMultiplier: number = 0;
-    public readonly femStat = new RangedStat(0, 50, 100);
-
-    public get femininity(): number {
-        return this.femStat.value;
-    }
-
+    public cumMultiplier = 0;
+    protected femStat = 50;
+    public get femininity() { return this.femStat; }
     public set femininity(value: number) {
-        this.femStat.value = value;
+        this.femStat = value;
+        if (this.femStat > 100) this.femStat = 100;
+        if (this.femStat < 0) this.femStat = 0;
     }
-
-    public readonly fertStat = new RangedStat(0, 10, 100);
-
-    public get fertility(): number {
-        return this.fertStat.value;
-    }
-
-    public set fertility(value: number) {
-        this.fertStat.value = value;
-    }
+    public fertility = 10;
 
     public wombs = new ObservableList<Womb>();
     public buttWomb = new ButtWomb(this);
@@ -160,8 +148,8 @@ export class Body implements ISerializable<IBody> {
             thickness: this.thickness,
             tone: this.tone,
             cumMultiplier: this.cumMultiplier,
-            femininity: this.femStat.serialize(),
-            fertility: this.fertStat.serialize(),
+            femininity: this.femininity,
+            fertility: this.fertility,
 
             buttWomb: this.buttWomb.serialize(),
             wombs: this.wombs.serialize(),
@@ -196,8 +184,8 @@ export class Body implements ISerializable<IBody> {
         this.thickness = saveObject.thickness;
         this.tone = saveObject.tone;
         this.cumMultiplier = saveObject.cumMultiplier;
-        this.femStat.deserialize(saveObject.femininity);
-        this.fertStat.deserialize(saveObject.fertility);
+        this.femininity = saveObject.femininity;
+        this.fertility = saveObject.fertility;
 
         if (saveObject.buttWomb)
             this.buttWomb.deserialize(saveObject.buttWomb);

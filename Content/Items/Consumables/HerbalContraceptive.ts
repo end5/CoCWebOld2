@@ -16,6 +16,6 @@ export class HerbalContraceptive extends Consumable {
         // Placeholder, sue me
         CView.text("You chew on the frankly awfully bitter leaves as quickly as possible before swallowing them down.");
 
-        character.effects.create(EffectType.Contraceptives, { expireCountdown: 48 });
+        character.effects.create(EffectType.Contraceptives, { combatExpire: 48 });
     }
 }

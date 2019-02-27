@@ -13,7 +13,7 @@ export class Spellblade extends Weapon {
     public onEquip(character: Character): void {
         while (character.effects.has(EffectType.WizardsFocus))
             character.effects.removeByName(EffectType.WizardsFocus);
-        character.effects.create(EffectType.WizardsFocus, { spellCost: { multi: 0.5 } });
+        character.effects.create(EffectType.WizardsFocus, { spellCost: 0.5 });
     }
 
     public onUnequip(character: Character): void {

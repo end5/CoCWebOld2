@@ -106,13 +106,14 @@ export class Imp extends Character {
         this.body.hair.length = 5;
         this.body.wings.type = WingType.IMP;
 
-        this.stats.base.str.raw = 20;
-        this.stats.base.tou.raw = 10;
-        this.stats.base.spe.raw = 25;
-        this.stats.base.int.raw = 12;
-        this.stats.base.lib.raw = 45;
-        this.stats.base.sens.raw = 45;
-        this.stats.base.cor.raw = 100;
+        this.stats.str = 20;
+        this.stats.tou = 10;
+        this.stats.spe = 25;
+        this.stats.int = 12;
+        this.stats.lib = 45;
+        this.stats.sens = 45;
+        this.stats.cor = 100;
+        this.stats.HP = this.stats.maxHP;
         this.stats.lust = 40;
         this.stats.level = 1;
 

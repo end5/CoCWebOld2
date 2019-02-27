@@ -281,8 +281,8 @@ export class FoxBerry extends Consumable {
             }
         }
         // HEAT!
-        const heatEffect = character.effects.getByName(EffectType.Heat);
-        if (heatEffect && heatEffect.values.lib.total.flat < 30 && randInt(6) === 0 && changes < changeLimit) {
+        const heat = character.effects.getByName(EffectType.Heat);
+        if (heat && heat.values.lib && heat.values.lib < 30 && randInt(6) === 0 && changes < changeLimit) {
             if (character.canGoIntoHeat()) {
                 displayGoIntoHeat(character);
                 changes++;

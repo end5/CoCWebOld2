@@ -299,7 +299,7 @@ export class MinotaurBlood extends Consumable {
             if (cocks.length > 0) CView.text("\n\nYour " + describeCock(character, cocks.get(0)) + " tingles abruptly, then stops.  Worried, you reach down to check it, only to discover that it feels... numb.  It will be very hard to masturbate like this.");
             else if (vaginas.length > 0) CView.text("\n\nYour " + describeVagina(character, vaginas.get(0)) + " tingles abruptly, then stops.  Worried, you reach down to check it, only to discover that it feels... numb.  It will be very hard to masturbate like this.");
             if (cocks.length > 0 || vaginas.length > 0) {
-                character.effects.create(EffectType.Dysfunction, { expireCountdown: 96 });
+                character.effects.create(EffectType.Dysfunction, { hourExpire: 96 });
                 changes++;
             }
         }

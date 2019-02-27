@@ -21,5 +21,6 @@ export enum CharacterType {
     Goblin = "Goblin",
     ImpGang = "ImpGang",
     LivingStatue = "LivingStatue",
-    DemonPack = "DemonPack"
+    DemonPack = "DemonPack",
+    Urta = "Urta"
 }

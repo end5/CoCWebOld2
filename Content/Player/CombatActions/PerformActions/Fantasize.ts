@@ -40,6 +40,6 @@ export class Fantasize extends CombatAction {
         }
         if (lustChange >= 20) CView.text("The fantasy is so vivid and pleasurable you wish it was happening now.  You wonder if " + target.desc.a + target.desc.short + " can tell what you were thinking.\n\n");
         else CView.text("\n");
-        character.stats.lustNoResist += lustChange;
+        character.stats.raw.lust += lustChange;
     }
 }

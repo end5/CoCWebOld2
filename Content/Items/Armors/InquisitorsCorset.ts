@@ -40,7 +40,7 @@ export class InquisitorsCorset extends Armor {
         while (character.effects.has(EffectType.SluttySeduction))
             character.effects.removeByName(EffectType.SluttySeduction);
         character.effects.create(EffectType.BloodMage);
-        character.effects.create(EffectType.SluttySeduction, { teaseChance: 10 });
+        character.effects.create(EffectType.SluttySeduction, { teaseDamage: 10 });
         super.onEquip(character);
     }
 

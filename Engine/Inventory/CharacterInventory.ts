@@ -4,7 +4,6 @@ import { Character } from 'Engine/Character/Character';
 import { Item } from 'Engine/Items/Item';
 import { Weapon } from 'Engine/Items/Weapon';
 import { Armor } from 'Engine/Items/Armor';
-import { IStat, Stat } from 'Engine/Character/Stats/Stat/Stat';
 import { IEquipSlot, EquipSlot } from './EquipSlot';
 import { IPiercingInventory, PiercingInventory } from './PiercingInventory';
 import { EquipSlotList } from './EquipSlotList';
@@ -13,7 +12,7 @@ import { IItemStack, ItemStack } from './ItemStack';
 
 export interface ICharInv {
     items: IItemStack[];
-    gems: IStat;
+    gems: number;
     weapon?: IEquipSlot;
     armor?: IEquipSlot;
     piercings: IPiercingInventory;
@@ -24,7 +23,7 @@ export interface ICharInv {
 export class CharacterInventory implements ISerializable<ICharInv> {
     private char: Character;
     public readonly items: Inventory<Item>;
-    public gemsStat: Stat;
+    public gems: number;
     public readonly unarmedWeaponSlot: EquipSlot<Weapon>;
     public readonly equippedWeaponSlot: EquipSlot<Weapon>;
     public readonly noArmorSlot: EquipSlot<Armor>;
@@ -36,7 +35,7 @@ export class CharacterInventory implements ISerializable<ICharInv> {
     public constructor(character: Character, unarmedWeapon: Weapon, noArmor: Armor) {
         this.char = character;
         this.items = new Inventory<Item>();
-        this.gemsStat = new Stat(0);
+        this.gems = 0;
         this.unarmedWeaponSlot = new EquipSlot(character);
         this.unarmedWeaponSlot.equip(unarmedWeapon);
         this.equippedWeaponSlot = new EquipSlot(character);
@@ -56,9 +55,6 @@ export class CharacterInventory implements ISerializable<ICharInv> {
         }, false);
     }
 
-    public get gems() { return this.gemsStat.raw; }
-    public set gems(num: number) { this.gemsStat.raw = num; }
-
     public get weapon(): Weapon {
         return this.equippedWeaponSlot.item ? this.equippedWeaponSlot.item : this.unarmedWeaponSlot.item!;
     }
@@ -69,7 +65,7 @@ export class CharacterInventory implements ISerializable<ICharInv> {
 
     public serialize(): ICharInv {
         const saveObj: ICharInv = {
-            gems: this.gemsStat.serialize(),
+            gems: this.gems,
             items: this.items.serialize(),
             piercings: this.piercings.serialize(),
             cockSocks: this.cockSocks.serialize(),
@@ -83,7 +79,7 @@ export class CharacterInventory implements ISerializable<ICharInv> {
     }
 
     public deserialize(saveObject: ICharInv) {
-        this.gemsStat.deserialize(saveObject.gems);
+        this.gems = saveObject.gems;
         this.items.deserialize(saveObject.items, ItemStack);
         if (saveObject.weapon)
             this.equippedWeaponSlot.deserialize(saveObject.weapon);

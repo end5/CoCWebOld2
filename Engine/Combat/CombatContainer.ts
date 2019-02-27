@@ -47,7 +47,7 @@ export class CombatContainer {
     }
 
     public HPRatio(): number {
-        return this.char.stats.HP / this.char.stats.base.HP.max;
+        return this.char.stats.HP / this.char.stats.maxHP;
     }
 
     public gainHP(value: number): number {

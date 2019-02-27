@@ -119,10 +119,10 @@ class Special extends CombatAction {
             enemy.stats.spe += speedChange;
 
             const akbalSpeed = enemy.effects.getByName(EffectType.AkbalSpeed);
-            if (akbalSpeed)
-                akbalSpeed.values.spe.total.flat += speedChange;
+            if (akbalSpeed && akbalSpeed.values.spe)
+                akbalSpeed.values.spe += speedChange;
             else
-                enemy.effects.create(EffectType.AkbalSpeed, { spe: { total: { flat: speedChange } } });
+                enemy.effects.create(EffectType.AkbalSpeed, { spe: speedChange });
         }
         // *Special Attack B -
         else {
@@ -204,18 +204,18 @@ export class Akbal extends Character {
         this.body.tails.add(new Tail(TailType.DOG));
         this.hoursSinceCum = 400;
 
-        this.stats.base.str.raw = 55;
-        this.stats.base.tou.raw = 53;
-        this.stats.base.spe.raw = 50;
-        this.stats.base.int.raw = 75;
-        this.stats.base.lib.raw = 50;
-        this.stats.base.sens.raw = 50;
-        this.stats.base.cor.raw = 100;
-        this.stats.base.lust.raw = 30;
-        this.stats.base.lustVuln = 0.8;
-        this.stats.base.HP.max += 20;
-        this.stats.base.HP.raw += 20;
-        this.stats.base.level.raw = 6;
+        this.stats.str = 55;
+        this.stats.tou = 53;
+        this.stats.spe = 50;
+        this.stats.int = 75;
+        this.stats.lib = 50;
+        this.stats.sens = 50;
+        this.stats.cor = 100;
+        this.stats.lust = 30;
+        this.stats.lustVuln = 0.8;
+        this.stats.maxHP = 20;
+        this.stats.HP = this.stats.maxHP;
+        this.stats.level = 6;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "claw-slash", 5),

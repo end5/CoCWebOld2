@@ -12,7 +12,7 @@ import { CView } from 'Engine/Display/ContentView';
 export class SluttySwimwear extends Armor {
     public constructor() {
         super(ArmorName.SluttySwimwear, new ItemDesc("S.Swmwr", "a skimpy black bikini", "An impossibly skimpy black bikini. You feel dirty just looking at it... and a little aroused, actually."), "slutty swimwear", 0, 6, "Light", true);
-        this.effects.create(EffectType.SluttySeduction, { teaseChance: 6 });
+        this.effects.create(EffectType.SluttySeduction, { teaseDamage: 6 });
     }
 
     public useText(character: Character): void {

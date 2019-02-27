@@ -38,7 +38,7 @@ class DrugAttack extends CombatAction {
             CView.text(char.desc.capitalA + char.desc.short + " pulls out a blue vial and uncaps it, swiftly downing its contents.");
             if (char.combat.HPRatio() < 1) {
                 CView.text("  She looks to have recovered from some of her wounds!\n");
-                char.stats.HP += (char.stats.base.HP.max / 4);
+                char.stats.HP += (char.stats.maxHP / 4);
             }
             else CView.text("  There doesn't seem to be any effect.\n");
             return;
@@ -128,15 +128,16 @@ export class Goblin extends Character {
         this.body.hair.color = "purple";
         this.body.hair.length = 4;
 
-        this.stats.base.str.raw = 12;
-        this.stats.base.tou.raw = 13;
-        this.stats.base.spe.raw = 35;
-        this.stats.base.int.raw = 42;
-        this.stats.base.lib.raw = 45;
-        this.stats.base.sens.raw = 45;
-        this.stats.base.cor.raw = 60;
-        this.stats.base.lust.raw = 50;
-        this.stats.base.level.raw = 1;
+        this.stats.str = 12;
+        this.stats.tou = 13;
+        this.stats.spe = 35;
+        this.stats.int = 42;
+        this.stats.lib = 45;
+        this.stats.sens = 45;
+        this.stats.cor = 60;
+        this.stats.HP = this.stats.maxHP;
+        this.stats.lust = 50;
+        this.stats.level = 1;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),

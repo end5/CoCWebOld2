@@ -19,7 +19,7 @@ export function controlsMenu(): NextScreenChoices {
 
     const bindListGrid = document.createElement('table');
     MainScreen.textElement.appendChild(new ScreenElement(bindListGrid));
-    const listBind = (l:string, b:BindableAction) => {listBindableAction(bindListGrid, l, b)};
+    const listBind = (l: string, b: BindableAction) => {listBindableAction(bindListGrid, l, b);};
     listBind("Stats"           , BindableAction.Stats);
     listBind("Level Up"        , BindableAction.LevelUp);
     listBind("Quicksave 1"     , BindableAction.Quicksave1);
@@ -58,10 +58,9 @@ function listBindableAction(bindListElement: HTMLTableElement, text: string, bin
     const keyPair = InputManager.get(bindableAction);
     if (!keyPair) throw new Error('Incorrect bindable action');
 
-    let bindElement = bindListElement.insertRow();
+    const bindElement = bindListElement.insertRow();
     bindListElement.appendChild(bindElement);
     bindElement.insertCell().innerHTML = "<b>" + text + "</b>";
-
 
     const button1 = new ButtonElement();
     button1.element = document.createElement("a");

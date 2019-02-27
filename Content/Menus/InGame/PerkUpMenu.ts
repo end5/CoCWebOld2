@@ -187,14 +187,11 @@ function getAvailablePerks(character: Character): Effect[] {
     // slot 5 - libido perks
     // Slot 5 - Fertile+ increases cum production and fertility (+15%)
     if (character.stats.lib >= 25) {
-        perkList.push(new Effect(EffectType.FertilityPlus, {
-            fertility: { total: { multi: 0.15 } },
-            cumQuantity: { total: { multi: 1.75 } }
-        }));
+        perkList.push(new Effect(EffectType.FertilityPlus));
     }
     // Slot 5 - minimum libido
     if (character.stats.lib >= 50) {
-        perkList.push(new Effect(EffectType.HotBlooded, { lust: { min: { flat: 20 } } }));
+        perkList.push(new Effect(EffectType.HotBlooded, { minLust: 20 }));
     }
     // Tier 1 Libido Perks
     if (character.stats.level >= 6) {
@@ -221,7 +218,7 @@ function getAvailablePerks(character: Character): Effect[] {
         perkList.push(new Effect(EffectType.Nymphomania));
     }
     // Slot 7 - UNFINISHED :3
-    if (character.stats.base.lust.min >= 20 && character.effects.has(EffectType.CorruptedLibido) && character.stats.cor >= 50) {
+    if (character.stats.minLust() >= 20 && character.effects.has(EffectType.CorruptedLibido) && character.stats.cor >= 50) {
         perkList.push(new Effect(EffectType.Acclimation));
     }
     // Tier 1 Corruption Perks - acclimation over-rides

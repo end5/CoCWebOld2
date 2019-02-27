@@ -130,9 +130,10 @@ export class WetCloth extends Consumable {
         }
         // 3b.Infinite Vagina
         if (character.vaginalCapacity() < 9000) {
-            if (!character.effects.has(EffectType.BonusVCapacity))
+            const bonusVCapacity = character.effects.getByName(EffectType.BonusVCapacity);
+            if (!bonusVCapacity)
                 character.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 9000 });
-            else character.effects.getByName(EffectType.BonusVCapacity)!.values.vaginalCapacity = 9000;
+            else bonusVCapacity.values.vaginalCapacity = 9000;
             CView.text("\n\nYour " + describeVagina(character, character.body.vaginas.get(0)) + "'s internal walls feel a tingly wave of strange tightness.  Experimentally, you slip a few fingers, then your hand, then most of your forearm inside yourself.  <b>It seems you're now able to accommodate just about ANYTHING inside your sex.</b>");
             return;
         }
@@ -144,13 +145,14 @@ export class WetCloth extends Consumable {
         }
         // Big slime girl
         else {
-            if (!character.effects.has(EffectType.SlimeCraving)) {
+            const slimeCraving = character.effects.getByName(EffectType.SlimeCraving);
+            if (!slimeCraving) {
                 CView.text("\n\nYou feel a growing gnawing in your gut.  You feel... hungry, but not for food.  No, you need something wet and goopy pumped into you.  You NEED it.  You can feel it in your bones.  <b>If you don't feed that need... you'll get weaker and maybe die.</b>");
-                character.effects.create(EffectType.SlimeCraving, { other: { duration: 0 } }); // Value four indicates this tracks strength and speed separately
+                character.effects.create(EffectType.SlimeCraving, { duration: 0 }); // Value four indicates this tracks strength and speed separately
             }
             else {
                 CView.text("\n\nYou feel full for a moment, but you know it's just a temporary respite from your constant need to be 'injected' with fluid.");
-                character.effects.getByName(EffectType.SlimeCraving)!.values.other!.duration = 0;
+                slimeCraving.values.duration = 0;
             }
         }
         if (randInt(2) === 0) CView.text(displayModFem(character, 85, 3));

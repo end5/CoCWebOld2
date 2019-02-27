@@ -10,8 +10,9 @@ export class CockRing extends CockSock {
     }
 
     public onEquip(character: Character) {
-        if (!character.effects.has(EffectType.PentUp)) {
-            character.effects.create(EffectType.PentUp);
+        let pentUp = character.effects.getByName(EffectType.PentUp);
+        if (!pentUp) {
+            pentUp = character.effects.create(EffectType.PentUp, { minLust: 0 });
         }
         else {
             const numRings = character.inventory.cockSocks.reduce((prev: number, cur: EquipSlot<CockSock>) => {
@@ -19,12 +20,13 @@ export class CockRing extends CockSock {
                     prev++;
                 return prev;
             }, -1);
-            character.effects.getByName(EffectType.PentUp)!.values.lust.min.flat = 5 + (numRings * 5);
+            pentUp.values.minLust = 5 + (numRings * 5);
         }
     }
 
     public onUnequip(character: Character) {
-        if (character.effects.has(EffectType.PentUp)) {
+        const pentUp = character.effects.getByName(EffectType.PentUp);
+        if (pentUp) {
             const numRings = character.inventory.cockSocks.reduce((prev: number, cur: EquipSlot<CockSock>) => {
                 if (cur && cur.item && cur.item.name === "Cockring")
                     prev++;
@@ -34,7 +36,7 @@ export class CockRing extends CockSock {
                 character.effects.removeByName(EffectType.PentUp);
             }
             else
-                character.effects.getByName(EffectType.PentUp)!.values.lust.min.flat = 5 + (numRings * 5);
+                pentUp.values.minLust = 5 + (numRings * 5);
         }
     }
 }

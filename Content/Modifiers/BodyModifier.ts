@@ -173,25 +173,28 @@ export function displayFixFemininity(character: Character): string {
 // duration and intensity. Defaults to 1.
 export function displayGoIntoHeat(character: Character, intensity: number = 1): string {
     // Already in heat, intensify further.
-    const statusAffectHeat = character.effects.getByName(EffectType.Heat);
-    if (statusAffectHeat) {
-        statusAffectHeat.values.fertility.total.flat += 5 * intensity;
-        statusAffectHeat.values.lib.total.flat += 5 * intensity;
-        statusAffectHeat.values.expireCountdown += 48 * intensity;
-        // $> Fix this
-        // character.stats.libBimbo += 5 * intensity;
+    const heat = character.effects.getByName(EffectType.Heat);
+    if (heat) {
+        if (heat.values.fertility) {
+            heat.values.fertility += 5 * intensity;
+        }
+        if (heat.values.lib) {
+            heat.values.lib += 5 * intensity;
+        }
+        if (heat.values.hourExpire) {
+            heat.values.hourExpire += 48 * intensity;
+        }
+        character.stats.raw.lib += 5 * intensity;
         return "\n\nYour mind clouds as your " + describeVagina(character, character.body.vaginas.get(0)) + " moistens.  Despite already being in heat, the desire to copulate constantly grows even larger.";
     }
     // Go into heat.  Heats v1 is bonus fertility, v2 is bonus libido, v3 is hours till it's gone
     else {
-        // character.effects.add(StatusEffectType.Heat, 10 * intensity, 15 * intensity, 48 * intensity, 0);
         character.effects.create(EffectType.Heat, {
-            fertility: { total: { flat: 10 * intensity } },
-            lib: { total: { flat: 15 * intensity } },
-            expireCountdown: 48 * intensity
+            fertility: 10 * intensity,
+            lib: 15 * intensity,
+            hourExpire: 48 * intensity
         });
-        // $> Fix this
-        // character.stats.libBimbo += 15 * intensity;
+        character.stats.raw.lib += 15 * intensity;
         return "\n\nYour mind clouds as your " + describeVagina(character, character.body.vaginas.get(0)) + " moistens.  Your hands begin stroking your body from top to bottom, your sensitive skin burning with desire.  Fantasies about bending over and presenting your needy pussy to a male overwhelm you as <b>you realize you have gone into heat!</b>";
     }
 }
@@ -205,27 +208,30 @@ export function displayGoIntoHeat(character: Character, intensity: number = 1): 
 // duration and intensity. Defaults to 1.
 export function displayGoIntoRut(character: Character, intensity: number = 1): string {
     // Has rut, intensify it!
-    const statusAffectRut = character.effects.getByName(EffectType.Rut);
-    if (statusAffectRut) {
-        statusAffectRut.values.cumQuantity.total.flat = 100 * intensity;
-        statusAffectRut.values.lib.total.flat = 5 * intensity;
-        statusAffectRut.values.expireCountdown = 48 * intensity;
-        // $> Fix this
-        //   character.stats.libBimbo += 5 * intensity;
+    const rut = character.effects.getByName(EffectType.Rut);
+    if (rut) {
+        if (rut.values.cumQuantity) {
+            rut.values.cumQuantity += 100 * intensity;
+        }
+        if (rut.values.lib) {
+            rut.values.lib += 5 * intensity;
+        }
+        if (rut.values.hourExpire) {
+            rut.values.hourExpire += 48 * intensity;
+        }
+        character.stats.raw.lib += 5 * intensity;
         return "\n\nYour " + describeCock(character, character.body.cocks.get(0)) + " throbs and dribbles as your desire to mate intensifies.  You know that <b>you've sunken deeper into rut</b>, but all that really matters is unloading into a cum-hungry cunt.";
     }
     else {
         // v1 - bonus cum production
         // v2 - bonus libido
         // v3 - time remaining!
-        // character.effects.add(StatusEffectType.Rut, 150 * intensity, 5 * intensity, 100 * intensity, 0);
         character.effects.create(EffectType.Rut, {
-            cumQuantity: { total: { flat: 150 * intensity } },
-            lib: { total: { flat: 5 * intensity } },
-            expireCountdown: 100 * intensity
+            cumQuantity: 150 * intensity,
+            lib: 5 * intensity,
+            hourExpire: 100 * intensity
         });
-        // $> Fix this
-        //  character.stats.libBimbo += 5 * intensity;
+        character.stats.raw.lib += 5 * intensity;
         return "\n\nYou stand up a bit straighter and look around, sniffing the air and searching for a mate.  Wait, what!?  It's hard to shake the thought from your head - you really could use a nice fertile hole to impregnate.  You slap your forehead and realize <b>you've gone into rut</b>!";
     }
 }

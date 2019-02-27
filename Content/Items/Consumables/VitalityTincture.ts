@@ -28,7 +28,7 @@ export class VitalityTincture extends Consumable {
         // tou change
         character.stats.tou = strChange;
         // Chance of fitness change
-        if (character.stats.HP + 50 !== character.stats.base.HP.max) {
+        if (character.stats.HP + 50 !== character.stats.maxHP) {
             character.stats.HP += 50;
             CView.text("  Any aches, pains and bruises you have suffered no longer hurt and you feel much better.");
         }

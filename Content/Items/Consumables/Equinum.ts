@@ -370,7 +370,8 @@ export class Equinum extends Consumable {
                     changes++;
                 }
             }
-            if (character.effects.getByName(EffectType.Heat)!.values.lib.total.flat < 30 && randInt(2) === 0 && changes < changeLimit) {
+            const heat = character.effects.getByName(EffectType.Heat);
+            if (heat && heat.values.lib && heat.values.lib < 30 && randInt(2) === 0 && changes < changeLimit) {
                 if (character.canGoIntoHeat()) {
                     displayGoIntoHeat(character);
                     changes++;

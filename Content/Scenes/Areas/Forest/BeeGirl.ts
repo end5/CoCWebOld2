@@ -134,16 +134,18 @@ class BeeSting extends CombatAction {
         else {
             CView.text("Searing pain lances through you as " + beeGirl.desc.a + beeGirl.desc.short + " manages to sting you!  You stagger back a step and nearly trip, finding it hard to move yourself.");
             const paralyzeEffect = player.effects.getByName(EffectType.ParalyzeVenom);
-            if (paralyzeEffect) {
-                paralyzeEffect.values.str.total.flat -= 3; // v1 - strenght penalty, v2 speed penalty
-                paralyzeEffect.values.spe.total.flat -= 3; // v1 - strenght penalty, v2 speed penalty
-                // paralyzeEffect.value1 += 2.9;
-                // paralyzeEffect.value2 += 2.9;
+            if (paralyzeEffect && paralyzeEffect.values.str && paralyzeEffect.values.spe) {
+                paralyzeEffect.values.str += 2.9; // v1 - strenght penalty, v2 speed penalty
+                paralyzeEffect.values.spe += 2.9; // v1 - strenght penalty, v2 speed penalty
+                player.stats.str -= 3;
+                player.stats.spe -= 3;
 
                 CView.text("  It's getting much harder to move, you're not sure how many more stings like that you can take!");
             }
             else {
-                player.effects.create(EffectType.ParalyzeVenom, { str: { total: { flat: -2 } }, spe: { total: { flat: -2 } } });
+                player.effects.create(EffectType.ParalyzeVenom, { str: 2, spe: 2 });
+                player.stats.str -= 2;
+                player.stats.spe -= 2;
 
                 CView.text("  You've fallen prey to paralyzation venom!  Better end this quick!");
             }
@@ -173,16 +175,17 @@ export class BeeGirl extends Character {
         this.body.wings.type = WingType.BEE_LIKE_SMALL;
         this.body.tails.add(new Tail(TailType.BEE_ABDOMEN, 100));
 
-        this.stats.base.str.raw = 30;
-        this.stats.base.tou.raw = 30;
-        this.stats.base.spe.raw = 30;
-        this.stats.base.int.raw = 20;
-        this.stats.base.lib.raw = 60;
-        this.stats.base.sens.raw = 55;
-        this.stats.base.cor.raw = 0;
-        this.stats.base.lust.raw = 20 + randInt(40);
-        this.stats.base.lustVuln = 0.9;
-        this.stats.base.level.raw = 4;
+        this.stats.str = 30;
+        this.stats.tou = 30;
+        this.stats.spe = 30;
+        this.stats.int = 20;
+        this.stats.lib = 60;
+        this.stats.sens = 55;
+        this.stats.cor = 0;
+        this.stats.HP = this.stats.maxHP;
+        this.stats.lust = 20 + randInt(40);
+        this.stats.lustVuln = 0.9;
+        this.stats.level = 4;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("chitin-plated fist" as WeaponName, new ItemDesc("chitin-plated fist"), "chitin-plated fist", "armored punch", 1),

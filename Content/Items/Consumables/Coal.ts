@@ -30,9 +30,9 @@ export class Coal extends Consumable {
             // Boost anal capacity without gaping
             let bonusACapacity = character.effects.getByName(EffectType.BonusACapacity);
             if (!bonusACapacity)
-                bonusACapacity = character.effects.create(EffectType.BonusACapacity);
-            if (bonusACapacity.values.analCapacity < 80) {
-                bonusACapacity.values.analCapacity = 5;
+                bonusACapacity = character.effects.create(EffectType.BonusACapacity, { analCapacity: 0 });
+            if (bonusACapacity.values.analCapacity && bonusACapacity.values.analCapacity < 80) {
+                bonusACapacity.values.analCapacity += 5;
                 CView.text("\n\nYou feel... more accommodating somehow.  Your " + describeButthole(character.body.butt) + " is tingling a bit, and though it doesn't seem to have loosened, it has grown more elastic.");
                 // changes++;
             }

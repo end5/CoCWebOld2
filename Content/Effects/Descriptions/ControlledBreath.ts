@@ -1,6 +1,7 @@
 import { Character } from 'Engine/Character/Character';
 import { Effect } from 'Engine/Effects/Effect';
 import { EffectDesc } from 'Engine/Effects/EffectDesc';
+import { EffectType } from 'Content/Effects/EffectType';
 
 export class ControlledBreath extends EffectDesc {
     public description(effect: Effect, character: Character): string {
@@ -11,6 +12,6 @@ export class ControlledBreath extends EffectDesc {
     }
 
     public constructor() {
-        super("Controlled Breath", "Controlled Breath", "Jojo’s training allows you to recover more quickly. Increases rate of fatigue regeneration by 10%");
+        super(EffectType.ControlledBreath, "Controlled Breath", "Jojo’s training allows you to recover more quickly. Increases rate of fatigue regeneration by 10%");
     }
 }

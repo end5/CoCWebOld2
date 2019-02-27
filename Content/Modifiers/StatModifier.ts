@@ -2,7 +2,7 @@ import { Character } from 'Engine/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 
 export function displayCharacterHPChange(character: Character, changeAmount: number) {
-    if (changeAmount > 0 && character.stats.HP === character.stats.base.HP.max) {
+    if (changeAmount > 0 && character.stats.HP === character.stats.maxHP) {
         CView.text("You're as healthy as you can be.\n");
         return;
     }
@@ -12,8 +12,8 @@ export function displayCharacterHPChange(character: Character, changeAmount: num
     const diff = character.stats.HP - oldHP;
 
     if (diff > 0) {
-        if (character.stats.HP === character.stats.base.HP.max)
-            CView.text("Your HP maxes out at " + character.stats.base.HP.max + ".\n");
+        if (character.stats.HP === character.stats.maxHP)
+            CView.text("Your HP maxes out at " + character.stats.maxHP + ".\n");
         else
             CView.text("You gain " + diff + " HP.\n");
     }

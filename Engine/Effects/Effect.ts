@@ -1,6 +1,6 @@
 import { EffectDesc } from './EffectDesc';
 import { ISerializable } from 'Engine/Utilities/ISerializable';
-import { EffectValues, IEffectValues } from './EffectValues';
+import { IEffectValues } from './EffectValues';
 import { EffectDescLib } from './EffectDescLib';
 import { Character } from 'Engine/Character/Character';
 
@@ -12,12 +12,12 @@ export interface IEffect {
 export class Effect implements ISerializable<IEffect> {
     private effectType: string;
     public readonly desc: EffectDesc;
-    private effectValues: EffectValues;
+    private effectValues: IEffectValues;
 
     public constructor(type: string, values?: IEffectValues) {
         this.effectType = type;
         this.desc = EffectDescLib.get(name);
-        this.effectValues = new EffectValues(values);
+        this.effectValues = values ? values : {};
     }
 
     public get values() {
@@ -34,14 +34,18 @@ export class Effect implements ISerializable<IEffect> {
     public combatEnd(char: Character): void { }
 
     public serialize(): IEffect {
-        return {
-            type: this.effectType,
-            values: this.values
-        };
+        if (Object.keys(this.values).length > 0)
+            return {
+                type: this.effectType,
+                values: this.values
+            };
+        else
+            return { type: this.effectType };
     }
 
     public deserialize(saveObject: IEffect) {
         this.effectType = saveObject.type;
-        this.effectValues = new EffectValues(saveObject.values);
+        if (saveObject.values)
+            this.effectValues = saveObject.values;
     }
 }

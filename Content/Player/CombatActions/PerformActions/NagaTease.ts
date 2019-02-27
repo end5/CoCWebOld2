@@ -69,7 +69,7 @@ export class NagaTease extends CombatAction {
             }
             if (character.effects.has(EffectType.Seduction)) damage += 5;
             // + slutty armor bonus
-            // if (character.perks.has(EffectType.SluttySeduction)) damage += character.perks.get(EffectType.SluttySeduction).value1;
+            if (character.effects.has(EffectType.SluttySeduction)) damage += character.effects.getByName(EffectType.SluttySeduction)!.values.teaseDamage!;
             // 10% for bimbo shits
             if (bimbo || bro || futa) {
                 damage += 5;

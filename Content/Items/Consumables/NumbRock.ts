@@ -25,7 +25,8 @@ export class NumbRock extends Consumable {
             character.stats.lust -= 20 + randInt(40);
         }
         if (randInt(5) === 0) {
-            if (!character.effects.has(EffectType.Dysfunction)) {
+            const dysfunction = character.effects.getByName(EffectType.Dysfunction);
+            if (!dysfunction) {
                 CView.text("\n\nUnfortunately, the skin of ");
                 if (character.body.cocks.length > 0) {
                     CView.text(describeOneOfYourCocks(character));
@@ -38,11 +39,11 @@ export class NumbRock extends Consumable {
                 }
                 if (!(character.body.cocks.length > 0 || character.body.vaginas.length > 0)) CView.text(describeButthole(character.body.butt) + " ");
                 CView.text(" numbs up too.  You give yourself a gentle touch, but are quite disturbed when you realize you can barely feel it.  You can probably still fuck something to get off, but regular masturbation is out of the question...");
-                character.effects.create(EffectType.Dysfunction, { expireCountdown: 50 + randInt(100) });
+                character.effects.create(EffectType.Dysfunction, { hourExpire: 50 + randInt(100) });
             }
             else {
                 CView.text("\n\nSadly your groin becomes even more deadened to sensation.  You wonder how much longer you'll have to wait until you can please yourself again.");
-                character.effects.getByName(EffectType.Dysfunction)!.values.expireCountdown = 50 + randInt(100);
+                dysfunction.values.hourExpire = 50 + randInt(100);
             }
         }
         else if (randInt(4) === 0 && character.stats.int > 15) {

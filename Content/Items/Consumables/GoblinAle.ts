@@ -91,9 +91,13 @@ export class GoblinAle extends Consumable {
         }
         // Boost vaginal capacity without gaping
         const bonusVCap = character.effects.getByName(EffectType.BonusVCapacity);
-        if (changes < changeLimit && randInt(3) === 0 && character.body.vaginas.length > 0 && bonusVCap && bonusVCap.values.vaginalCapacity < 40) {
+        if (
+            changes < changeLimit && randInt(3) === 0 &&
+            character.body.vaginas.length > 0 &&
+            bonusVCap && bonusVCap.values.vaginalCapacity && bonusVCap.values.vaginalCapacity < 40
+        ) {
             if (!character.effects.has(EffectType.BonusVCapacity))
-                character.effects.create(EffectType.BonusVCapacity);
+                character.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 0 });
             bonusVCap.values.vaginalCapacity = 5;
             CView.text("\n\nThere is a sudden... emptiness within your " + describeVagina(character, character.body.vaginas.get(0)) + ".  Somehow you know you could accommodate even larger... insertions.");
             changes++;

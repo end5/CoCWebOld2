@@ -142,18 +142,18 @@ export class TentacleBeast extends Character {
         this.body.hair.length = 1;
         this.body.tails.add(new Tail(TailType.DEMONIC));
 
-        this.stats.base.str.raw = 58;
-        this.stats.base.tou.raw = 25;
-        this.stats.base.spe.raw = 45;
-        this.stats.base.int.raw = 45;
-        this.stats.base.lib.raw = 90;
-        this.stats.base.sens.raw = 20;
-        this.stats.base.cor.raw = 100;
-        this.stats.base.HP.max += 350;
-        this.stats.base.HP.raw += 350;
-        this.stats.base.lust.raw = 10;
-        this.stats.base.lustVuln = 0.8;
-        this.stats.base.level.raw = 6;
+        this.stats.str = 58;
+        this.stats.tou = 25;
+        this.stats.spe = 45;
+        this.stats.int = 45;
+        this.stats.lib = 90;
+        this.stats.sens = 20;
+        this.stats.cor = 100;
+        this.stats.maxHP = 350;
+        this.stats.HP = this.stats.maxHP;
+        this.stats.lust = 10;
+        this.stats.lustVuln = 0.8;
+        this.stats.level = 6;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("whip-tendril" as WeaponName, new ItemDesc("whip-tendril"), "whip-tendril", "thorny tendril", 1),

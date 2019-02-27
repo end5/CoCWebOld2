@@ -337,46 +337,46 @@ function confirmEndowmentWetVagina(): NextScreenChoices {
 }
 
 function setEndowmentStrength(player: Character): NextScreenChoices {
-    player.stats.base.str.raw += 5;
+    player.stats.raw.str += 5;
     player.body.tone += 7;
     player.body.thickness += 3;
     // Add bonus +25% strength gain
-    player.effects.create(EffectType.Strong, { str: { delta: { multi: 0.25 } } });
+    player.effects.create(EffectType.Strong, { str: 0.25 });
     return chooseHistory();
 }
 
 function setEndowmentToughness(player: Character): NextScreenChoices {
-    player.stats.base.tou.raw += 5;
+    player.stats.raw.tou += 5;
     player.body.tone += 5;
     player.body.thickness += 5;
-    player.effects.create(EffectType.Tough, { tou: { delta: { multi: 0.25 } } });
-    player.stats.HP = player.stats.base.HP.max;
+    player.effects.create(EffectType.Tough, { tou: 0.25 });
+    player.stats.HP = player.stats.maxHP;
     return chooseHistory();
 }
 
 function setEndowmentSpeed(player: Character): NextScreenChoices {
-    player.stats.base.spe.raw += 5;
+    player.stats.raw.spe += 5;
     player.body.tone += 10;
-    player.effects.create(EffectType.Fast, { spe: { delta: { multi: 0.25 } } });
+    player.effects.create(EffectType.Fast, { spe: 0.25 });
     return chooseHistory();
 }
 
 function setEndowmentSmarts(player: Character): NextScreenChoices {
-    player.stats.base.int.raw += 5;
+    player.stats.raw.int += 5;
     player.body.thickness -= 5;
-    player.effects.create(EffectType.Smart, { int: { delta: { multi: 0.25 } } });
+    player.effects.create(EffectType.Smart, { int: 0.25 });
     return chooseHistory();
 }
 
 function setEndowmentLibido(player: Character): NextScreenChoices {
-    player.stats.base.lib.raw += 5;
-    player.effects.create(EffectType.Lusty, { lib: { delta: { multi: 0.25 } } });
+    player.stats.raw.lib += 5;
+    player.effects.create(EffectType.Lusty, { lib: 0.25 });
     return chooseHistory();
 }
 
 function setEndowmentTouch(player: Character): NextScreenChoices {
-    player.stats.base.sens.raw += 5;
-    player.effects.create(EffectType.Sensitive, { sens: { delta: { multi: 0.25 } } });
+    player.stats.raw.sens += 5;
+    player.effects.create(EffectType.Sensitive, { sens: 0.25 });
     return chooseHistory();
 }
 
@@ -420,7 +420,7 @@ function setEndowmentFertile(player: Character): NextScreenChoices {
 function setEndowmentWetVagina(player: Character): NextScreenChoices {
     player.body.femininity += 7;
     player.body.vaginas.get(0)!.wetness = VaginaWetness.WET;
-    player.effects.create(EffectType.WetPussy);
+    player.effects.create(EffectType.WetPussy, { vaginalCapacity: 20 });
     return chooseHistory();
 }
 
@@ -477,6 +477,7 @@ function confirmHistory(choice: EffectType): NextScreenChoices {
 
 function setHistory(player: Character, choice: EffectType): NextScreenChoices {
     player.effects.create(choice);
+
     if (choice === EffectType.HistorySlut || choice === EffectType.HistoryWhore) {
         if (player.body.vaginas.length > 0) {
             player.body.vaginas.get(0)!.virgin = false;

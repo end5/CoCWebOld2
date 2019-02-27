@@ -26,6 +26,8 @@ import { dogRaceScore, spiderRaceScore, kitsuneRaceScore, cowRaceScore } from 'C
 import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';
 import { Settings } from 'Content/Settings';
 import { CeraphFlags } from 'Content/Scenes/NPCs/Ceraph';
+import { CharacterType } from 'Content/Character/CharacterType';
+import { NEEDLEWORK_LUST_TEASE_MULTI } from 'Content/Scenes/Places/TelAdre/UmasShop';
 
 const enum TeaseType {
     ButtShake,                  // 0 butt shake
@@ -80,18 +82,26 @@ const enum TeaseType {
     MaxTeaseTypes,              // Max Tease Types - Used for choices array init
 }
 
-function determineBaseDamage(character: Character): number {
+function determineDamage(character: Character, bimbo: boolean, bro: boolean, futa: boolean): number {
     let damage: number = 6 + randInt(3);
     if (character.effects.has(EffectType.SensualLover))
         damage += 2;
     if (character.effects.has(EffectType.Seduction))
         damage += 5;
+    // + slutty armor bonus
+    const sluttySeduction = character.effects.getByName(EffectType.SluttySeduction);
+    if (sluttySeduction && sluttySeduction.values.teaseDamage)
+        damage += sluttySeduction.values.teaseDamage;
+    // 10% for bimbo shits
+    if (bimbo || bro || futa) {
+        damage += 5;
+    }
     damage += character.stats.level;
     damage += character.stats.teaseLevel * 2;
     return damage;
 }
 
-function determineBaseChance(character: Character): number {
+function determineChance(character: Character): number {
     let chance: number = 0;
     chance = 60;
     // 5% chance for each tease level.
@@ -101,21 +111,15 @@ function determineBaseChance(character: Character): number {
     // 10% for sexy armor types
     if (character.effects.has(EffectType.SluttySeduction)) chance += 10;
     // 10% for bimbo shits
-    if (character.effects.has(EffectType.BimboBody)) {
-        chance += 10;
-    }
-    if (character.effects.has(EffectType.BroBody)) {
-        chance += 10;
-    }
-    if (character.effects.has(EffectType.FutaForm)) {
-        chance += 10;
-    }
+    if (character.effects.has(EffectType.BimboBody)) chance += 10;
+    if (character.effects.has(EffectType.BroBody)) chance += 10;
+    if (character.effects.has(EffectType.FutaForm)) chance += 10;
+
     // 2 & 2 for seductive valentines!
-    if (character.effects.has(EffectType.SensualLover)) {
-        chance += 2;
-    }
-    // if (character.perks.has(EffectType.ChiReflowLust))
-    //     chance += UmasShop.NEEDLEWORK_LUST_TEASE_MULTI;
+    if (character.effects.has(EffectType.SensualLover)) chance += 2;
+
+    if (character.effects.has(EffectType.ChiReflowLust))
+        chance += NEEDLEWORK_LUST_TEASE_MULTI;
     return chance;
 }
 
@@ -397,9 +401,9 @@ function determineTeaseChoice(character: Character, monster: Character, bimbo: b
         choices[TeaseType.KitsuneGendered] += 4;
     }
     // 42 Urta teases!
-    // if (urtaQuest.isUrta()) {
-    //     choices[TeaseType.Urta] += 9;
-    // }
+    if (character.charType === CharacterType.Urta) {
+        choices[TeaseType.Urta] += 9;
+    }
     // 43 - special mino + cowgirls
     if (character.body.vaginas.length > 0 && character.lactationQ() >= 500 && largestBreastRating >= 6 && cowRaceScore(character) >= 3 && character.body.tails.reduce(Tail.HasType(TailType.COW), false)) {
         choices[TeaseType.Cowgirl] += 9;
@@ -455,11 +459,9 @@ export class Tease extends CombatAction {
         let bimbo: boolean = character.effects.has(EffectType.BimboBody) ? true : false;
         const bro: boolean = character.effects.has(EffectType.BroBody) ? true : false;
         const futa: boolean = character.effects.has(EffectType.FutaForm) ? true : false;
-        let chance: number = determineBaseChance(character);
-        let damage: number = determineBaseDamage(character);
-        // 10% for bimbo shits
+        let chance: number = determineChance(character);
+        let damage: number = determineDamage(character, bimbo, bro, futa);
         if (bimbo || bro || futa) {
-            damage += 5;
             bimbo = true;
         }
 

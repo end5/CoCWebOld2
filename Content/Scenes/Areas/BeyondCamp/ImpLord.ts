@@ -111,18 +111,18 @@ export class ImpLord extends Character {
         this.body.skin.tone = "red";
         this.body.wings.type = WingType.IMP;
 
-        this.stats.base.str.raw = 55;
-        this.stats.base.tou.raw = 40;
-        this.stats.base.spe.raw = 75;
-        this.stats.base.int.raw = 42;
-        this.stats.base.lib.raw = 55;
-        this.stats.base.sens.raw = 35;
-        this.stats.base.cor.raw = 100;
-        this.stats.base.lust.raw = 30;
-        this.stats.base.lustVuln = .65;
-        this.stats.base.level.raw = 7;
-        this.stats.base.HP.max += 100;
-        this.stats.base.HP.raw += 100;
+        this.stats.str = 55;
+        this.stats.tou = 40;
+        this.stats.spe = 75;
+        this.stats.int = 42;
+        this.stats.lib = 55;
+        this.stats.sens = 35;
+        this.stats.cor = 100;
+        this.stats.lust = 30;
+        this.stats.lustVuln = .65;
+        this.stats.level = 7;
+        this.stats.maxHP = 100;
+        this.stats.HP = this.stats.maxHP;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("fist" as WeaponName, new ItemDesc("fist"), "fist", "punch", 10),

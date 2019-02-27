@@ -16,53 +16,53 @@ function updateTime() {
 function updateMainPlayer() {
     const char = CharDict.player;
     if (char) {
-        MainScreen.statsPanel.str.value = Math.floor(char.stats.base.str.value);
-        MainScreen.statsPanel.str.min = Math.floor(char.stats.base.str.min);
-        MainScreen.statsPanel.str.max = Math.floor(char.stats.base.str.max);
+        MainScreen.statsPanel.str.value = Math.floor(char.stats.str);
+        MainScreen.statsPanel.str.min = 0;
+        MainScreen.statsPanel.str.max = 100;
 
-        MainScreen.statsPanel.tou.value = Math.floor(char.stats.base.tou.value);
-        MainScreen.statsPanel.tou.min = Math.floor(char.stats.base.tou.min);
-        MainScreen.statsPanel.tou.max = Math.floor(char.stats.base.tou.max);
+        MainScreen.statsPanel.tou.value = Math.floor(char.stats.tou);
+        MainScreen.statsPanel.tou.min = 0;
+        MainScreen.statsPanel.tou.max = 100;
 
-        MainScreen.statsPanel.spe.value = Math.floor(char.stats.base.spe.value);
-        MainScreen.statsPanel.spe.min = Math.floor(char.stats.base.spe.min);
-        MainScreen.statsPanel.spe.max = Math.floor(char.stats.base.spe.max);
+        MainScreen.statsPanel.spe.value = Math.floor(char.stats.spe);
+        MainScreen.statsPanel.spe.min = 0;
+        MainScreen.statsPanel.spe.max = 100;
 
-        MainScreen.statsPanel.int.value = Math.floor(char.stats.base.int.value);
-        MainScreen.statsPanel.int.min = Math.floor(char.stats.base.int.min);
-        MainScreen.statsPanel.int.max = Math.floor(char.stats.base.int.max);
+        MainScreen.statsPanel.int.value = Math.floor(char.stats.int);
+        MainScreen.statsPanel.int.min = 0;
+        MainScreen.statsPanel.int.max = 100;
 
-        MainScreen.statsPanel.lib.value = Math.floor(char.stats.base.lib.value);
-        MainScreen.statsPanel.lib.min = Math.floor(char.stats.base.lib.min);
-        MainScreen.statsPanel.lib.max = Math.floor(char.stats.base.lib.max);
+        MainScreen.statsPanel.lib.value = Math.floor(char.stats.lib);
+        MainScreen.statsPanel.lib.min = 0;
+        MainScreen.statsPanel.lib.max = 100;
 
-        MainScreen.statsPanel.sens.value = Math.floor(char.stats.base.sens.value);
-        MainScreen.statsPanel.sens.min = Math.floor(char.stats.base.sens.min);
-        MainScreen.statsPanel.sens.max = Math.floor(char.stats.base.sens.max);
+        MainScreen.statsPanel.sens.value = Math.floor(char.stats.sens);
+        MainScreen.statsPanel.sens.min = 0;
+        MainScreen.statsPanel.sens.max = 100;
 
-        MainScreen.statsPanel.cor.value = Math.floor(char.stats.base.cor.value);
-        MainScreen.statsPanel.cor.min = Math.floor(char.stats.base.cor.min);
-        MainScreen.statsPanel.cor.max = Math.floor(char.stats.base.cor.max);
+        MainScreen.statsPanel.cor.value = Math.floor(char.stats.cor);
+        MainScreen.statsPanel.cor.min = 0;
+        MainScreen.statsPanel.cor.max = 100;
 
-        MainScreen.statsPanel.hp.value = Math.floor(char.stats.base.HP.value);
-        MainScreen.statsPanel.hp.min = Math.floor(char.stats.base.HP.min);
-        MainScreen.statsPanel.hp.max = Math.floor(char.stats.base.HP.max);
+        MainScreen.statsPanel.hp.value = Math.floor(char.stats.HP);
+        MainScreen.statsPanel.hp.min = 0;
+        MainScreen.statsPanel.hp.max = Math.floor(char.stats.maxHP);
 
-        MainScreen.statsPanel.lust.value = Math.floor(char.stats.base.lust.value);
-        MainScreen.statsPanel.lust.min = Math.floor(char.stats.base.lust.min);
-        MainScreen.statsPanel.lust.max = Math.floor(char.stats.base.lust.max);
+        MainScreen.statsPanel.lust.value = Math.floor(char.stats.lust);
+        MainScreen.statsPanel.lust.min = Math.floor(char.stats.minLust());
+        MainScreen.statsPanel.lust.max = 100;
 
-        MainScreen.statsPanel.fatigue.value = Math.floor(char.stats.base.fatigue.value);
-        MainScreen.statsPanel.fatigue.min = Math.floor(char.stats.base.fatigue.min);
-        MainScreen.statsPanel.fatigue.max = Math.floor(char.stats.base.fatigue.max);
+        MainScreen.statsPanel.fatigue.value = Math.floor(char.stats.fatigue);
+        MainScreen.statsPanel.fatigue.min = 0;
+        MainScreen.statsPanel.fatigue.max = 100;
 
-        MainScreen.statsPanel.level.value = Math.floor(char.stats.base.level.raw);
+        MainScreen.statsPanel.level.value = Math.floor(char.stats.level);
 
         MainScreen.statsPanel.xp.value = char.roundXPToLevel();
         if (char.canLevelUp())
             MainScreen.levelupIcon.show();
 
-        MainScreen.statsPanel.gems.value = char.inventory.gemsStat.raw;
+        MainScreen.statsPanel.gems.value = char.inventory.gems;
 
     }
 }

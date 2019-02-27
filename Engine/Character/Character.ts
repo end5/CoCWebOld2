@@ -1,14 +1,13 @@
 ﻿import { CharacterDescription } from './CharacterDescription';
 import { Gender, GenderIdentity } from 'Engine/Body/GenderIdentity';
 import { IBody, Body } from 'Engine/Body/Body';
-import { IStats } from './Stats/Stats';
+import { Stats, IRawStats } from './Stats';
 import { IEffect, Effect } from 'Engine/Effects/Effect';
 import { ICharInv, CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { ISerializable } from 'Engine/Utilities/ISerializable';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { generateUUID } from 'Engine/Utilities/Uuid';
 import { EffectList } from 'Engine/Effects/EffectList';
-import { StatsWrapper } from './Stats/StatsWrapper';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { Tail, TailType } from 'Engine/Body/Tail';
 import { LegType } from 'Engine/Body/Legs';
@@ -17,6 +16,7 @@ import { BreastRow } from 'Engine/Body/BreastRow';
 import { WingType } from 'Engine/Body/Wings';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
 import { randInt } from 'Engine/Utilities/SMath';
+import { EffectType } from 'Content/Effects/EffectType';
 
 export interface ICharacter {
     type: string;
@@ -24,7 +24,7 @@ export interface ICharacter {
     partyUUID?: string;
     genderPref: Gender;
     body: IBody;
-    stats: IStats;
+    stats: IRawStats;
     effects: IEffect[];
     inventory: ICharInv;
     hoursSinceCum: number;
@@ -51,12 +51,12 @@ export abstract class Character implements ISerializable<ICharacter> {
         return this.combatContainer;
     }
 
-    public genderManager: GenderIdentity = new GenderIdentity(this);
+    public genderManager = new GenderIdentity(this);
 
-    public readonly body: Body = new Body();
-    public readonly stats = new StatsWrapper();
+    public body = new Body();
+    public stats = new Stats();
     public readonly effects = new EffectList();
-    public hoursSinceCum: number = 0;
+    public hoursSinceCum = 0;
 
     public constructor(type: string) {
         this.charType = type;
@@ -64,14 +64,6 @@ export abstract class Character implements ISerializable<ICharacter> {
             this.stats.XP = this.totalXP();
         }
         this.UUID = generateUUID();
-        this.stats.HP = this.stats.base.HP.max;
-
-        this.effects.on('add', (effect) => {
-            this.stats.addEffect(effect);
-        }, false);
-        this.effects.on('remove', (effect) => {
-            this.stats.removeEffect(effect);
-        }, false);
     }
 
     public get gender(): Gender {
@@ -159,6 +151,25 @@ export abstract class Character implements ISerializable<ICharacter> {
                 percent += 0.01;
             if (this.cumQ() >= 1600)
                 percent += 0.02;
+            if (this.effects.has(EffectType.BroBody))
+                percent += 0.05;
+            if (this.effects.has(EffectType.MaraesGiftStud))
+                percent += 0.15;
+            if (this.effects.has(EffectType.FerasBoonAlpha))
+                percent += 0.10;
+            const elvenBounty =  this.effects.getByName(EffectType.ElvenBounty);
+            if (elvenBounty && elvenBounty.values.virility && elvenBounty.values.virility > 0)
+                percent += 0.05;
+            if (this.effects.has(EffectType.FertilityPlus))
+                percent += 0.03;
+            if (this.effects.has(EffectType.PiercedFertite))
+                percent += 0.03;
+            if (this.effects.has(EffectType.OneTrackMind))
+                percent += 0.03;
+            if (this.effects.has(EffectType.MagicalVirility))
+                percent += 0.05;
+            if (this.effects.has(EffectType.MessyOrgasms))
+                percent += 0.03;
             if (percent > 1)
                 percent = 1;
             return percent;
@@ -259,7 +270,7 @@ export abstract class Character implements ISerializable<ICharacter> {
     private regeneration() {
         let healingPercent = 0;
         if (healingPercent > 10) healingPercent = 10;
-        this.stats.HP += Math.round(this.stats.base.HP.max * healingPercent / 100);
+        this.stats.HP += Math.round(this.stats.maxHP * healingPercent / 100);
     }
 
     public modCumMultiplier(delta: number): number {
@@ -271,7 +282,7 @@ export abstract class Character implements ISerializable<ICharacter> {
     }
 
     public orgasm(): void {
-        this.stats.lustNoResist = 0;
+        this.stats.raw.lust = 0;
         this.hoursSinceCum = 0;
     }
 
@@ -312,7 +323,7 @@ export abstract class Character implements ISerializable<ICharacter> {
     }
 
     public roundXPToLevel(): number {
-        return this.canLevelUp() ? this.stats.level * 100 : this.stats.base.XP.raw;
+        return this.canLevelUp() ? this.stats.level * 100 : this.stats.XP;
     }
 
     public slimeFeed() {

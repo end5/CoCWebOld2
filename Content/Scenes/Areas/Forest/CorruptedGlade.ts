@@ -259,7 +259,7 @@ function treeBoobFun(player: Character): NextScreenChoices {
     if (!player.effects.has(EffectType.LustyTongue)) {
         if (randInt(4) === 0) { // 25% Chance of sensitive mouth status – increased lust gain/hour due to licking your lips :3
             CView.text("  The feeling doesn't seem to fade, only becoming more and more intense over the coming hour.  It will be hard to keep from getting turned on any time you lick your lips or eat some food.");
-            player.effects.create(EffectType.LustyTongue, { expireCountdown: 24 });
+            player.effects.create(EffectType.LustyTongue, { combatExpire: 24 });
         }
         else CView.text("  Thankfully, the feeling goes away after a few minutes, leaving you feeling just a bit more sensitive.");
     }

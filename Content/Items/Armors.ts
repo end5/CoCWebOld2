@@ -36,20 +36,26 @@ ItemDict.add(new Armor(
     new ItemDesc("BimboSk", "a skirt that looks like it belongs on a bimbo", "A tight, cleavage-inducing halter top and an extremely short miniskirt.  The sexual allure of this item is undoubtable."),
     "bimbo skirt", 1, 50, "Light"
 ));
-ItemDict.getByName<Armor>(ArmorName.BimboSkirt)!.effects.create(EffectType.SluttySeduction, { teaseChance: 10, desc: "Your delightfully slutty yet upbeat garb helps you seduce your foes!" });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.BimboSkirt)!.effects.create(EffectType.SluttySeduction, { teaseChance: 10, desc: "Your delightfully slutty yet upbeat garb helps you seduce your foes!" });
+ItemDict.getByName<Armor>(ArmorName.BimboSkirt)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 10 });
 ItemDict.add(new Armor(
     ArmorName.BondageStraps,
     new ItemDesc("BonStrp", "a set of bondage straps", "These leather straps and well-placed hooks are actually designed in such a way as to be worn as clothing.  While they technically would cover your naughty bits, virtually every other inch of your body would be exposed."),
     "barely-decent bondage straps", 0, 600, "Light"
 ));
-ItemDict.getByName<Armor>(ArmorName.BondageStraps)!.effects.create(EffectType.SluttySeduction, { teaseChance: 10, desc: "Your fetishy bondage outfit allows you access to an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.BondageStraps)!.effects.create(EffectType.SluttySeduction, { teaseChance: 10, desc: "Your fetishy bondage outfit allows you access to an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.BondageStraps)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 10 });
 ItemDict.add(new ComfortableClothes());
 ItemDict.add(new Armor(
     ArmorName.ChainmailBikini,
     new ItemDesc("Chn Bikini", "a chainmail bikini", "A revealing chainmail bikini that barely covers anything.  The bottom half is little more than a triangle of metal and a leather thong."),
     "revealing chainmail bikini", 2, 700, "Light", true
 ));
-ItemDict.getByName<Armor>(ArmorName.ChainmailBikini)!.effects.create(EffectType.SluttySeduction, { teaseChance: 5, desc: "Your revealing chain bikini allows you access to 'Seduce', an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.ChainmailBikini)!.effects.create(EffectType.SluttySeduction, { teaseChance: 5, desc: "Your revealing chain bikini allows you access to 'Seduce', an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.ChainmailBikini)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 5 });
 ItemDict.add(new Armor(
     ArmorName.SuitClothes,
     new ItemDesc("Suitclothes", "a set of classy suit-clothes", "A set of classy suitclothes."),
@@ -78,7 +84,9 @@ ItemDict.add(new Armor(
     new ItemDesc("Indec StAr", "a suit of practically indecent steel armor", "This suit of steel 'armor' has two round disks that barely cover the nipples, a tight chainmail bikini, and circular butt-plates."),
     "practically indecent steel armor", 5, 800, "Medium", true
 ));
-ItemDict.getByName<Armor>(ArmorName.IndecentSteelArmor)!.effects.create(EffectType.SluttySeduction, { teaseChance: 6, desc: "Your incredibly revealing steel armor allows you access to 'Seduce', an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.IndecentSteelArmor)!.effects.create(EffectType.SluttySeduction, { teaseChance: 6, desc: "Your incredibly revealing steel armor allows you access to 'Seduce', an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.IndecentSteelArmor)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 6 });
 ItemDict.add(new Armor(
     ArmorName.LeatherArmor,
     new ItemDesc("LeathrA", "a set of leather armor", "This is a suit of well-made leather armor.  It looks fairly rugged. (+5 Defense)"),
@@ -107,7 +115,9 @@ ItemDict.add(new Armor(
         "NurseCl", "a nurse's outfit", "This borderline obscene nurse's outfit would barely cover your hips and crotch.  The midriff is totally exposed, and the white top leaves plenty of room for cleavage.  A tiny white hat tops off the whole ensemble."),
     "skimpy nurse's outfit", 0, 800, "Light"
 ));
-ItemDict.getByName<Armor>(ArmorName.NurseOutfit)!.effects.create(EffectType.SluttySeduction, { teaseChance: 8, desc: "Your fetishy nurse outfit allows you access to an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.NurseOutfit)!.effects.create(EffectType.SluttySeduction, { teaseChance: 8, desc: "Your fetishy nurse outfit allows you access to an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.NurseOutfit)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 8 });
 ItemDict.add(new Armor(
     ArmorName.Overalls,
     new ItemDesc("Overalls", "a white shirt and overalls", "A simple white shirt and overalls."),
@@ -123,7 +133,9 @@ ItemDict.add(new Armor(
     new ItemDesc("Rbbr Fetish", "a set of revealing rubber fetish clothes", "A revealing set of fetish-wear.  Upgrades your tease attack with the \"Slutty Seduction\" perk."),
     "rubber fetish clothes", 3, 1000, "Light", true
 ));
-ItemDict.getByName<Armor>(ArmorName.RubberFetishClothes)!.effects.create(EffectType.SluttySeduction, { teaseChance: 8, desc: "Your fetishy rubberwear allows you access to 'Seduce', an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.RubberFetishClothes)!.effects.create(EffectType.SluttySeduction, { teaseChance: 8, desc: "Your fetishy rubberwear allows you access to 'Seduce', an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.RubberFetishClothes)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 8 });
 ItemDict.add(new SluttySwimwear());
 ItemDict.add(new Armor(
     ArmorName.Scalemail,
@@ -136,7 +148,7 @@ ItemDict.add(new Armor(
     new ItemDesc("SS.Robe", "a spider-silk robes", "This robe looks incredibly comfortable.  It's made from alchemically enhanced spider-silk, and embroidered with what looks like magical glyphs around the sleeves and hood."),
     "spider-silk robes", 6, 950, "Light",
 ));
-ItemDict.getByName<Armor>(ArmorName.SpidersilkRobes)!.effects.create(EffectType.WizardsEndurance, { spellCost: { flat: 30 } });
+ItemDict.getByName<Armor>(ArmorName.SpidersilkRobes)!.effects.create(EffectType.WizardsEndurance, { spellCost: 30 });
 ItemDict.add(new Armor(
     ArmorName.SpidersilkArmor,
     new ItemDesc("SSArmor", "a suit of spider-silk armor", "This armor is as white as the driven snow.  It's crafted out of thousands of strand(s of spider-silk into an impenetrable protective suit.  The surface is slightly spongy, but so tough you wager most blows would bounce right off."),
@@ -147,7 +159,9 @@ ItemDict.add(new Armor(
     new ItemDesc("Bodysuit", "a semi-transparent, curve-hugging bodysuit", "A semi-transparent bodysuit."),
     "semi-transparent bodysuit", 0, 1300, "Light"
 ));
-ItemDict.getByName<Armor>(ArmorName.SemiTransBodysuit)!.effects.create(EffectType.SluttySeduction, { teaseChance: 7, desc: "Your clingy transparent bodysuit allows you access to 'Seduce', an improved form of 'Tease'." });
+// perkDesc never used in original code
+// ItemDict.getByName<Armor>(ArmorName.SemiTransBodysuit)!.effects.create(EffectType.SluttySeduction, { teaseChance: 7, desc: "Your clingy transparent bodysuit allows you access to 'Seduce', an improved form of 'Tease'." });
+ItemDict.getByName<Armor>(ArmorName.SemiTransBodysuit)!.effects.create(EffectType.SluttySeduction, { teaseDamage: 7 });
 ItemDict.add(new Armor(
     ArmorName.TubeTop,
     new ItemDesc("Tube Top", "a snug tube top and VERY short shorts", "A clingy tube top and VERY short shorts."),
@@ -158,4 +172,4 @@ ItemDict.add(new Armor(
     new ItemDesc("W.Robes", "a wizard's robes", "These robes appear to have once belonged to a female wizard.  They're long with a slit up the side and full billowing sleeves.  The top is surprisingly low cut.  Somehow you know wearing it would aid your spellcasting."),
     "wizard's robes", 1, 50, "Light",
 ));
-ItemDict.getByName<Armor>(ArmorName.WizardRobes)!.effects.create(EffectType.WizardsEndurance, { spellCost: { flat: 25 } });
+ItemDict.getByName<Armor>(ArmorName.WizardRobes)!.effects.create(EffectType.WizardsEndurance, { spellCost: 25 });

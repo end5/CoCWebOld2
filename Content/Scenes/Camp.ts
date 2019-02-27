@@ -74,7 +74,7 @@ export function camp(player: Character): NextScreenChoices {
     // Day Time!
     else {
         CView.text("It's light outside, a good time to explore and forage for supplies with which to fortify your camp.\n");
-        if (player.stats.fatigue > 40 || player.stats.HP / player.stats.base.HP.max <= .9) {
+        if (player.stats.fatigue > 40 || player.stats.HP / player.stats.maxHP <= .9) {
             restName = "Rest";
             restEvent = choiceWrap(rest);
         }

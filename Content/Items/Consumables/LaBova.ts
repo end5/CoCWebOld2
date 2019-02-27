@@ -300,11 +300,12 @@ export class LaBova extends Consumable {
                 CView.text("\n\nYou feel a relaxing sensation in your groin.  On further inspection you discover your " + describeVagina(character, character.body.vaginas.get(0)!) + " has somehow relaxed, permanently loosening.");
                 character.body.vaginas.get(0)!.looseness++;
                 // Cunt Stretched used to determine how long since last enlargement
-                if (!character.effects.has(EffectType.CuntStretched))
-                    character.effects.create(EffectType.CuntStretched);
+                let cuntStretched = character.effects.getByName(EffectType.CuntStretched);
+                if (!cuntStretched)
+                    cuntStretched = character.effects.create(EffectType.CuntStretched, { hoursSince: 0 });
                 // Reset the timer on it to 0 when restretched.
                 else
-                    character.effects.getByName(EffectType.CuntStretched)!.values.expireCountdown = 0;
+                    cuntStretched.values.hoursSince = 0;
                 character.body.vaginas.get(0)!.looseness++;
                 changes++;
                 character.stats.lust += 10;

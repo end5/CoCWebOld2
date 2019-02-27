@@ -24,6 +24,6 @@ export class FishFillet extends Consumable {
         // (If lake has been tainted, +1 Corruption?)
         if (character.effects.has(EffectType.FactoryOverload)) character.stats.cor += 0.5;
         character.stats.cor += 0.1;
-        character.stats.HP += Math.round(character.stats.base.HP.max * .25);
+        character.stats.HP += Math.round(character.stats.maxHP * .25);
     }
 }

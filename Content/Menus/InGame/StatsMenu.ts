@@ -223,17 +223,21 @@ function displayStats(player: Character): NextScreenChoices {
     // Begin Ongoing Stat Effects
     let statEffects: string = "";
 
-    if (player.effects.has(EffectType.Heat))
-        statEffects += "Heat - " + Math.round(player.effects.getByName(EffectType.Heat)!.values.expireCountdown) + " hours remaining\n";
+    const heat = player.effects.getByName(EffectType.Heat);
+    if (heat && heat.values.hourExpire)
+        statEffects += "Heat - " + Math.round(heat.values.hourExpire) + " hours remaining\n";
 
-    if (player.effects.has(EffectType.Rut))
-        statEffects += "Rut - " + Math.round(player.effects.getByName(EffectType.Rut)!.values.expireCountdown) + " hours remaining\n";
+    const rut = player.effects.getByName(EffectType.Rut);
+    if (rut && rut.values.hourExpire)
+        statEffects += "Rut - " + Math.round(rut.values.hourExpire) + " hours remaining\n";
 
-    if (player.effects.getByName(EffectType.LustStick)!.values.expireCountdown > 0)
-        statEffects += "Luststick - " + Math.round(player.effects.getByName(EffectType.LustStick)!.values.expireCountdown) + " hours remaining\n";
+    const lustStick = player.effects.getByName(EffectType.LustStick);
+    if (lustStick && lustStick.values.hourExpire)
+        statEffects += "Luststick - " + Math.round(lustStick.values.hourExpire) + " hours remaining\n";
 
-    if (player.effects.getByName(EffectType.BlackCatBeer)!.values.expireCountdown > 0)
-        statEffects += "Black Cat Beer - " + player.effects.getByName(EffectType.BlackCatBeer)!.values.expireCountdown + " hours remaining (Lust resistance 20% lower, physical resistance 25% higher.)\n";
+    const blackCatBeer = player.effects.getByName(EffectType.BlackCatBeer);
+    if (blackCatBeer && blackCatBeer.values.hourExpire)
+        statEffects += "Black Cat Beer - " + blackCatBeer.values.hourExpire + " hours remaining (Lust resistance 20% lower, physical resistance 25% higher.)\n";
 
     if (statEffects !== "")
         CView.text("\n<b><u>Ongoing Status Effects</u></b>\n" + statEffects);

@@ -21,7 +21,7 @@ export class GodsMead extends Consumable {
         character.stats.cor -= 1;
         // Health/HP(Large increase; always occurs):
         CView.text("\n\nYou feel suddenly invigorated by the potent beverage, like you could take on a whole horde of barbarians or giants and come out victorious!");
-        character.stats.HP += Math.round(character.stats.base.HP.max * .33);
+        character.stats.HP += Math.round(character.stats.maxHP * .33);
         if (randInt(3) === 0) {
             CView.text("\n\nThe alcohol fills your limbs with vigor, making you feel like you could take on the world with just your fists!");
             if (Settings.sillyMode) CView.text("  Maybe you should run around shirtless, drink, and fight!  Saxton Hale would be proud.");

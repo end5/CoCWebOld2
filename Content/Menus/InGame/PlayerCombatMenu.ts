@@ -111,9 +111,10 @@ function showMonsterLust(enemy: Character): void {
         CView.text(enemy.desc.capitalA + enemy.desc.short + " is currently wrapped up in your tail-coils!  ");
     }
     // Venom stuff!
-    if (enemy.effects.has(EffectType.NagaVenom)) {
+    const nagaVenom = enemy.effects.getByName(EffectType.NagaVenom);
+    if (nagaVenom) {
         if (enemy.desc.plural) {
-            if (enemy.effects.getByName(EffectType.NagaVenom)!.values.expireCountdown <= 1) {
+            if (nagaVenom.values.combatExpire && nagaVenom.values.combatExpire <= 1) {
                 CView.text("You notice " + enemy.desc.subjectivePronoun + " are beginning to show signs of weakening, but there still appears to be plenty of fight left in " + enemy.desc.objectivePronoun + ".  ");
             }
             else {
@@ -122,7 +123,7 @@ function showMonsterLust(enemy: Character): void {
         }
         // Not plural
         else {
-            if (enemy.effects.getByName(EffectType.NagaVenom)!.values.expireCountdown <= 1) {
+            if (nagaVenom.values.combatExpire && nagaVenom.values.combatExpire <= 1) {
                 CView.text("You notice " + enemy.desc.subjectivePronoun + " is beginning to show signs of weakening, but there still appears to be plenty of fight left in " + enemy.desc.objectivePronoun + ".  ");
             }
             else {

@@ -1,6 +1,7 @@
 import { Character } from 'Engine/Character/Character';
 import { Effect } from 'Engine/Effects/Effect';
 import { EffectDesc } from 'Engine/Effects/EffectDesc';
+import { EffectType } from 'Content/Effects/EffectType';
 
 export class Enlightened extends EffectDesc {
     public description(effect: Effect, character: Character): string {
@@ -11,6 +12,6 @@ export class Enlightened extends EffectDesc {
     }
 
     public constructor() {
-        super("Enlightened", "Enlightened", "Jojo’s tutelage has given you a master’s focus and you can feel the universe in all its glory spread out before you. You’ve finally surpassed your teacher.");
+        super(EffectType.Enlightened, "Enlightened", "Jojo’s tutelage has given you a master’s focus and you can feel the universe in all its glory spread out before you. You’ve finally surpassed your teacher.");
     }
 }

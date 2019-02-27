@@ -106,7 +106,7 @@ export class TamaniDrugAttack extends CombatAction {
             CView.text(char.desc.capitalA + char.desc.short + " pulls out a blue vial and uncaps it, swiftly downing its contents.");
             if (char.combat.HPRatio() < 1) {
                 CView.text("  She looks to have recovered from some of her wounds!\n");
-                char.stats.HP += (char.stats.base.HP.max / 2);
+                char.stats.HP += (char.stats.maxHP / 2);
             }
             else CView.text("  There doesn't seem to be any effect.\n");
             return;
@@ -212,18 +212,18 @@ export class Tamani extends Character {
         this.body.hair.color = "pink and black";
         this.body.hair.length = 16;
 
-        this.stats.base.str.raw = 32;
-        this.stats.base.tou.raw = 43;
-        this.stats.base.spe.raw = 55;
-        this.stats.base.int.raw = 62;
-        this.stats.base.lib.raw = 65;
-        this.stats.base.sens.raw = 65;
-        this.stats.base.cor.raw = 50;
-        this.stats.base.HP.max += 40;
-        this.stats.base.HP.raw += 40;
-        this.stats.base.lust.raw = 40;
-        this.stats.base.lustVuln = 0.9;
-        this.stats.base.level.raw = 4;
+        this.stats.str = 32;
+        this.stats.tou = 43;
+        this.stats.spe = 55;
+        this.stats.int = 62;
+        this.stats.lib = 65;
+        this.stats.sens = 65;
+        this.stats.cor = 50;
+        this.stats.maxHP = 40;
+        this.stats.HP = this.stats.maxHP;
+        this.stats.lust = 40;
+        this.stats.lustVuln = 0.9;
+        this.stats.level = 4;
 
         this.inventory = new CharacterInventory(this,
             new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),

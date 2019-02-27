@@ -181,18 +181,18 @@ export class TamanisDaughters extends Character {
         this.body.hair.color = "pink";
         this.body.hair.length = 16;
 
-        this.stats.base.str.raw = 55;
-        this.stats.base.tou.raw = 30;
-        this.stats.base.spe.raw = 45;
-        this.stats.base.int.raw = 50;
-        this.stats.base.lib.raw = 70;
-        this.stats.base.sens.raw = 70;
-        this.stats.base.cor.raw = 50;
-        this.stats.base.HP.max += 50 + (Math.floor(TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 2) * 15);
-        this.stats.base.HP.raw = this.stats.base.HP.max;
-        this.stats.base.lust.raw = 30;
-        this.stats.base.lustVuln = .65;
-        this.stats.base.level.raw = 8 + (Math.floor(TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 20));
+        this.stats.str = 55;
+        this.stats.tou = 30;
+        this.stats.spe = 45;
+        this.stats.int = 50;
+        this.stats.lib = 70;
+        this.stats.sens = 70;
+        this.stats.cor = 50;
+        this.stats.maxHP = 50 + (Math.floor(TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 2) * 15);
+        this.stats.HP = this.stats.maxHP;
+        this.stats.lust = 30;
+        this.stats.lustVuln = .65;
+        this.stats.level = 8 + (Math.floor(TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 20));
 
         this.inventory = new CharacterInventory(this,
             new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),

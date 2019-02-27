@@ -67,10 +67,10 @@ class ImpPregnancyEvents implements IPregnancyEvent {
         CView.text("\n");
         // Add imp birth status - used to control frequency of night imp gangbag
         const birthedImps = player.effects.getByName(EffectType.BirthedImps);
-        if (birthedImps && birthedImps.values.other && birthedImps.values.other.amount)
-            birthedImps.values.other!.amount++;
+        if (birthedImps && birthedImps.values.amount)
+            birthedImps.values.amount++;
         else
-            player.effects.create(EffectType.BirthedImps, { other: { amount: 0 } });
+            player.effects.create(EffectType.BirthedImps, { amount: 0 });
         if (player.body.vaginas.length === 0) {
             CView.text("You feel a terrible pressure in your groin... then an incredible pain accompanied by the rending of flesh.  You look down and behold a vagina.  ");
             player.body.vaginas.add(new Vagina());

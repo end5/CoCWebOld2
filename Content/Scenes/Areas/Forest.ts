@@ -269,7 +269,7 @@ function bigJunkForestScene(player: Character, lake: boolean = false): NextScree
         // SCENE END = FOR ALL OTHER CHARACTERS
         else CView.text("  You struggle and push with your " + describeLegs(player) + " as hard as you can, but it's no use.  You do the only thing you can and begin stroking your " + describeCocksLight(player) + " with as much vigor as you can muster.  Eventually, your body tenses and a light load of jizz erupts from your loins, but the orgasm is truly mild compared to what you need.  You're far too weary from struggling to give yourself the masturbation you truly need, but you continue to try.  Nearly an hour later, " + describeOneOfYourCocks(player) + " has softened enough to allow you to stand again, and you make your way back to camp, still dragging your genitals across the forest floor.");
     }
-    player.stats.lustNoResist += 25 + randInt(player.stats.cor / 5);
+    player.stats.raw.lust += 25 + randInt(player.stats.cor / 5);
 
     player.stats.fatigue += 5;
     return { next: passTime(1) };

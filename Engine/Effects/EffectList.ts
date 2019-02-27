@@ -34,7 +34,7 @@ export class EffectList extends ObservableList<Effect> {
     public get blockedCombatActions(): CombatActionType {
         let flags = CombatActionType.None;
         for (const effect of this) {
-            if (effect)
+            if (effect && effect.values.blockedTypes)
                 flags &= effect.values.blockedTypes;
         }
         return flags;

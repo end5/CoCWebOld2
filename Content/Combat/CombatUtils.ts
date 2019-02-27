@@ -35,7 +35,7 @@ export function combatRegeneration(character: Character): void {
     if (character.inventory.armor.displayName === "goo armor") healingPercent += 2;
     if (character.effects.has(EffectType.LustyRegeneration)) healingPercent += 1;
     if (healingPercent > 5) healingPercent = 5;
-    character.stats.HP += (Math.round(character.stats.base.HP.max * healingPercent / 100));
+    character.stats.HP += (Math.round(character.stats.maxHP * healingPercent / 100));
 }
 
 export function fatigueRecovery(character: Character): void {

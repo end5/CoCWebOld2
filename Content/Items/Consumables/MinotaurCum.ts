@@ -65,9 +65,9 @@ export class MinotaurCum extends Consumable {
             character.stats.lust += randInt(5) + character.stats.cor / 20 + MinotaurCumFlags.MINOTAUR_CUM_ADDICTION_TRACKER / 5;
         }
         // (Healing � if hurt and uber-addicted (hasperk))
-        if (character.stats.HP < character.stats.base.HP.max && character.effects.has(EffectType.MinotaurCumAddict)) {
+        if (character.stats.HP < character.stats.maxHP && character.effects.has(EffectType.MinotaurCumAddict)) {
             CView.text("\n\nThe fire of your arousal consumes your body, leaving vitality in its wake.  You feel much better!");
-            character.stats.HP += Math.floor(character.stats.base.HP.max / 4);
+            character.stats.HP += Math.floor(character.stats.maxHP / 4);
         }
         // Uber-addicted status!
         if (character.effects.has(EffectType.MinotaurCumAddict) && MinotaurCumFlags.MINOTAUR_CUM_REALLY_ADDICTED_STATE <= 0) {

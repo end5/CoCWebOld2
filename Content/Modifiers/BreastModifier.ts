@@ -185,8 +185,9 @@ export function boostLactation(character: Character, boostAmt: number): number {
     let temp2: number = 0;
     // Prevent lactation decrease if lactating.
     if (boostAmt >= 0) {
-        if (character.effects.has(EffectType.LactationReduction))
-            character.effects.getByName(EffectType.LactationReduction)!.values.expireCountdown = 0;
+        const lacReducEffect = character.effects.getByName(EffectType.LactationReduction);
+        if (lacReducEffect && lacReducEffect.values)
+            lacReducEffect.values.hourExpire = 0;
         if (character.effects.has(EffectType.LactationReduc0))
             character.effects.removeByName(EffectType.LactationReduc0);
         if (character.effects.has(EffectType.LactationReduc1))

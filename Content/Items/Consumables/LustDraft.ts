@@ -26,7 +26,7 @@ export class LustDraft extends Consumable {
         if (this.enhanced) CView.text("red");
         else CView.text("pink");
         CView.text(" potion, and its unnatural warmth immediately flows to your groin.");
-        character.stats.lustNoResist += 30 + randInt(character.stats.lib / 10);
+        character.stats.raw.lust += 30 + randInt(character.stats.lib / 10);
 
         // Heat/Rut for those that can have them if "fuck draft"
         if (this.enhanced) {
