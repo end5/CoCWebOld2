@@ -1,0 +1,30 @@
+{
+  "name": "coc-web",
+  "version": "0.0.1",
+  "description": "Here lies the web edition of Corruption of Champions.",
+  "main": "index.js",
+  "dependencies": {
+    "codemirror": "^5.44.0"
+  },
+  "devDependencies": {
+    "@types/codemirror": "0.0.72",
+    "requirejs": "^2.3.6",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "init": "node init.js",
+    "build": "tsc -p tsconfig.json",
+    "build:parser-tester": "tsc -p ParserTester/tsconfig.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/end5/CoCWeb.git"
+  },
+  "author": "end5",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/end5/CoCWeb/issues"
+  },
+  "homepage": "https://github.com/end5/CoCWeb#readme"
+}

@@ -13,7 +13,8 @@
         "paths": {
             "Engine": ["Engine"],
             "Content": ["Content"]
-        }
+        },
+        "moduleResolution": "node"
     },
     "include": [
         "Engine",
