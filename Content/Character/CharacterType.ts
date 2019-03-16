@@ -22,5 +22,11 @@ export enum CharacterType {
     ImpGang = "ImpGang",
     LivingStatue = "LivingStatue",
     DemonPack = "DemonPack",
-    Urta = "Urta"
+    Urta = "Urta",
+    SandTrap = "Sand Trap",
+    SandWitch = "Sand Witch",
+    SandWitchMob = "Sand Witch Mob",
+    SandMother = "Sand Mother",
+    Naga = "Naga",
+    CumWitch = "Cum Witch"
 }

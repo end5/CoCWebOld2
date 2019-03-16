@@ -114,4 +114,6 @@ export enum SpriteName {
     Weaponsmith = "weaponsmith",
     Yara = "yara",
     Yvonne = "yvonne",
+    Wanderer = "Wanderer",
+    Gnoll = "Gnoll"
 }
