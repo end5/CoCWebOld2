@@ -12,8 +12,10 @@ import { MinotaurCumFlags } from 'Content/Items/Consumables/MinotaurCum';
 import { doExplore } from './Exploration';
 import { masturbateMenu } from './Masturbate';
 import { inventoryMenu } from 'Content/Menus/InGame/PlayerInventoryMenu';
+import { Flags } from 'Engine/Flags';
 
 //  SLEEP_WITH: number = 701;
+export const CampFlags = Flags.register('Camp', { SLEEP_WITH: '' });
 
 export function camp(player: Character): NextScreenChoices {
     // Build explore menus

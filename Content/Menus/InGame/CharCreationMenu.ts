@@ -1,4 +1,4 @@
-import { NextScreenChoices, ScreenChoice } from 'Engine/Display/ScreenDisplay';
+import { NextScreenChoices, ScreenChoice, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { MainScreen } from 'Engine/Display/MainScreen';
 import { Player } from 'Content/Player/Player';
 import { Time } from 'Engine/Utilities/Time';
@@ -40,7 +40,7 @@ function enterName(player: Character): NextScreenChoices {
     const nameField = new InputElement('text', document.createElement('input'));
     MainScreen.textElement.appendChild(nameField);
 
-    return { choices: [["OK", () => chooseName(player, nameField)]] };
+    return { choices: [["OK", choiceWrap(chooseName, nameField)]] };
 }
 
 function chooseName(player: Character, nameField: InputElement): NextScreenChoices {

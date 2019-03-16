@@ -1,5 +1,4 @@
 import { DefeatType } from './DefeatEvent';
-import { randInt } from 'Engine/Utilities/SMath';
 import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 
@@ -50,10 +49,11 @@ export abstract class EndScenes {
 
     /**
      * Calls after combat is over. Displays this character's victory scene.
+     * If no NextScreenChoices, the enemy's defeat scene will also be displayed.
      * @param howYouWon How this character defeated the enemy.
      * @param enemy The enemy character.
      */
-    protected victoryScene?(howYouWon: DefeatType, enemy: Character): NextScreenChoices;
+    protected victoryScene?(howYouWon: DefeatType, enemy: Character): NextScreenChoices | void;
 
     /**
      * Calls after combat is over. Displays this character's defeat scene.
@@ -72,15 +72,13 @@ export abstract class EndScenes {
         if (enemy.combat.endScenes.beforeEndingScene)
             enemy.combat.endScenes.beforeEndingScene(howYouWon, this.char);
         if (this.victoryScene && enemy.combat.endScenes.defeatScene) {
-            if (randInt(2) === 0) {
-                return this.victoryScene(howYouWon, enemy);
+            const nextScene = this.victoryScene(howYouWon, enemy);
+            if (nextScene) {
+                return nextScene;
             }
             else {
                 return enemy.combat.endScenes.defeatScene(howYouWon, this.char);
             }
-        }
-        else if (this.victoryScene) {
-            return this.victoryScene(howYouWon, enemy);
         }
         else if (enemy.combat.endScenes.defeatScene) {
             return enemy.combat.endScenes.defeatScene(howYouWon, this.char);

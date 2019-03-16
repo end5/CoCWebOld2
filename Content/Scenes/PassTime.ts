@@ -5,6 +5,7 @@ import { TimeEvents } from 'Engine/TimeEvents';
 import { playerMenu } from 'Content/Menus/InGame/PlayerMenu';
 import { CView } from 'Engine/Display/ContentView';
 import { numToCardinalCapText } from 'Content/Utilities/NumToText';
+import { Area } from 'Content/Area';
 
 export function passTime(num: number): ClickFunction {
     return function passHour(char: Character) {
@@ -15,6 +16,8 @@ export function passTime(num: number): ClickFunction {
 
         Time.hour += num;
         TimeEvents.update(num);
+
+        Area.transistion('Overworld', 'Camp');
 
         return playerMenu(char);
     };

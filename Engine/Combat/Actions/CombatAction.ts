@@ -40,7 +40,7 @@ export abstract class CombatAction {
     protected useAction?(char: Character, enemy: Character): void;
     protected checkMiss?(char: Character, enemy: Character): boolean;
     protected missed?(char: Character, enemy: Character): void;
-    protected calcDamage?(char: Character, enemy: Character): void | IActionDamage;
+    protected calcDamage?(char: Character, enemy: Character): undefined | IActionDamage;
     protected applyDamage?(char: Character, enemy: Character, damage: number, lust: number, crit: boolean): void;
     public use(char: Character, enemy: Character): void {
         const reaction = enemy.combat.reactions.get(this.name);
@@ -68,9 +68,9 @@ export abstract class CombatAction {
         }
         else {
             if (this.calcDamage) {
-                const initialDamage = this.calcDamage(char, enemy) as (IActionDamage | undefined);
+                const initialDamage = this.calcDamage(char, enemy);
 
-                let modifiedDamage: IActionDamage & { continue?: boolean } | undefined;
+                let modifiedDamage;
                 if (reaction && reaction.beforeApplyDamage) {
                     modifiedDamage = reaction.beforeApplyDamage(enemy, char, initialDamage);
                 }
@@ -78,10 +78,23 @@ export abstract class CombatAction {
                 if (modifiedDamage && !modifiedDamage.continue) return;
 
                 if (this.applyDamage) {
-                    const damage = modifiedDamage && modifiedDamage.damage !== undefined ? modifiedDamage.damage : (initialDamage && initialDamage.damage !== undefined ? initialDamage.damage : 0);
-                    const lust = modifiedDamage && modifiedDamage.lust !== undefined ? modifiedDamage.lust : (initialDamage && initialDamage.lust !== undefined ? initialDamage.lust : 0);
+                    let damage = 0;
+                    if (modifiedDamage && modifiedDamage.damage)
+                        damage = modifiedDamage.damage;
+                    else if (initialDamage && initialDamage.damage)
+                        damage = initialDamage.damage;
 
-                    const crit = modifiedDamage && modifiedDamage.crit !== undefined ? modifiedDamage.crit : (initialDamage && initialDamage.crit !== undefined ? initialDamage.crit : false);
+                    let lust = 0;
+                    if (modifiedDamage && modifiedDamage.lust)
+                        lust = modifiedDamage.lust;
+                    else if (initialDamage && initialDamage.lust)
+                        lust = initialDamage.lust;
+
+                    let crit = false;
+                    if (modifiedDamage && modifiedDamage.crit)
+                        crit = modifiedDamage.crit;
+                    else if (initialDamage && initialDamage.crit)
+                        crit = initialDamage.crit;
 
                     this.applyDamage(char, enemy, damage, lust, crit);
                 }

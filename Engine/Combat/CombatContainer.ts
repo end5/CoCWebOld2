@@ -10,7 +10,7 @@ import { CView } from 'Engine/Display/ContentView';
 export class CombatContainer {
     public useAI: boolean = true;
     public readonly action: CombatAction;
-    public readonly endScenes: EndScenes;
+    public endScenes: EndScenes;
     public readonly rewards: ICombatRewards;
     public readonly reactions: Dictionary<string, IReaction>;
 
