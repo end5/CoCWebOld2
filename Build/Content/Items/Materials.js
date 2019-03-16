@@ -1,0 +1,9 @@
+define(["require", "exports", "Engine/Items/Material", "./MaterialName", "./Materials/KitsuneStatue", "Engine/Items/ItemDesc", "Engine/Items/ItemDict"], function (require, exports, Material_1, MaterialName_1, KitsuneStatue_1, ItemDesc_1, ItemDict_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    ItemDict_1.ItemDict.add(new Material_1.Material(MaterialName_1.MaterialName.BlackChitin, new ItemDesc_1.ItemDesc("B.Chitn", "a large shard of chitinous plating", "A perfect piece of black chitin from a bee-girl.  It still has some fuzz on it."), "You look over the scale carefully but cannot find a use for it.  Maybe someone else will know how to use it."));
+    ItemDict_1.ItemDict.add(new KitsuneStatue_1.KitsuneStatue());
+    ItemDict_1.ItemDict.add(new Material_1.Material(MaterialName_1.MaterialName.GreenGel, new ItemDesc_1.ItemDesc("GreenGl", "a clump of green gel", "This tough substance has no obvious use that you can discern."), "You examine the gel thoroughly, noting it is tough and resiliant, yet extremely pliable.  Somehow you know eating it would not be a good idea."));
+    ItemDict_1.ItemDict.add(new Material_1.Material(MaterialName_1.MaterialName.ToughSpiderSilk, new ItemDesc_1.ItemDesc("T.SSilk", "a bundle of tough spider-silk", "This bundle of fibrous silk is incredibly tough and strong, though somehow not sticky in the slightest.  You have no idea how to work these tough little strand(s into anything usable.  Perhaps one of this land's natives might have an idea?"), "You look over the tough webbing, confusion evident in your expression.  There's really nothing practical you can do with these yourself.  It might be best to find someone more familiar with the odd materials in this land to see if they can make sense of it."));
+});
+//# sourceMappingURL=Materials.js.map

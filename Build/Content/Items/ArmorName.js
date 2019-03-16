@@ -1,0 +1,43 @@
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ArmorName;
+    (function (ArmorName) {
+        ArmorName["ComfortUndercloth"] = "c.under";
+        ArmorName["GreenClothes"] = "G. Clothes";
+        ArmorName["LongDress"] = "B.Dress";
+        ArmorName["BeeArmor"] = "BeeArmr";
+        ArmorName["BimboSkirt"] = "BimboSk";
+        ArmorName["BondageStraps"] = "BonStrp";
+        ArmorName["ComfortClothes"] = "C.Cloth";
+        ArmorName["ChainmailBikini"] = "Chn Bikini";
+        ArmorName["SuitClothes"] = "ClssyCl";
+        ArmorName["FullChainmail"] = "FullChn";
+        ArmorName["FullPlatemail"] = "FullPlt";
+        ArmorName["GelArmor"] = "GelArmr";
+        ArmorName["GooArmor"] = "GooArmr";
+        ArmorName["InquisitorsCorset"] = "I.Corst";
+        ArmorName["InquisitorsRobes"] = "I.Robes";
+        ArmorName["IndecentSteelArmor"] = "IndecSt";
+        ArmorName["LeatherArmor"] = "LeathrA";
+        ArmorName["LeatherArmorSegments"] = "UrtaLta";
+        ArmorName["LustyMaidensArmor"] = "LMArmor";
+        ArmorName["TightLeatherPants"] = "LthrPnt";
+        ArmorName["LeatherRobes"] = "LthrRob";
+        ArmorName["ModestRobes"] = "M.Robes";
+        ArmorName["NurseOutfit"] = "NurseCl";
+        ArmorName["Overalls"] = "Overall";
+        ArmorName["RedBodysuit"] = "R.BdySt";
+        ArmorName["RubberFetishClothes"] = "RbbrClt";
+        ArmorName["SluttySwimwear"] = "S.Swmwr";
+        ArmorName["Scalemail"] = "ScaleMl";
+        ArmorName["SeductiveArmor"] = "SeductA";
+        ArmorName["SpidersilkRobes"] = "SS.Robe";
+        ArmorName["SpidersilkArmor"] = "SSArmor";
+        ArmorName["SemiTransBodysuit"] = "T.BSuit";
+        ArmorName["TubeTop"] = "TubeTop";
+        ArmorName["WizardRobes"] = "W.Robes";
+        ArmorName["FurLoincloth"] = "FurLoin";
+    })(ArmorName = exports.ArmorName || (exports.ArmorName = {}));
+});
+//# sourceMappingURL=ArmorName.js.map
