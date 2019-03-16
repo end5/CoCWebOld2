@@ -8,12 +8,27 @@
             "problemMatcher": [
                 "$tsc"
             ],
-            "group": {
-                "kind":"build",
-                "isDefault": true
-            },
             "presentation": {
                 "reveal": "silent"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build CoCWeb ParserTester",
+            "type": "shell",
+            "command": "tsc -p ParserTester/tsconfig.json -m amd",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
             }
         }
     ]
