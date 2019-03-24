@@ -18,6 +18,7 @@ import { PlayerAction } from './CombatActions/PlayerActionPerform';
 import { ItemDict } from 'Engine/Items/ItemDict';
 import { PlayerStats } from 'Content/Player/PlayerStats';
 import { PlayerBody } from 'Content/Player/PlayerBody';
+import './PlayerEvents';
 
 class BlankEndScenes extends EndScenes { }
 

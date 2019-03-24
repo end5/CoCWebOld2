@@ -44,6 +44,10 @@ export class Womb implements ISerializable<IWomb> {
         return this.currentPregnancy;
     }
 
+    public get event(): IPregnancyEvent | undefined {
+        return this.pregEvent;
+    }
+
     public isPregnant(): boolean {
         return !!this.pregnancy;
     }
@@ -71,12 +75,7 @@ export class Womb implements ISerializable<IWomb> {
 
     public clear() {
         this.currentPregnancy = undefined;
-    }
-
-    public update() {
-        if (this.currentPregnancy) {
-            this.currentPregnancy.incubation -= this.currentPregnancy.incubation === 0 ? 0 : 1;
-        }
+        this.pregEvent = undefined;
     }
 
     public serialize(): IWomb | void {

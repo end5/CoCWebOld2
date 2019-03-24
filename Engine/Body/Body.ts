@@ -112,14 +112,6 @@ export class Body implements ISerializable<IBody> {
         }, false);
     }
 
-    public update(hours: number) {
-        for (let timeCountdown: number = 0; timeCountdown < hours; timeCountdown++) {
-            for (const womb of this.wombs)
-                womb.update();
-            this.buttWomb.update();
-        }
-    }
-
     public serialize(): IBody {
         return {
             antennae: this.antennae.serialize(),

@@ -107,11 +107,6 @@ export abstract class Character implements ISerializable<ICharacter> {
         this.hoursSinceCum = saveObject.hoursSinceCum;
     }
 
-    public update(hours: number) {
-        this.body.update(hours);
-        this.regeneration();
-    }
-
     public vaginalCapacity(): number {
         if (this.body.vaginas.length > 0) {
             let bonus: number = 0;
@@ -265,12 +260,6 @@ export abstract class Character implements ISerializable<ICharacter> {
         return randInt([200, 10, 20, 30, 40, 50, 55, 58, 66, 75,
             83, 85, 85, 86, 92, 94, 96, 98, 99, 101,
             107][Math.round(this.stats.level)] || 130);
-    }
-
-    private regeneration() {
-        let healingPercent = 0;
-        if (healingPercent > 10) healingPercent = 10;
-        this.stats.HP += Math.round(this.stats.maxHP * healingPercent / 100);
     }
 
     public modCumMultiplier(delta: number): number {
