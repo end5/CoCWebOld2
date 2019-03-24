@@ -15,10 +15,14 @@ export function passTime(num: number): ClickFunction {
         else CView.text(numToCardinalCapText(num) + " hours pass...\n");
 
         Time.hour += num;
-        TimeEvents.update(num);
+        return TimeEvents.update(num, backToCamp(char));
+    };
+}
 
+function backToCamp(player: Character) {
+    return () => {
         Area.transistion('Overworld', 'Camp');
 
-        return playerMenu(char);
+        return playerMenu(player);
     };
 }

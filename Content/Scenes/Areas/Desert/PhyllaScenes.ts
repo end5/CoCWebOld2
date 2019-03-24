@@ -111,7 +111,7 @@ export const PhyllaFlags = Flags.register("Phylla", {
  * Created by aimozg on 05.01.14.
  */
 
-TimeEvents.set("Phylla", () => {
+TimeEvents.register("Phylla", () => {
     PhyllaFlags.PHYLLA_WOMB.update();
     if (PhyllaFlags.PHYLLA_EGG_LAYING > 0 && randInt(5) === 0 && PhyllaFlags.ANT_KIDS < 5000) PhyllaFlags.ANT_KIDS++;
     if (Time.hour > 23) {

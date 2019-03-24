@@ -10,14 +10,25 @@ export interface ClickObject {
 }
 export type ClickOption = ClickFunction | ClickObject | undefined;
 export type ScreenChoice = [string, ClickOption];
-export interface NextScreenChoices {
+
+export interface YesNoChoice {
     yes?: ClickOption;
     no?: ClickOption;
+}
+
+export interface NextChoice {
     next?: ClickOption;
+}
+
+export interface SceneChoices {
     choices?: ScreenChoice[];
     persistantChoices?: ScreenChoice[];
-    needEvent?: boolean;
 }
+
+/**
+ * needEvent is the option to get the mouse click event passed as the second argument of the click function
+ */
+export type NextScreenChoices = (YesNoChoice | NextChoice | SceneChoices) & { needEvent?: boolean };
 
 export const DisplayUpdateEvents: (() => void)[] = [];
 
@@ -135,14 +146,22 @@ function doYesNo(yesFunc: ClickOption, noFunc: ClickOption, needEvents?: boolean
     MainScreen.botButtons.get(BottomButtons.NO_BUTTON_ID)!.modify("No", clickFuncWrapper(noFunc, needEvents));
 }
 
+function isYesNo(next: NextScreenChoices): next is YesNoChoice {
+    return ('yes' in next && !!next.yes) || ('no' in next && !!next.no);
+}
+
+function isNext(next: NextScreenChoices): next is NextChoice {
+    return 'next' in next && !!next.next;
+}
+
 export function displayNextScreenChoices(nextScreen: void | NextScreenChoices) {
     if (nextScreen) {
         for (const event of DisplayUpdateEvents)
             event();
-        if (nextScreen.yes && nextScreen.no) {
+        if (isYesNo(nextScreen)) {
             doYesNo(nextScreen.yes, nextScreen.no, nextScreen.needEvent);
         }
-        else if (nextScreen.next) {
+        else if (isNext(nextScreen)) {
             doNext(nextScreen.next, nextScreen.needEvent);
         }
         else if (nextScreen.choices && nextScreen.choices.length > 0 || (nextScreen.persistantChoices && nextScreen.persistantChoices.length > 0)) {

@@ -89,7 +89,7 @@ export const TamanisDaughtersFlags = Flags.register("Tamani's Daughters", {
 
 TamanisDaughtersFlags.WOMB.eventSets.set(PregnancyType.PLAYER, [96, 48]);
 
-TimeEvents.set("Tamani's Daughters", () => {
+TimeEvents.register("Tamani's Daughters", () => {
     TamanisDaughtersFlags.WOMB.update(); // Preg should be 7*24, ends at 0 to -48 --> 9*24, ends at 0
     if (TamanisDaughtersFlags.WOMB.pregnancy && TamanisDaughtersFlags.WOMB.pregnancy.incubation === 0) {
         TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS += TamanisDaughtersFlags.TAMANI_DAUGHTERS_PREGNANCY_COUNT;

@@ -65,7 +65,7 @@ Males:
 
 TamaniFlags.TAMANI_WOMB.eventSets.set(PregnancyType.PLAYER, [96, 48]);
 
-TimeEvents.set("Tamani", () => {
+TimeEvents.register("Tamani", () => {
     TamaniFlags.TAMANI_WOMB.update();
     if (TamaniFlags.TAMANI_WOMB.pregnancy && TamaniFlags.TAMANI_WOMB.pregnancy.incubation === 0)
         tamaniGivesBirth(); // Silently clear Tamani's pregnancy if the player doesn't encounter her in time

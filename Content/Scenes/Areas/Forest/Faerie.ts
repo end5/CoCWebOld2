@@ -295,7 +295,7 @@ function faerieCaptureHJ(player: Character): NextScreenChoices {
     return { next: passTime(1) };
 }
 
-TimeEvents.set("Jizzed Pants", (player: Character): void | boolean => {
+TimeEvents.register("Jizzed Pants", (player: Character): void | boolean => {
     if (player.effects.has(EffectType.Jizzpants)) {
         CView.text("\nYour " + player.inventory.armor.displayName + " squishes wetly with all the semen you unloaded into them, arousing you more and more with every movement.\n");
         player.stats.lust += 10 + player.stats.sens / 5;
