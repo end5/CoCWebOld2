@@ -86,7 +86,7 @@ class MinotaurPregnancyEvents implements IPregnancyEvent {
     }
 
     public canBirth(player: Character, womb: Womb): boolean {
-        return womb.pregnancy!.incubation === 1;
+        return !!womb.pregnancy && womb.pregnancy.incubation === 1;
     }
 
     public birthScene(player: Character, womb: Womb): void {

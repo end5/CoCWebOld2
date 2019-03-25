@@ -1,17 +1,11 @@
-import { Pregnancy, IPregnancy } from 'Engine/Body/Pregnancy/Pregnancy';
+import { Pregnancy } from 'Engine/Body/Pregnancy/Pregnancy';
 import { IncubationTime } from './IncubationTime';
 import { PregnancyType } from './PregnancyType';
-import { ISerializable } from 'Engine/Utilities/ISerializable';
 import { Dictionary } from 'Engine/Utilities/Dictionary';
 
-export interface IFlagWomb {
-    pregnancy?: IPregnancy;
-    lastEvent: number;
-}
-
-export class FlagWomb implements ISerializable<IFlagWomb> {
-    protected currentPregnancy?: Pregnancy;
+export class FlagWomb {
     public readonly eventSets: Dictionary<string, number[]> = new Dictionary();
+    protected currentPregnancy?: Pregnancy;
     protected lastEvent: number = 0;
 
     public get pregnancy(): Pregnancy | undefined {
@@ -57,24 +51,6 @@ export class FlagWomb implements ISerializable<IFlagWomb> {
             if (this.currentPregnancy.incubation === 0) {
                 this.clear();
             }
-        }
-    }
-
-    public serialize(): IFlagWomb | void {
-        if (this.currentPregnancy)
-            return {
-                pregnancy: this.currentPregnancy.serialize(),
-                lastEvent: this.lastEvent,
-            };
-    }
-
-    public deserialize(saveObject: IFlagWomb) {
-        if (saveObject) {
-            if (saveObject.pregnancy) {
-                this.currentPregnancy = new Pregnancy('', 0);
-                this.currentPregnancy.deserialize(saveObject.pregnancy);
-            }
-            this.lastEvent = saveObject.lastEvent;
         }
     }
 }

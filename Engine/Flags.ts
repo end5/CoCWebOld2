@@ -1,4 +1,4 @@
-import { IDictionary } from './Utilities/Dictionary';
+import { IDictionary } from 'Engine/Utilities/Dictionary';
 import { ISerializable } from 'Engine/Utilities/ISerializable';
 
 class FlagDict implements ISerializable<object> {
@@ -6,7 +6,8 @@ class FlagDict implements ISerializable<object> {
     private flags: IDictionary<object> = {};
 
     /**
-     * Registers a new flag object. This is the default entry for the key.
+     * Registers a object. This is the default entry for the key.
+     * Returns the original object.
      * @param key
      * @param entry
      */
@@ -17,26 +18,32 @@ class FlagDict implements ISerializable<object> {
     }
 
     /**
-     * Resets the flags.
+     * Resets the flags. Does not change objects.
      */
     public reset() {
-        this.overwriteFlags(JSON.parse(JSON.stringify(this.defaultFlags)));
+        this.overwriteFlags(this.flags, JSON.parse(JSON.stringify(this.defaultFlags)));
     }
 
-    private overwriteFlags(otherFlags: IDictionary<object>) {
-        for (const key of Object.keys(this.flags)) {
-            for (const valueKey of Object.keys(this.flags[key])) {
-                (this.flags[key] as any)[valueKey] = (otherFlags[key] as any)[valueKey];
-            }
+    private overwriteFlags(flags: IDictionary<any>, defaultFlags: IDictionary<any>) {
+        for (const key of Object.keys(flags)) {
+            if (typeof flags[key] === 'object' && flags[key] !== null)
+                this.overwriteFlags(flags[key] as object, defaultFlags[key] as object);
+            else if (
+                typeof flags[key] === 'boolean' ||
+                typeof flags[key] === 'number' ||
+                typeof flags[key] === 'string' ||
+                typeof flags[key] === 'undefined'
+            )
+                flags[key] = defaultFlags[key];
         }
     }
 
-    public serialize(): IDictionary<object> {
+    public serialize(): object {
         return this.flags;
     }
 
-    public deserialize(saveObject: IDictionary<object>) {
-        this.overwriteFlags(saveObject);
+    public deserialize(saveObject: object) {
+        this.overwriteFlags(this.flags, saveObject);
     }
 }
 
