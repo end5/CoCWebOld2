@@ -24,3 +24,7 @@ export function exgartuanNagaStoleMyMasturbation(player: Character): NextScreenC
 export function exgartuanMasturbation(player: Character): NextScreenChoices {
     return sceneNotImplimented();
 }
+
+export function fountainEncounter() {
+    return sceneNotImplimented();
+}

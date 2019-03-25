@@ -30,7 +30,7 @@ import { nagaRapeChoice, nagaFUCKSJOOOOOO } from 'Content/Scenes/Areas/Desert/Na
 // 2a)  Ability -  Poison Bite - poisons player
 class PoisonBite extends CombatAction {
     public name = "Poison Bite";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         // (Deals damage over 4-5 turns, invariably reducing
         // your speed. It wears off once combat is over.)
         CView.text("The naga strikes with the speed of a cobra, sinking her fangs into your flesh!  ");
@@ -64,7 +64,7 @@ class PoisonBite extends CombatAction {
 // every turn until you break free
 class Constrict extends CombatAction {
     public name = "Constrict";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         CView.text("The naga draws close and suddenly wraps herself around you, binding you in place! You can't help but feel strangely aroused by the sensation of her scales rubbing against your body. All you can do is struggle as she begins to squeeze tighter!");
         enemy.effects.create(EffectType.NagaBind);
         enemy.combat.loseHP(2 + randInt(4));
@@ -75,7 +75,7 @@ class Constrict extends CombatAction {
 // (base it on toughness?)
 class TailWhip extends CombatAction {
     public name = "Tail Whip";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         CView.text("The naga tenses and twists herself forcefully.  ");
     }
 

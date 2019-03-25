@@ -15,7 +15,7 @@ import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Character } from 'Engine/Character/Character';
-import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
+import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { Settings } from 'Content/Settings';
@@ -32,21 +32,28 @@ import { Dictionary } from 'Engine/Utilities/Dictionary';
 import { IReaction } from 'Engine/Combat/Actions/IReaction';
 import { oasisSexing } from 'Content/Scenes/Areas/Desert/Oasis';
 
-function rapeDemons(player: Character): NextScreenChoices {
-    CView.clear().text("You open your arms and step into the throng of eager demons. They jump eagerly to touch you, becoming more and more lust-frenzied every second. You take the nearest demon and throw it to the ground and without a moment's thought the rest of the group leap to join you in a thoughtless madness of lust...");
-    return { next: oasisSexing };
-}
-
-export function teased(player: Character, lustDelta: number): NextScreenChoices {
-    CView.text("\n");
-    if (lustDelta === 0) CView.text("\n" + capitalA + short + " seems unimpressed.");
-    else if (lustDelta > 0 && lustDelta < 5) CView.text("The demons lessen somewhat in the intensity of their attack, and some even eye up your assets as they strike at you.");
-    else if (lustDelta >= 5 && lustDelta < 10) CView.text("The demons are obviously steering clear from damaging anything you might use to fuck and they're starting to leave their hands on you just a little longer after each blow. Some are starting to cop quick feels with their other hands and you can smell the demonic lust of a dozen bodies on the air.");
-    else if (lustDelta >= 10) CView.text("The demons are less and less willing to hit you and more and more willing to just stroke their hands sensuously over you. The smell of demonic lust is thick on the air and part of the group just stands there stroking themselves openly.");
-    applyTease(lustDelta);
-}
+// export function teased(player: Character, lustDelta: number): NextScreenChoices {
+//     CView.text("\n");
+//     if (lustDelta === 0) CView.text("\n" + capitalA + short + " seems unimpressed.");
+//     else if (lustDelta > 0 && lustDelta < 5) CView.text("The demons lessen somewhat in the intensity of their attack, and some even eye up your assets as they strike at you.");
+//     else if (lustDelta >= 5 && lustDelta < 10) CView.text("The demons are obviously steering clear from damaging anything you might use to fuck and they're starting to leave their hands on you just a little longer after each blow. Some are starting to cop quick feels with their other hands and you can smell the demonic lust of a dozen bodies on the air.");
+//     else if (lustDelta >= 10) CView.text("The demons are less and less willing to hit you and more and more willing to just stroke their hands sensuously over you. The smell of demonic lust is thick on the air and part of the group just stands there stroking themselves openly.");
+//     applyTease(lustDelta);
+// }
 
 const reactions = new Dictionary<string, IReaction>();
+reactions.set("Teased", {
+    beforeApplyDamage(self, enemy, damage) {
+        CView.text("\n");
+        if (damage && damage.lust) {
+            if (damage.lust === 0) CView.text("\n" + self.desc.capitalA + self.desc.short + " seems unimpressed.");
+            else if (damage.lust > 0 && damage.lust < 5) CView.text("The demons lessen somewhat in the intensity of their attack, and some even eye up your assets as they strike at you.");
+            else if (damage.lust >= 5 && damage.lust < 10) CView.text("The demons are obviously steering clear from damaging anything you might use to fuck and they're starting to leave their hands on you just a little longer after each blow. Some are starting to cop quick feels with their other hands and you can smell the demonic lust of a dozen bodies on the air.");
+            else if (damage.lust >= 10) CView.text("The demons are less and less willing to hit you and more and more willing to just stroke their hands sensuously over you. The smell of demonic lust is thick on the air and part of the group just stands there stroking themselves openly.");
+        }
+        return { ...damage, continue: true };
+    }
+});
 
 class PackAttack extends CombatAction {
     public name = "Pack Attack";
@@ -105,7 +112,7 @@ class PackAttack extends CombatAction {
 
 class LustAttack extends CombatAction {
     public name = "Lust Attack";
-    public useAction(char: Character, enemy: Character) {
+    protected useAction(char: Character, enemy: Character) {
         if (enemy.stats.lust < 35) {
             CView.text("The " + char.desc.name + " press in close against you and although they fail to hit you with an attack, the sensation of their skin rubbing against yours feels highly erotic.");
         }
@@ -128,11 +135,16 @@ class LustAttack extends CombatAction {
 }
 
 class MainAction extends CombatAction {
-    public name: string = "Action";
-    public subActions: CombatAction[] = [new PackAttack(), new LustAttack()];
+    public name = "Action";
+    public subActions = [new PackAttack(), new LustAttack()];
     public use(char: Character, enemy: Character): void {
         randomChoice((this.subActions.filter((subAction) => subAction.isPossible(char) && subAction.canUse(char, enemy).canUse))).use(char, enemy);
     }
+}
+
+function rapeDemons(player: Character): NextScreenChoices {
+    CView.clear().text("You open your arms and step into the throng of eager demons. They jump eagerly to touch you, becoming more and more lust-frenzied every second. You take the nearest demon and throw it to the ground and without a moment's thought the rest of the group leap to join you in a thoughtless madness of lust...");
+    return { next: choiceWrap(oasisSexing, true) };
 }
 
 export class DemonPackEndScenes extends EndScenes {
@@ -147,7 +159,7 @@ export class DemonPackEndScenes extends EndScenes {
         }
         else if (howYouWon === DefeatType.HP) {
             CView.clear().text("The demons finally beat you down and you collapse onto the sand of the oasis. Almost immediately you feel demonic hands pressing and probing your prone form. You hear the leader of the group say something in a strange tongue but you have a feeling you know what it means. The demons dive onto your inert body with intent and begin to press themselves against you...");
-            return { next: oasisSexing };
+            return { next: choiceWrap(oasisSexing, true) };
         }
         else {
             CView.clear().text("You struggle to keep your mind on the fight and fail to do so. ");
@@ -165,7 +177,7 @@ export class DemonPackEndScenes extends EndScenes {
                 CView.text(describeVagina(enemy, enemy.body.vaginas.get(0)) + " burns ");
             }
             CView.text("with arousal.  You make a grab for the nearest demon and catch a handful of jiggly breast. You try desperately to use your other arm to pull her closer to slake your thirst but you both go tumbling to the ground. The demonic leader laughs out loud and the rest of the tribe falls on you, grabbing for anything it can find.");
-            return { next: oasisSexing };
+            return { next: choiceWrap(oasisSexing, true) };
         }
     }
 
@@ -236,6 +248,7 @@ export class DemonPack extends Character {
             {
                 mainAction: new MainAction(),
                 endScenes: new DemonPackEndScenes(this),
+                reactions,
                 rewards: {
                     gems: randInt(25) + 10,
                     drop: new WeightedDrop<string>().addMany(1,

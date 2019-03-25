@@ -33,7 +33,7 @@ import { Womb } from 'Engine/Body/Pregnancy/Womb';
 // *Restores one third of her HP.
 class Heal extends CombatAction {
     public name = "Heal";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         CView.text("The Witch smirks at you and holds her free hand under her robes.  When she pulls it out, you realize she's gathered a handful of her cum.  She holds it up and exhales over it, the air making a slight whistle as it blows through her parted lips.  The ebony sorceress then smears the goop over her wounds, which seem to drink in the cum and vanish before your eyes.  She scolds, \"<i>Physical damage?  How artless.</i>\"");
         self.combat.gainHP(self.stats.maxHP * 0.33);
         // self.stats.fatigue
@@ -43,7 +43,7 @@ class Heal extends CombatAction {
 // *Attack: Bukkake
 class Bukkake extends CombatAction {
     public name = "Bukkake";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         // *Cum Witch hikes up her dress and bukkake's at PC.  Large # of chance for 'hits' for low individual damage.  Small reduction to sand witch lust.  Used more at high lust.
         CView.text("The Cum Witch moans and daintily peels her robes away from her swollen cock-flesh.  A bubble of precum pops wetly from her urethra to splatter on the floor as her balls suddenly swell.  You look back up in time to see the telltale glow of magic surrounding her staff, but then she's thrusting her hips at you, lewdly humping the air as she unleashes rope after thick rope of potent jism in your direction!\n");
     }
@@ -164,7 +164,7 @@ class Bukkake extends CombatAction {
 // *Attack: Cum Magic
 class CumMagic extends CombatAction {
     public name = "Cum Magic";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         // *Used on males only, casts spell that causes balls to temporarily swell and increase lust by a moderate amount.  Unavoidable.
         CView.text("Gesticulating with her free hand, the Cum Witch utters impossible to pronounce words before closing her fingers tightly into a fist.  That same instant, you feel an onset of warmth in your [balls], a spreading heat that makes you tremble with growing lust.  A second later, [eachCock] is throbbing, and a runner of cum trickles from the [cockHead], a hint of your temporarily-enhanced virility.");
         // (15-30 lust, based on libido)
@@ -177,7 +177,7 @@ class CumMagic extends CombatAction {
 // *Used on vagoozles, spell that causes womb to literally thirst for sperm.  Unavoidable moderate lust gain.  Pregnant character's are immune.
 class CumHunger extends CombatAction {
     public name = "Cum Hunger";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         CView.text("Moaning luridly, the Cum Witch swivels her staff and opens her hand to spread her fingers wide.  At the same time, you feel her magic slam into your midsection, burrowing into your womb.  ");
         if (enemy.body.wombs.find(Womb.Pregnant)) {
             CView.text("Yet, whatever she tries to do fails, as her otherworldly conjuration falls apart as soon as soon as it reaches you.");
@@ -191,7 +191,7 @@ class CumHunger extends CombatAction {
 // *Attack: Gender Confusion
 class GenderConfusion extends CombatAction {
     public name = "Gender Confusion";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         // *Used on genderless and hermaphrodite characters.  Mental attack that draws on disharmony with standard gender types to stun for one round.  3 turn cooldown
         CView.text("Touching her alabaster staff to her brow, just under the brim of her hat, the Cum Witch makes a brief incantation and fixes you with her gaze.  Her eyes flash blindingly white, and then you feel her inside you, rifling through your memories, digging up memories of your childhood, your past, and throwing them against you.  ");
         if (enemy.stats.int / 5 + randInt(20) + enemy.stats.level / 2 < 18) {
@@ -207,7 +207,7 @@ class GenderConfusion extends CombatAction {
 // *Attack: Shell
 class ShellDefense extends CombatAction {
     public name = "Shell Defense";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         // *Grants immunity to all magic-based attacks for the next two turns.
         CView.text("The Cum Witch holds her staff in both hands and rotates it in a circle, chanting all the while.  Her voice rises in pitch and intensity until she's screaming out unwords of power.  With one final cry, she slams her staff down into the ground hard enough to kick up a puff of sandy dust.  It quickly settles, but the Cum Witch has some kind of glittering, reflective shield around herself now!");
         // $> Check again
@@ -220,7 +220,7 @@ class ShellDefense extends CombatAction {
 // *Intelligence dependant attack with possibility of very high lust gain.
 class Cocknosis extends CombatAction {
     public name = "Cocknosis";
-    public useAction(self: Character, enemy: Character) {
+    protected useAction(self: Character, enemy: Character) {
         CView.text("Lifting her robes enticingly, the Cum Witch reveals her ");
         if (self.stats.lust < 50) CView.text("half-hard");
         else if (self.stats.lust < 70) CView.text("hard");
@@ -280,7 +280,7 @@ class CumWitchEndScenes extends EndScenes {
     }
 
     protected defeatScene(howYouLost: DefeatType, enemy: Character): NextScreenChoices {
-        return cumWitchDefeated(enemy, this.char);
+        return cumWitchDefeated(enemy, this.char, true);
     }
 }
 

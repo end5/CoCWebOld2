@@ -1,6 +1,6 @@
 import { CView } from 'Engine/Display/ContentView';
 import { Character } from 'Engine/Character/Character';
-import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
+import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { SpriteName } from 'Content/Display/SpriteName';
 import { describeLegs } from 'Content/Descriptors/LegDescriptor';
 import { CombatManager } from 'Engine/Combat/CombatManager';
@@ -25,6 +25,7 @@ import { DemonPack } from 'Content/Scenes/Areas/Desert/DemonPack';
 import { Flags } from 'Engine/Flags';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
 import { ImpPregEvent } from 'Content/Scenes/Pregnancy/Imp';
+import { PhyllaFlags } from 'Content/Scenes/Areas/Desert/PhyllaScenes';
 
 export const OasisFlags = Flags.register('Oasis', {
     SUBMIT: 0,
@@ -95,10 +96,10 @@ function oasisTalkAccept(player: Character): NextScreenChoices {
     // Count voluntary submissions
     OasisFlags.SUBMIT++;
     // TO THE SECKSIN!
-    return { next: oasisSexing };
+    return { next: choiceWrap(oasisSexing) };
 }
 
-export function oasisSexing(player: Character): NextScreenChoices {
+export function oasisSexing(player: Character, postCombat?: boolean): NextScreenChoices {
     CView.sprite(SpriteName.Oasis_Demons); // 46;
     player.slimeFeed();
     // New screen
@@ -185,7 +186,7 @@ export function oasisSexing(player: Character): NextScreenChoices {
         CView.text("You do your best to keep a vague mental catalogue of what has been in where, but eventually it becomes impossible to remember the type or number of demonic dicks that have filled you with their cum. The sand below your ass is wet with seed that has spilled out of your overflowing " + describeVagina(player, player.body.vaginas.get(0)) + " and there is every indication of more to come.\n\n");
     }
     // If you got here by winning combat!
-    if ((monster.stats.HP < 1 || monster.stats.lust > 99) && inCombat) {
+    if ((monster.stats.HP < 1 || monster.stats.lust > 99) && postCombat) {
         CView.text("You fuck and fuck until not a single demon is capable of servicing your needs. They lie moaning and panting at the edge of the oasis, unable to move. You survey the fallen fiends with just a touch of pride and a whole lot of satisfaction, your body feeling stronger for the endurance exercise.");
         player.orgasm();
         player.stats.cor += 1.5;
@@ -193,12 +194,12 @@ export function oasisSexing(player: Character): NextScreenChoices {
         return { next: passTime(1) };
     }
     // If you got here by losing combat!
-    else if ((player.stats.HP < 1 || player.stats.lust > 99) && inCombat) {
+    else if ((player.stats.HP < 1 || player.stats.lust > 99) && postCombat) {
         // ►Oasis Demons Defeat PC as part of antm
         // Antmorph stuff
-        if (monster.effects.has(EffectType.phyllafight)) {
+        if (monster.effects.has(EffectType.PhyllaFight)) {
             CView.text("You sought to save the ant-girl from being raped, and looking around, you don't see her anywhere.  She must have gotten away safely.  Mission... accomplished?  Wait, that ungrateful little bitch just left you to suffer in her place!  Your ass is gonna be sore for a while, but not as sore as your pride...  ");
-            OasisFlags.ANTS_PC_FAILED_PHYLLA = 1;
+            PhyllaFlags.ANTS_PC_FAILED_PHYLLA = 1;
         }
         CView.text("The demons fuck you like animals until you can't come any more. Every one of your orifices is filled and you pump out orgasm after orgasm until you black out from the abuse.");
         player.orgasm();
@@ -217,7 +218,7 @@ export function oasisSexing(player: Character): NextScreenChoices {
     player.stats.sens += .5;
     player.stats.cor += 4;
 
-    if (inCombat) return { next: passTime(1) };
+    if (postCombat) return { next: passTime(1) };
     else return { next: playerMenu };
 }
 

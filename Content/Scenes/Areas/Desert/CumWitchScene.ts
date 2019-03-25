@@ -17,6 +17,7 @@ import { Settings } from 'Content/Settings';
 import { describeFaceShort } from 'Content/Descriptors/FaceDescriptor';
 import { BreastRow } from 'Engine/Body/BreastRow';
 import { DesertCaveFlags } from 'Content/Scenes/Dungeons/DesertCave/Rooms';
+import { SandWitchPregEvent } from 'Content/Scenes/Pregnancy/SandWitch';
 
 export function defeatedByCumWitch(player: Character, cumWitch: Character): NextScreenChoices {
     if (player.body.cocks.length > 0 && (player.body.vaginas.length <= 0 || randInt(2) === 0)) {
@@ -30,7 +31,7 @@ export function defeatedByCumWitch(player: Character, cumWitch: Character): Next
 }
 
 // *Victory Intro
-export function cumWitchDefeated(player: Character, cumWitch: Character): NextScreenChoices {
+export function cumWitchDefeated(player: Character, cumWitch: Character, postCombat?: boolean): NextScreenChoices {
     CView.clear();
     // (HP)
     if (cumWitch.stats.HP < 1) CView.text("The chocolate-skinned witch collapses down onto her hands and knees with the tattered remnants of her robes swirling about her.  With her clothing destroyed, you're treated to the perfect view of her semi-erect cock and swollen testes swaying enticingly beneath her, paired with the glimmering wetness of her juicy cunny - also on display.  Her udder-like melons sway and jiggle in sympathy to her uncoordinated swaying.  She grumbles, \"<i>You've beaten me, interloper...</i>\"");
@@ -40,17 +41,17 @@ export function cumWitchDefeated(player: Character, cumWitch: Character): NextSc
     const choices: ScreenChoice[] = [];
     if (player.body.cocks.length > 0) {
         // *Male "Too Big" Victory Sex
-        if (player.body.cocks.sort(Cock.Largest).get(0)!.area > cumWitch.vaginalCapacity()) choices[0] = ["Too Big Fuck", maleTooBigVictorySex];
+        if (player.body.cocks.sort(Cock.Largest).get(0)!.area > cumWitch.vaginalCapacity()) choices[0] = ["Too Big Fuck", choiceWrap(maleTooBigVictorySex, postCombat)];
         // *Male Victory Sex
         if (player.body.cocks.find(Cock.CockThatFits(cumWitch.vaginalCapacity()))) choices[1] = ["Fuck Her", choiceWrap(menFuckUpSomeCumWitch, cumWitch)];
     }
     // Tentacle Victory Gangbang
     // 3+ Tentas
-    if (player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length >= 3) choices[2] = ["Tentacles", tentacleVictoryGangbangCumWitch];
+    if (player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length >= 3) choices[2] = ["Tentacles", choiceWrap(tentacleVictoryGangbangCumWitch, postCombat)];
     // Female Victory Sex
     if (player.body.vaginas.length > 0) choices[3] = ["Ladysex", choiceWrap(ladyVictorySex, cumWitch)];
 
-    if (inCombat) {
+    if (postCombat) {
         if (cumWitch.stats.HP >= 1) choices[9] = ["Leave", declineSandWitch];
         else choices[9] = ["Leave", passTime(1)];
     }
@@ -60,16 +61,14 @@ export function cumWitchDefeated(player: Character, cumWitch: Character): NextSc
 }
 
 // *Decline Sex
-export function declineSandWitch(player: Character): NextScreenChoices {
+function declineSandWitch(player: Character): NextScreenChoices {
     CView.clear();
     CView.text("Dusting yourself off, you lower your [weapon] and leave the cum witch to recover from the humiliation of losing to you.  The haunted, hungry look in her eyes leaves little doubt that she'll challenge you again or that she still wants to fuck you.  For now, she slips down into her own puddled cum, idly touching herself.");
-    if (inCombat)
-        return { next: passTime(1) };
-    else return { next: playerMenu };
+    return { next: passTime(1) };
 }
 
 // *Male Victory Sex
-export function menFuckUpSomeCumWitch(player: Character, cumWitch: Character): NextScreenChoices {
+function menFuckUpSomeCumWitch(player: Character, cumWitch: Character, postCombat?: boolean): NextScreenChoices {
     CView.clear();
     const firstCockThatFits = player.body.cocks.find(Cock.CockThatFits(cumWitch.vaginalCapacity()));
     const secondCockThatFits = player.body.cocks.filter(Cock.CocksThatFit(cumWitch.vaginalCapacity())).get(1);
@@ -103,7 +102,7 @@ export function menFuckUpSomeCumWitch(player: Character, cumWitch: Character): N
         CView.text("\n\nRising slowly, you withdraw yourself from the goo-glazed pussy beneath you and try to ignore the matching river of white that pours out from betwixt your thighs.  You make sure to lean over your onyx lover, salting her with her own dripping seed until the flow slows to a trickle.  She meekly protests at first, then gives up with a lusty sigh, smearing her skin with pristine white as her mind slides back into the gutter.  You make sure to admire your work while you get dressed.");
         // (cum, then +5 lust){preg check for sammitches}
         // sand witch preg
-        attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, 90);
+        attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, SandWitchPregEvent, 90);
         player.orgasm();
         player.stats.lust += 5;
 
@@ -157,19 +156,14 @@ export function menFuckUpSomeCumWitch(player: Character, cumWitch: Character): N
         else CView.text("  You smirk as you wonder if she'll learn anything from this.  You hope not - it's a fun lesson to teach.");
         player.orgasm();
     }
-    if (Area.inDungeon) {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: playerMenu };
-    }
-    else {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: passTime(1) };
-    }
+    if (Area.inDungeon && !postCombat)
+        return { next: playerMenu };
+    else
+        return { next: passTime(1) };
 }
+
 // *Male "Too Big" Victory Sex
-export function maleTooBigVictorySex(player: Character): NextScreenChoices {
+function maleTooBigVictorySex(player: Character, postCombat?: boolean): NextScreenChoices {
     CView.clear();
     const largestCock = player.body.cocks.sort(Cock.Largest).get(0);
     CView.text("You slip out of your [armor] with deliberate slowness, the tight, constraining pressure on your massive tool shifting in the most delicious way.  The uncomfortable yet tantalizing weight lessens gradually, and at the first hint of freedom, your " + describeCock(player, largestCock) + " flops free to taste the freedom of the open air, nearly doubling in size as your blood surges through it.  The witch's eyes look up in confusion at your prodigious proportions and widen in shock.");
@@ -202,20 +196,14 @@ export function maleTooBigVictorySex(player: Character): NextScreenChoices {
 
     CView.text("\n\nExhausted at last, you pat your " + describeCock(player, largestCock) + " affectionately.  You'd wipe it off on the witch's hair, if it wasn't messier than the " + describeSkin(player) + " you plan to clean.  She begins to lick her fingers and clean the stuff off her face.  You just laugh, and get dressed.  There's still much to do.");
     player.orgasm();
-    if (Area.inDungeon) {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: playerMenu };
-    }
-    else {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: passTime(1) };
-    }
+    if (Area.inDungeon && !postCombat)
+        return { next: playerMenu };
+    else
+        return { next: passTime(1) };
 }
 
 // Female Victory Sex
-export function ladyVictorySex(player: Character, cumWitch: Character): NextScreenChoices {
+function ladyVictorySex(player: Character, cumWitch: Character, postCombat?: boolean): NextScreenChoices {
     CView.clear();
     CView.text("You disrobe, casting aside the garments with a feminine sigh.  As soon as you expose yourself, the witch's eyes twinkle happily.  She caresses her stiff tool and tweaks one of her nipples as she watches you.  \"<i>If you wanted to get fucked by little old me, all you had to do was bend over, honey.</i>\"");
 
@@ -241,23 +229,17 @@ export function ladyVictorySex(player: Character, cumWitch: Character): NextScre
 
     CView.text("\n\nYou recover after a few minutes and rise up, legs shaking at the overpowering sensation of the witch's withdrawing phallus, but you make it up with spunk pouring from your [vagina].  What a victory!");
 
-    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, 90);
+    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, SandWitchPregEvent, 90);
     player.orgasm();
-    if (Area.inDungeon) {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: playerMenu };
-    }
-    else {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: passTime(1) };
-    }
+    if (Area.inDungeon && !postCombat)
+        return { next: playerMenu };
+    else
+        return { next: passTime(1) };
 }
 
 // Tentacle Victory Gangbang
 // 3+ Tentas
-export function tentacleVictoryGangbangCumWitch(player: Character): NextScreenChoices {
+function tentacleVictoryGangbangCumWitch(player: Character, postCombat?: boolean): NextScreenChoices {
     CView.clear();
     CView.text("The defeated sorceress eyes you questioningly as you step closer, and her surprise only deepens when you part your [armor] to expose your " + describeCocksLight(player) + ".   You gleefully twist your multiple members around each other into a many-layered helix, oily, pre-dripping plant-cocks squirming together in a bundle of barely-restrained, bubbling lust.  The pliant flesh pulsates happily at its freedom and immediately takes a twist towards the horny witch, pausing above her as if considering the tightness of her slick folds or the softness of her erect cock's skin.");
 
@@ -285,20 +267,14 @@ export function tentacleVictoryGangbangCumWitch(player: Character): NextScreenCh
     CView.text("\n\nYou retract your spent shafts and smirk at the backflow of bukkake that bursts from the cum witch's soiled loins.  She's utterly wrecked, dominated by dick in every sense.  What delicious irony that a sorceress should be taken with the very type of organ she glorifies!  Getting dressed, you give her a lazy wave and invite her to try again some other time.");
 
     player.orgasm();
-    if (Area.inDungeon) {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: playerMenu };
-    }
-    else {
-        if (inCombat)
-            return { next: passTime(1) };
-        else return { next: passTime(1) };
-    }
+    if (Area.inDungeon && !postCombat)
+        return { next: playerMenu };
+    else
+        return { next: passTime(1) };
 }
 
 // Repeat Desert Loss Female & Herm
-export function savinMakesAwesomeFemdom(player: Character, cumWitch: Character): NextScreenChoices {
+function savinMakesAwesomeFemdom(player: Character, cumWitch: Character): NextScreenChoices {
     CView.clear();
     // (HP)
     if (player.stats.HP < 1) CView.text("Unable to further withstand the witch's magical assault, you topple over into the soft, warm sands. Before you can recover, the witch is on top of you, her powerful legs straddling your [hips]. Her long, dainty fingers lock through your [armor], pulling your face out of the sand and rolling you over to look up at her.");
@@ -348,7 +324,7 @@ export function savinMakesAwesomeFemdom(player: Character, cumWitch: Character):
 }
 
 // Resist
-export function resistSavinStuff(player: Character): NextScreenChoices {
+function resistSavinStuff(player: Character): NextScreenChoices {
     CView.clear();
     CView.text("It takes nothing more than a gentle push to put the witch on her back.  She gasps as you straddle her, [legs] spread around her wide, birthing hips, her cock buried to the hilt inside you.  To your surprise, she reaches up from her now-submissive position, stroking your cheek and purring like a pleasured cat.  You lean down, kissing her lips for once, rather than her teats, leaving a pearly milk stain on the full black lines.  With a smile, you plant your hands on her chest to steady yourself as you begin to rise and fall on her cock, dragging the massive thing nearly out of you before sliding back down with tantalizing slowness, reveling in the sensation of being filled to the brim once again.  Again and again you buck your hips and bounce on her cock, picking up the pace to a fury of lusty fucking, a symphony of moans and primal grunts echoing out across the desert as you breed the witch, coaxing the cum you need so desperately out of her thick, throbbing pole.");
 
@@ -363,11 +339,12 @@ export function resistSavinStuff(player: Character): NextScreenChoices {
     player.stats.sens += 2;
 
     // knock up hurrrr
-    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, 90);
+    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, SandWitchPregEvent, 90);
     return { next: passTime(1) };
 }
+
 // Do Nothing
-export function doNotResistSavin(player: Character): NextScreenChoices {
+function doNotResistSavin(player: Character): NextScreenChoices {
     CView.clear();
     CView.text("You need her inside you, to be filled with her seed... her children.  To be dominated, to be bred.  You sink into the witch's embrace, letting her slowly, lovingly pump her thick hips into you, taking more and more of her pre-cum and milk into you until you feel bloated, heavy-laden with white witchseed and the food you'll soon be making for your shared offspring.  The cum witch is incredibly gentle, her motions always tender, taking the best of care of you -- loving, in their way -- as she fills you with her cock again and again.  You bask in the fullness of it, going limp from pleasure, content to let her fuck you full of little witches, to be the mother of the dunes as you deserve.");
 
@@ -382,12 +359,12 @@ export function doNotResistSavin(player: Character): NextScreenChoices {
     player.stats.sens += 2;
 
     // knock up hurrrr
-    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, 90);
+    attemptKnockUp(player, PregnancyType.SAND_WITCH, IncubationTime.SAND_WITCH, SandWitchPregEvent, 90);
     return { next: passTime(1) };
 }
 
 // Avoid The Too Big Loss Facial
-export function tooBigCumWitchLossNoFacial(player: Character): NextScreenChoices {
+function tooBigCumWitchLossNoFacial(player: Character): NextScreenChoices {
     CView.clear();
     CView.text("You tell her you'd rather not get a face full of her spunk.  Judging by the sour look on her face, she seems to be honestly surprised by your choice, like she never expected that anyone would choose not to get a faceful of her spunk.  This bitch clearly has spent too much time with her nymphomaniac sisters.");
 
@@ -407,7 +384,7 @@ export function tooBigCumWitchLossNoFacial(player: Character): NextScreenChoices
 }
 // TDM's generic loss to cum witch scene
 // requires that the PC have a dick that can fit inside the cum witch's vagina.  The scene can be used with herms.
-export function TDMsLoseToCumWitchScene(player: Character, cumWitch: Character): NextScreenChoices {
+function TDMsLoseToCumWitchScene(player: Character, cumWitch: Character): NextScreenChoices {
     CView.clear();
     let cockThatFits = player.body.cocks.find(Cock.CockThatFits(cumWitch.vaginalCapacity()));
     if (!cockThatFits) cockThatFits = player.body.cocks.sort(Cock.Smallest).get(0);
@@ -476,7 +453,7 @@ export function TDMsLoseToCumWitchScene(player: Character, cumWitch: Character):
 }
 
 // *Repeat Desert Loss Male
-export function repeatLoseToCumWitchForDudes(player: Character, cumWitch: Character): NextScreenChoices {
+function repeatLoseToCumWitchForDudes(player: Character, cumWitch: Character): NextScreenChoices {
     CView.clear();
     // HP:
     if (player.stats.HP < 1) {
@@ -594,7 +571,7 @@ export function repeatLoseToCumWitchForDudes(player: Character, cumWitch: Charac
 }
 
 // Take The Too Big Loss Facial
-export function tooBigCumWitchLossFacial(player: Character, cumWitch: Character): NextScreenChoices {
+function tooBigCumWitchLossFacial(player: Character, cumWitch: Character): NextScreenChoices {
     CView.clear();
     const cockThatFits = player.body.cocks.find(Cock.CockThatFits(cumWitch.vaginalCapacity()));
     CView.text("Ruefully, you tell her that you don't mind a little cum in exchange for having your own abilities enhanced.  The knowing grin that spreads across her face makes it seem like she knew the result was a foregone conclusion.");

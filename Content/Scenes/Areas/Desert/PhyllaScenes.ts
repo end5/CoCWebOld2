@@ -33,6 +33,9 @@ import { DefeatType } from 'Engine/Combat/DefeatEvent';
 import { describeLegs } from 'Content/Descriptors/LegDescriptor';
 import { Encounter } from 'Content/Combat/Encounter';
 import { EndScenes } from 'Engine/Combat/EndScenes';
+import { Minotaur } from 'Content/Scenes/Areas/Mountains/Minotaur';
+import { Gnoll } from 'Content/Scenes/Areas/Plains/Gnoll';
+import { izmaFollower } from 'Content/Scenes/NPCs/Izma';
 
 //  ANTS_PC_FAILED_PHYLLA: number = 467;
 //  ANT_COLONY_KEPT_HIDDEN: number = 468;
@@ -73,6 +76,7 @@ import { EndScenes } from 'Engine/Combat/EndScenes';
 //  DIDNT_FUCK_PHYLLA_ON_RECRUITMENT: number = 925;
 
 export const PhyllaFlags = Flags.register("Phylla", {
+    ANTS_PC_FAILED_PHYLLA: 0,
     PHYLLA_EGG_LAYING: 0,
     ANT_KIDS: 0,
     DAYS_PHYLLA_HAS_SPENT_BIRTHING: 0,
@@ -1576,7 +1580,7 @@ function surePhyllaLetsFuck(player: Character): NextScreenChoices {
 
     CView.text("\n\nYou open your eyes to find Phylla staring up at you; you didn't even feel her break the kiss.  Never breaking her longing gaze, she once again wraps her mouth around your member and starts bobbing up and down.  Her eyes continue to lock on yours looking like a begging dog.  You feel the shaft and head of your cock rub along her lips as if you were fellating your own member.");
     // If PC can Autofellatio:
-    if (player.canAutoFellate()) CView.text("\n\nThis isn't really a new experience for you, but it's different this time as you feel Phylla's mind being overcome with the need for your nectar.");
+    if (player.body.cocks.find(Cock.CanAutoFellate)) CView.text("\n\nThis isn't really a new experience for you, but it's different this time as you feel Phylla's mind being overcome with the need for your nectar.");
     CView.text("\n\nShe beseeches both your mind and your body to orgasm and fill her mouth and stomach with your seed.");
     // (Leads to - Pure BJ Ending)
     return pureBJEnding(player, true);
@@ -1587,7 +1591,7 @@ function nopeNotOnMouthOrWhateverFuckThisNoise(player: Character): NextScreenCho
     CView.clear();
     CView.text("You pass on her offer, not wanting to know what THAT sensation");
     // If PC can't Autofellatio:
-    if (!player.canAutoFellate()) CView.text(" or anything like it would feel like.");
+    if (!player.body.cocks.find(Cock.CanAutoFellate)) CView.text(" or anything like it would feel like.");
     else CView.text(" feels like with Phylla's mind linked to your own.");
 
     CView.text("\n\nShe whines playfully, but respects your wishes. Getting back into it, she doesn't hold back. Acting as if this is a daily routine for her, she once again stimulates that one little area of your dick when she wants a shot of pre.  You can feel how she wants to coax more and more precum out of you until you explode in her mouth, how she wants you to drive your cock down her throat and flood her gullet with all the cum you can muster.");

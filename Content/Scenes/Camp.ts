@@ -15,7 +15,10 @@ import { inventoryMenu } from 'Content/Menus/InGame/PlayerInventoryMenu';
 import { Flags } from 'Engine/Flags';
 
 //  SLEEP_WITH: number = 701;
-export const CampFlags = Flags.register('Camp', { SLEEP_WITH: '' });
+export const CampFlags = Flags.register('Camp', {
+    SLEEP_WITH: '',
+    CHEST: 0,
+});
 
 export function camp(player: Character): NextScreenChoices {
     // Build explore menus

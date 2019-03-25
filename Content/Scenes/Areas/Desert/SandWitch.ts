@@ -31,7 +31,7 @@ import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
 
 class LustMagicAttack extends CombatAction {
     public name = "Lust Magic";
-    public useAction(char: Character, enemy: Character) {
+    protected useAction(char: Character, enemy: Character) {
         CView.text("The sand witch points at you, drawing a circle in the air and mouthing strange words.\n\n");
         if (enemy.effects.has(EffectType.StoneLust)) {
             CView.text("The orb inside you grows warm, almost hot, suffusing your body with heat and arousal.  ");

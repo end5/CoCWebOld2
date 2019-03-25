@@ -1,11 +1,10 @@
 import { CView } from 'Engine/Display/ContentView';
 import { SpriteName } from 'Content/Display/SpriteName';
 import { Character } from 'Engine/Character/Character';
-import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
+import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { ExgartuanFlags } from 'Content/Scenes/NPCs/Exgartuan';
 import { Flags } from 'Engine/Flags';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
-import { Time } from 'Engine/Utilities/Time';
 import { describeCock, describeCocksLight } from 'Content/Descriptors/CockDescriptor';
 import { CombatManager } from 'Engine/Combat/CombatManager';
 import { SandWitch } from 'Content/Scenes/Areas/Desert/SandWitch';
@@ -28,39 +27,30 @@ import { Settings } from 'Content/Settings';
 import { mf } from 'Content/Descriptors/GenderDescriptor';
 import { describeSkin } from 'Content/Descriptors/SkinDescriptor';
 import { Encounter } from 'Content/Combat/Encounter';
+import { FlagWomb } from 'Content/Body/Pregnancy/FlagWomb';
+import { TimeEvents } from 'Engine/TimeEvents';
+import { followerShouldra, sandWitchGetsGhostly } from 'Content/Scenes/NPCs/Shouldra';
+import { TamaniFlags } from 'Content/Scenes/Areas/Forest/TamaniScene';
+import { sandwitchGetsDildoed } from 'Content/Scenes/Misc/TamaniDildo';
 
 export const SandWitchFlags = Flags.register("SandWitch", {
     COMBAT_BONUS_XP_VALUE: 0,
+    MET_SANDWITCH: 0, // sand
+    WOMB: new FlagWomb()
 });
+SandWitchFlags.WOMB.eventSets.set(PregnancyType.BEE_EGGS, [96]);
+SandWitchFlags.WOMB.eventSets.set(PregnancyType.DRIDER_EGGS, [96]);
 
-export class SandWitchScene implements ITimeAware {
+// const EGG_WITCH_TYPE: number = 589;
+// const EGG_WITCH_COUNTER: number = 588;
 
-    // const EGG_WITCH_TYPE: number = 589;
-    // const EGG_WITCH_COUNTER: number = 588;
-
-    public pregnancy: PregnancyStore;
-
-    public constructor() {
-        pregnancy = new PregnancyStore(SandWitchFlags.EGG_WITCH_TYPE, SandWitchFlags.EGG_WITCH_COUNTER, 0, 0);
-        pregnancy.addPregnancyEventSet(PregnancyType.BEE_EGGS, 96);
-        // Event: 0 (= not pregnant), 1, 2 (< 96)
-        pregnancy.addPregnancyEventSet(PregnancyType.DRIDER_EGGS, 96);
-        // Event: 0 (= not pregnant), 1, 2 (< 96)
-        timeAwareClassAdd(this);
+TimeEvents.register("SandWitch Pregnancy", (player: Character): void | boolean => {
+    SandWitchFlags.WOMB.update();
+    if (SandWitchFlags.WOMB.pregnancy && SandWitchFlags.WOMB.pregnancy.incubation === 0) {
+        SandWitchFlags.WOMB.clear(); // Clear Pregnancy
     }
 
-    // Implementation of ITimeAware
-    public timeChange(): boolean {
-        pregnancy.pregnancyAdvance();
-        trace("\nSand Witch time change: Time is " + Time.hour + ", incubation: " + pregnancy.incubation + ", event: " + pregnancy.event);
-        if (pregnancy.isPregnant && pregnancy.incubation == 0) pregnancy.knockUpForce(); // Silently clear the Sand Witch's pregnancy if the player has not met her in time
-        return false;
-    }
-
-    public timeChangeLarge(): boolean {
-        return false;
-    }
-}
+});
 
 export function encounter(player: Character): NextScreenChoices {
     CView.sprite(SpriteName.SandWitch); // 50;
@@ -138,9 +128,9 @@ function allowSandWitchMagic(player: Character): NextScreenChoices {
 
         }
         CView.text("The sand-witch smiles and thanks you for your offering.  You notice her dress is damp in four spots on the front.  ");
-        if (sand === 0)
+        if (SandWitchFlags.MET_SANDWITCH === 0)
             CView.text("You wonder at what her robes conceal as she vanishes into the dunes.");
-        if (sand === 1) {
+        if (SandWitchFlags.MET_SANDWITCH === 1) {
             if (player.stats.cor <= 33)
                 CView.text("You are glad to avoid servicing her again as she vanishes into the dunes.");
             else if (player.stats.cor <= 66)
@@ -248,7 +238,7 @@ export function sandwitchRape(player: Character): NextScreenChoices {
         player.stats.lib += 1;
         player.stats.sens += 5;
 
-        if (sand === 0) sand = 1;
+        if (SandWitchFlags.MET_SANDWITCH === 0) SandWitchFlags.MET_SANDWITCH = 1;
         return { next: passTime(1) };
     }
     // HP DEFEAT
@@ -299,7 +289,8 @@ function sandwitchRaped(player: Character, sandWitch: Character): NextScreenChoi
     CView.sprite(SpriteName.SandWitch); // 50;
 
     if (player.body.legs.type === LegType.CENTAUR) {
-        sandwitchCentaurBoning(player, sandWitch);
+        const nextScene = sandwitchCentaurBoning(player, sandWitch);
+        if (nextScene) return nextScene;
         return { next: passTime(1) };
     }
     CView.text("Even as you rip her sand-colored robes from her body, her eyes hold power and defiance. Her chest holds four large breasts, each leaking milk upon the sands.  ");
@@ -424,8 +415,10 @@ function sandwitchCentaurBoning(player: Character, sandWitch: Character) {
         // [has breasts]
         if (player.body.chest.sort(BreastRow.Largest).get(0)!.rating > 0) CView.text(", eyes fixed on your " + describeAllBreasts(player));
         CView.text(".\n\n");
+        // Always returns false
         // [GoTo: SW_3 and return]
-        if (SWCentaurMore(player, 3)) return;
+        // if (SWCentaurMoreThree(player)) return;
+        SWCentaurMoreThree(player);
         CView.text("\n\n");
         CView.text("Delicate hands reach around to ");
         // [has breasts]
@@ -447,8 +440,10 @@ function sandwitchCentaurBoning(player: Character, sandWitch: Character) {
             }
         }
         CView.text("You can somehow feel her arousal pouring through her milk and into your skin, filling you with her own sensations and making your entire body vibrate like a sexual tuning fork.  As the sensations grow to be overwhelming, you feel yourself stumbling and slowing until you finally come to a stop. Panting, you listen to the sand witch's voice whispering sweet nothings into your ear... but the nothings seem to be having an effect.\n\n");
+        // Always returns false
         // [GoTo: SW-1]
-        if (SWCentaurMore(player, 1)) return;
+        // if (SWCentaurMoreOne(player)) return;
+        SWCentaurMoreOne(player);
     }
     // [Corruption > 70]
     else {
@@ -459,188 +454,190 @@ function sandwitchCentaurBoning(player: Character, sandWitch: Character) {
         else CView.text("drag her a bit until they come off. ");
         CView.text("Underneath the robes is a beautiful body with a quartet of breasts, even now leaking milk down her chest and stomach.  The streams run over her abs and split as they pour down the cracks of her twin set of pussies.  Realizing she cannot outrun you, she finally turns and stands her ground, staring at you with a mixture of fear and anger that only serves to increase your lust.\n\n");
         // [GoTo: SW-2]
-        if (SWCentaurMore(player, 2)) return;
+        const next = SWCentaurMoreTwo(player);
+        if (next) return next;
     }
+    return;
 }
 
-function SWCentaurMore(player: Character, argument: number): boolean {
+function SWCentaurMoreOne(player: Character) {
     CView.sprite(SpriteName.SandWitch); // 50;
     // { GoTo results }}
     // [SW_1]
-    if (argument === 1) {
-        CView.text("You realize too late that she has been casting a spell for the past few minutes. Before you can react, everything grows dark.");
-        // [Whatever effect the witch has if the player wins, rapes her, and she gets to cast a spell] [end]
-        // 1 change
-        player.orgasm();
-        // Grow tits
-        const firstRow = player.body.chest.get(0)!;
-        if (player.body.chest.sort(BreastRow.Largest).get(0)!.rating === 0) {
-            CView.text("\n\n(You grow a perfectly rounded pair of C-cup breasts!)");
-            if (player.body.chest.length === 0) player.body.chest.add(new BreastRow());
-            firstRow.count = 2;
-            firstRow.rating = 3;
-            if (firstRow.nipples.count < 1) firstRow.nipples.count = 1;
-            player.stats.sens += 2;
-            player.stats.lust += 1;
+    CView.text("You realize too late that she has been casting a spell for the past few minutes. Before you can react, everything grows dark.");
+    // [Whatever effect the witch has if the player wins, rapes her, and she gets to cast a spell] [end]
+    // 1 change
+    player.orgasm();
+    // Grow tits
+    const firstRow = player.body.chest.get(0)!;
+    if (player.body.chest.sort(BreastRow.Largest).get(0)!.rating === 0) {
+        CView.text("\n\n(You grow a perfectly rounded pair of C-cup breasts!)");
+        if (player.body.chest.length === 0) player.body.chest.add(new BreastRow());
+        firstRow.count = 2;
+        firstRow.rating = 3;
+        if (firstRow.nipples.count < 1) firstRow.nipples.count = 1;
+        player.stats.sens += 2;
+        player.stats.lust += 1;
 
-            return false;
-        }
-        // Grow tits bigger
-        if (player.body.chest.sort(BreastRow.Largest).get(0)!.rating < 3) {
-            CView.text("\n\n(Your breasts suddenly balloon outwards, stopping as they reach a perfectly rounded C-cup.)");
-            firstRow.rating = 3;
-            player.stats.sens += 1;
-            player.stats.lust += 1;
-
-            return false;
-        }
-        if (player.body.chest.sort(BreastRow.LactationMost).get(0)!.lactationMultiplier === 0) {
-            CView.text("\n\n(Your breasts now lactate.)");
-            boostLactation(player, 1);
-            player.stats.lib += .5;
-            player.stats.sens += 1;
-            player.stats.lust += 10;
-
-            return false;
-        }
-        // Make lactation happen
-        if (player.body.chest.sort(BreastRow.LactationMost).get(0)!.lactationMultiplier < 3) {
-            boostLactation(player, .7);
-            CView.text("\n\n(Your breasts feel fuller... riper... milkier...)");
-            return false;
-        }
-        // Libido boost if nothing else
-        player.stats.lib += 4;
-
-        CView.text("\n\n(Your libido has been boosted significantly by the Sand Witch's magic.)");
-        return false;
+        return;
     }
+    // Grow tits bigger
+    if (player.body.chest.sort(BreastRow.Largest).get(0)!.rating < 3) {
+        CView.text("\n\n(Your breasts suddenly balloon outwards, stopping as they reach a perfectly rounded C-cup.)");
+        firstRow.rating = 3;
+        player.stats.sens += 1;
+        player.stats.lust += 1;
+
+        return;
+    }
+    if (player.body.chest.sort(BreastRow.LactationMost).get(0)!.lactationMultiplier === 0) {
+        CView.text("\n\n(Your breasts now lactate.)");
+        boostLactation(player, 1);
+        player.stats.lib += .5;
+        player.stats.sens += 1;
+        player.stats.lust += 10;
+
+        return;
+    }
+    // Make lactation happen
+    if (player.body.chest.sort(BreastRow.LactationMost).get(0)!.lactationMultiplier < 3) {
+        boostLactation(player, .7);
+        CView.text("\n\n(Your breasts feel fuller... riper... milkier...)");
+        return;
+    }
+    // Libido boost if nothing else
+    player.stats.lib += 4;
+
+    CView.text("\n\n(Your libido has been boosted significantly by the Sand Witch's magic.)");
+    return;
+}
+
+function SWCentaurMoreTwo(player: Character) {
+    CView.sprite(SpriteName.SandWitch); // 50;
     // [SW_2: Split chances of occurrence between % categories as % are available]
-    if (argument === 2) {
-        // [% Player has cock(s)]
-        if (player.body.cocks.length > 0 || (player.gender === 3 && randInt(2) === 0)) {
-            CView.text("Finished with your games, pre-cum starts pooling under your throbbing " + describeCock(player, player.body.cocks.get(0)) + ". ");
-            // [largest cock is wide]
-            if (player.body.cocks.get(0)!.thickness >= 3) {
-                if (player.body.cocks.get(0)!.hasKnot()) CView.text("Seeing its sheer size combined with your swollen knot causes her to gasp in terror and try to run again.  ");
-                else CView.text("Seeing its sheer size causes her to gasp in fear and turn to run again.  ");
-            }
-            CView.text("You grab the witch and knock her down into the sand, quickly lowering your " + describeCock(player, player.body.cocks.get(0)) + " to be against her buttocks. ");
-            // [1 cock, non-tentacle]
-            if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 0) CView.text("With a single thrust, you push deep into one of her cunts, ");
-            // [1 cock, tentacle]
-            if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1) CView.text("Your " + describeCock(player, player.body.cocks.get(0)) + " caresses her anus teasingly, causing her to whimper in a mixture of arousal and denial.  With a single savage thrust, you push past her clenched muscles, ");
-            // [two cocks]
-            if (player.body.cocks.length === 2) CView.text("After aligning your " + describeCocksLight(player) + " to her twin cunts, you push yourself deeply into her, ");
-            // [3+ cocks]
-            if (player.body.cocks.length >= 3) CView.text("Lining up two of your cocks to her twin cunts and another to her anus, you thrust into her without pre-amble.  Her anal muscles try to keep you out, but they are no match for the strength of your legs.  You tear into her, ");
-            CView.text("eliciting a scream as your hind quarters push her forcefully over the sand. ");
-            // [largest cock is wide]
-            if (player.body.cocks.get(0)!.thickness >= 3) {
-                CView.text("It is hard to believe just how tight she is, though if her cries serve as any indication, she will not be after you are through with her.  Turned on even more, you thrust in with increasing vigor and try to widen her as much as possible. ");
-            }
-            // [2+ cocks]
-            if (player.body.cocks.length >= 2) {
-                CView.text("The feeling of your " + describeCocksLight(player) + " touching each other through the narrow layers of her body causes you to grunt in pleasure, experiencing the sensation anew during every thrust. ");
-            }
-            // [largest cock is long, non-tentacle]
-            if (player.body.cocks.get(0)!.length >= 12) {
-                if (player.body.cocks.length === 1) CView.text("Her body surrenders more and more as your " + describeCocksLight(player) + " presses against her cervix. ");
-                else CView.text("Her body surrenders more and more as your " + describeCocksLight(player) + "  press against her cervixes. ");
-                CView.text("Her mouth opens in a soundless and agonizing cry when you finally push past. ");
-            }
-            // [1 cock, tentacle]
-            if (player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1 && player.body.cocks.length === 1) {
-                CView.text("Her body surrenders more and more as your " + describeCock(player, player.body.cocks.get(0)) + " pushes deep into her bowels, snaking its way further into her body as it fucks her insides. ");
-            }
-            CView.text("It feels like you have been pushing yourself into her for hours");
-            // [largest cock is wide and/or long]
-            if (player.body.cocks.get(0)!.length >= 12 || player.body.cocks.get(0)!.thickness >= 3) {
-                CView.text("; her cries have long since died down to whimpers. ");
-            }
-            // [largest cock is not wide and/or long]
-            else CView.text(", and her cries have long since turned into groans of pleasure. ");
-            CView.text("You cannot hold off your orgasm any longer. Your " + describeCocksLight(player) + " explode");
-            if (player.body.cocks.length === 1) CView.text("s");
-            CView.text(", ");
-            // [large cum production]
-            if (player.cumQ() >= 250) CView.text("gushing massive amounts of your cum ");
-            // [regular cum production]
-            else CView.text("pushing your sperm ");
-            CView.text("deep into her ");
-            // [1 cock, tentacle]
-            if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1) CView.text("anus");
-            else {
-                // [largest cock is not wide and/or long]
-                if (player.body.cocks.get(0)!.length >= 12 || player.body.cocks.get(0)!.thickness >= 3) {
-                    // [1 cock]
-                    if (player.body.cocks.length === 1) CView.text("cunt");
-                    // [2+ cocks]
-                    if (player.body.cocks.length >= 2) CView.text("cunts");
-                }
-                // [largest cock is wide and/or long]
-                else {
-                    CView.text("womb");
-                    if (player.body.cocks.length >= 3) CView.text(" and bowels");
-                }
-            }
-            CView.text(".  With a satisfied groan, you pull out and let your " + describeCocksLight(player) + " dribble the last remnants of your cum over the ravished witch. Satisfied, you ride off into the desert.");
+    // [% Player has cock(s)]
+    if (player.body.cocks.length > 0 || (player.gender === 3 && randInt(2) === 0)) {
+        CView.text("Finished with your games, pre-cum starts pooling under your throbbing " + describeCock(player, player.body.cocks.get(0)) + ". ");
+        // [largest cock is wide]
+        if (player.body.cocks.get(0)!.thickness >= 3) {
+            if (player.body.cocks.get(0)!.hasKnot()) CView.text("Seeing its sheer size combined with your swollen knot causes her to gasp in terror and try to run again.  ");
+            else CView.text("Seeing its sheer size causes her to gasp in fear and turn to run again.  ");
         }
-        // [% no cocks]
+        CView.text("You grab the witch and knock her down into the sand, quickly lowering your " + describeCock(player, player.body.cocks.get(0)) + " to be against her buttocks. ");
+        // [1 cock, non-tentacle]
+        if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 0) CView.text("With a single thrust, you push deep into one of her cunts, ");
+        // [1 cock, tentacle]
+        if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1) CView.text("Your " + describeCock(player, player.body.cocks.get(0)) + " caresses her anus teasingly, causing her to whimper in a mixture of arousal and denial.  With a single savage thrust, you push past her clenched muscles, ");
+        // [two cocks]
+        if (player.body.cocks.length === 2) CView.text("After aligning your " + describeCocksLight(player) + " to her twin cunts, you push yourself deeply into her, ");
+        // [3+ cocks]
+        if (player.body.cocks.length >= 3) CView.text("Lining up two of your cocks to her twin cunts and another to her anus, you thrust into her without pre-amble.  Her anal muscles try to keep you out, but they are no match for the strength of your legs.  You tear into her, ");
+        CView.text("eliciting a scream as your hind quarters push her forcefully over the sand. ");
+        // [largest cock is wide]
+        if (player.body.cocks.get(0)!.thickness >= 3) {
+            CView.text("It is hard to believe just how tight she is, though if her cries serve as any indication, she will not be after you are through with her.  Turned on even more, you thrust in with increasing vigor and try to widen her as much as possible. ");
+        }
+        // [2+ cocks]
+        if (player.body.cocks.length >= 2) {
+            CView.text("The feeling of your " + describeCocksLight(player) + " touching each other through the narrow layers of her body causes you to grunt in pleasure, experiencing the sensation anew during every thrust. ");
+        }
+        // [largest cock is long, non-tentacle]
+        if (player.body.cocks.get(0)!.length >= 12) {
+            if (player.body.cocks.length === 1) CView.text("Her body surrenders more and more as your " + describeCocksLight(player) + " presses against her cervix. ");
+            else CView.text("Her body surrenders more and more as your " + describeCocksLight(player) + "  press against her cervixes. ");
+            CView.text("Her mouth opens in a soundless and agonizing cry when you finally push past. ");
+        }
+        // [1 cock, tentacle]
+        if (player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1 && player.body.cocks.length === 1) {
+            CView.text("Her body surrenders more and more as your " + describeCock(player, player.body.cocks.get(0)) + " pushes deep into her bowels, snaking its way further into her body as it fucks her insides. ");
+        }
+        CView.text("It feels like you have been pushing yourself into her for hours");
+        // [largest cock is wide and/or long]
+        if (player.body.cocks.get(0)!.length >= 12 || player.body.cocks.get(0)!.thickness >= 3) {
+            CView.text("; her cries have long since died down to whimpers. ");
+        }
+        // [largest cock is not wide and/or long]
+        else CView.text(", and her cries have long since turned into groans of pleasure. ");
+        CView.text("You cannot hold off your orgasm any longer. Your " + describeCocksLight(player) + " explode");
+        if (player.body.cocks.length === 1) CView.text("s");
+        CView.text(", ");
+        // [large cum production]
+        if (player.cumQ() >= 250) CView.text("gushing massive amounts of your cum ");
+        // [regular cum production]
+        else CView.text("pushing your sperm ");
+        CView.text("deep into her ");
+        // [1 cock, tentacle]
+        if (player.body.cocks.length === 1 && player.body.cocks.filter(Cock.FilterType(CockType.TENTACLE)).length === 1) CView.text("anus");
         else {
-            CView.text("Finished with your games ");
-            // [has cunt]
-            if (player.body.vaginas.length > 0) CView.text("and your " + describeVagina(player, player.body.vaginas.get(0)) + " dripping with desire");
-            CView.text(", you push the witch unceremoniously to the ground and deliver a slap to her breasts.  She cries out in pain as milk splashes out onto the sand.  A cruel smile is brought to your face and you start slapping them even harder, alternatively smacking her pair of cunts for good measure.  Surprisingly, her cries of pain begin to turn into moans of pleasure with every slap.  She might even be pushing into the blows slightly, though it is difficult to tell.  After a sizable pool of milk and her juices has drained into the sands beneath her, you reach down and start to drive your fingers hard into one of the sand witch's cunts.  The first few thrusts are enough to violently bring her to orgasm.  You trot forward slowly until you are over her and the witch suddenly hops up. Driving her face into your ");
-            // [has cunt]
-            if (player.body.vaginas.length > 0) {
-                CView.text(describeVagina(player, player.body.vaginas.get(0)) + ", she fingers herself even harder than you had been a moment ago.  Her lips lock unto your " + describeClit(player) + " and she suckles on it, drawing a pained gasp from you and causing your pussy juices to gush over her face. You feel ");
-                // [cunt size is small]
-                if (player.vaginalCapacity() < 10) CView.text("one of her fingers ");
-                // [cunt size is normal]
-                else if (player.vaginalCapacity() < 20) CView.text("several of her fingers ");
-                // [cunt size is large]
-                else CView.text("a fist ");
-                CView.text("pushing deep into your " + describeVagina(player, player.body.vaginas.get(0)) + ", and you're surprised as ");
-                // [anus size is small]
-                if (player.analCapacity() < 10) CView.text("her tongue ");
-                // [anus size is normal]
-                else if (player.analCapacity() < 20) CView.text("two of her fingers ");
-                // [anus size is large]
-                else CView.text("a fist ");
-                CView.text("penetrates your " + describeButthole(player.body.butt));
-                CView.text(".");
+            // [largest cock is not wide and/or long]
+            if (player.body.cocks.get(0)!.length >= 12 || player.body.cocks.get(0)!.thickness >= 3) {
+                // [1 cock]
+                if (player.body.cocks.length === 1) CView.text("cunt");
+                // [2+ cocks]
+                if (player.body.cocks.length >= 2) CView.text("cunts");
             }
-            // [does not has cunt]
+            // [largest cock is wide and/or long]
             else {
-                CView.text(describeButthole(player.body.butt) + ", she fingers herself even harder than you had been a moment ago.  Her tongue drives into your " + describeButthole(player.body.butt) + ", licking enthusiastically as she squeezes her nipples. ");
-                // [anus size is small]
-                if (player.analCapacity() < 10) CView.text("The sensations are intense, and you could almost swear that her tongue is tracing a pattern as her mouth mutters strange sounds. ");
-                // [anus size is normal]
-                else if (player.analCapacity() < 20) CView.text("Unsatisfied with just her buffet, you soon feel her fingers thrust hard into you and hear her muttering what sounds like obscene words of depraved lust. ");
-                // [anus size is large]
-                else CView.text("Unsatisfied with just her buffet, the witch grabs one of her breasts and squirts milk into your massive hole.  You realize she was lubricating it even as you feel her entire hand driving into you.  The sensations are too intense, and your screams of pleasure drown out her lustful muttering. ");
-                CView.text("Her mumbling finishes even as an orgasm overwhelms you.");
-                CView.text("\n\n");
-                // [SW_1]
-                SWCentaurMore(player, 1);
-                return { next: passTime(2) };
-                // Return true to indicate not to continue the scene.
-                return true;
+                CView.text("womb");
+                if (player.body.cocks.length >= 3) CView.text(" and bowels");
             }
         }
-        return false;
+        CView.text(".  With a satisfied groan, you pull out and let your " + describeCocksLight(player) + " dribble the last remnants of your cum over the ravished witch. Satisfied, you ride off into the desert.");
     }
+    // [% no cocks]
+    else {
+        CView.text("Finished with your games ");
+        // [has cunt]
+        if (player.body.vaginas.length > 0) CView.text("and your " + describeVagina(player, player.body.vaginas.get(0)) + " dripping with desire");
+        CView.text(", you push the witch unceremoniously to the ground and deliver a slap to her breasts.  She cries out in pain as milk splashes out onto the sand.  A cruel smile is brought to your face and you start slapping them even harder, alternatively smacking her pair of cunts for good measure.  Surprisingly, her cries of pain begin to turn into moans of pleasure with every slap.  She might even be pushing into the blows slightly, though it is difficult to tell.  After a sizable pool of milk and her juices has drained into the sands beneath her, you reach down and start to drive your fingers hard into one of the sand witch's cunts.  The first few thrusts are enough to violently bring her to orgasm.  You trot forward slowly until you are over her and the witch suddenly hops up. Driving her face into your ");
+        // [has cunt]
+        if (player.body.vaginas.length > 0) {
+            CView.text(describeVagina(player, player.body.vaginas.get(0)) + ", she fingers herself even harder than you had been a moment ago.  Her lips lock unto your " + describeClit(player) + " and she suckles on it, drawing a pained gasp from you and causing your pussy juices to gush over her face. You feel ");
+            // [cunt size is small]
+            if (player.vaginalCapacity() < 10) CView.text("one of her fingers ");
+            // [cunt size is normal]
+            else if (player.vaginalCapacity() < 20) CView.text("several of her fingers ");
+            // [cunt size is large]
+            else CView.text("a fist ");
+            CView.text("pushing deep into your " + describeVagina(player, player.body.vaginas.get(0)) + ", and you're surprised as ");
+            // [anus size is small]
+            if (player.analCapacity() < 10) CView.text("her tongue ");
+            // [anus size is normal]
+            else if (player.analCapacity() < 20) CView.text("two of her fingers ");
+            // [anus size is large]
+            else CView.text("a fist ");
+            CView.text("penetrates your " + describeButthole(player.body.butt));
+            CView.text(".");
+        }
+        // [does not has cunt]
+        else {
+            CView.text(describeButthole(player.body.butt) + ", she fingers herself even harder than you had been a moment ago.  Her tongue drives into your " + describeButthole(player.body.butt) + ", licking enthusiastically as she squeezes her nipples. ");
+            // [anus size is small]
+            if (player.analCapacity() < 10) CView.text("The sensations are intense, and you could almost swear that her tongue is tracing a pattern as her mouth mutters strange sounds. ");
+            // [anus size is normal]
+            else if (player.analCapacity() < 20) CView.text("Unsatisfied with just her buffet, you soon feel her fingers thrust hard into you and hear her muttering what sounds like obscene words of depraved lust. ");
+            // [anus size is large]
+            else CView.text("Unsatisfied with just her buffet, the witch grabs one of her breasts and squirts milk into your massive hole.  You realize she was lubricating it even as you feel her entire hand driving into you.  The sensations are too intense, and your screams of pleasure drown out her lustful muttering. ");
+            CView.text("Her mumbling finishes even as an orgasm overwhelms you.");
+            CView.text("\n\n");
+            // [SW_1]
+            SWCentaurMoreOne(player);
+            return { next: passTime(2) };
+            // Return true to indicate not to continue the scene.
+        }
+    }
+    return;
+}
+
+function SWCentaurMoreThree(player: Character) {
+    CView.sprite(SpriteName.SandWitch); // 50;
     // [SW_3]
-    if (argument === 3) {
-        CView.text("As she begins to seem less skittish, you reach your hands into her robe and push it off of her shoulders, revealing a beautiful body underneath.  A pair of pussies is betraying the sand witch's arousal - her thighs are already dripping wet.  You begin to tease her four breasts as you lower your mouth to her lips for a passionate kiss.  Breaking off the kiss and grinning, you ");
-        // [STR > 50]
-        if (player.stats.str > 50) CView.text("pick her up and toss her onto your back. ");
-        // [STR < 50]
-        else CView.text("offer her your hand and help her onto your back. ");
-        CView.text("Your strong hooves carry you across the clear desert at a light trot.  Without her robes to protect her, you can feel the witch's bare pussies grinding against your back as she presses her quad of breasts against your shoulders.  Her moans intensify more and more as you pick up the pace.");
-    }
-    return false;
+    CView.text("As she begins to seem less skittish, you reach your hands into her robe and push it off of her shoulders, revealing a beautiful body underneath.  A pair of pussies is betraying the sand witch's arousal - her thighs are already dripping wet.  You begin to tease her four breasts as you lower your mouth to her lips for a passionate kiss.  Breaking off the kiss and grinning, you ");
+    // [STR > 50]
+    if (player.stats.str > 50) CView.text("pick her up and toss her onto your back. ");
+    // [STR < 50]
+    else CView.text("offer her your hand and help her onto your back. ");
+    CView.text("Your strong hooves carry you across the clear desert at a light trot.  Without her robes to protect her, you can feel the witch's bare pussies grinding against your back as she presses her quad of breasts against your shoulders.  Her moans intensify more and more as you pick up the pace.");
 }
 
 // Knot sand witch
@@ -681,14 +678,26 @@ export function beatSandwitch(player: Character, sandWitch: Character): NextScre
     let temp2;
     let temp3;
     if (Settings.sillyMode) temp3 = missingoSex;
-    if (player.inventory.keyItems.has("Deluxe Dildo")) temp2 = sandwitchGetsDildoed;
+    if (TamaniFlags.DELUXE_DILDO) temp2 = sandwitchGetsDildoed;
     let shouldra;
-    if (shouldraFollower.followerShouldra() && player.gender > 0) shouldra = shouldraFollower.sandWitchGetsGhostly;
+    if (followerShouldra() && player.gender > 0) shouldra = sandWitchGetsGhostly;
     // return { yes: sandwitchRaped, no: passTime(1) };
     let ovi;
-    if (player.gender > 0 && player.body.ovipositor.canOviposit()) ovi = ovipositSandWitches;
+    if (player.gender > 0 && player.body.ovipositor.canOviposit()) ovi = choiceWrap(ovipositSandWitches, sandWitch);
 
-    return { choices: [["Yes", sandwitchRaped], ["Dildo Rape", temp2], ["Use 3i@-", temp3], ["Use Shouldra", shouldra], ["Lay Eggs", ovi], ["Taunt Her", sandwitchSpanking], ["", undefined], ["", undefined], ["", undefined], ["Leave", passTime(1)]] };
+    return {
+        choices: [
+            ["Yes", choiceWrap(sandwitchRaped, sandWitch)],
+            ["Dildo Rape", temp2], ["Use 3i@-", temp3],
+            ["Use Shouldra", shouldra],
+            ["Lay Eggs", ovi],
+            ["Taunt Her", choiceWrap(sandwitchSpanking, sandWitch)],
+            ["", undefined],
+            ["", undefined],
+            ["", undefined],
+            ["Leave", passTime(1)]
+        ]
+    };
 }
 
 // This is a bonus scene for those who are playing Corruption of Champions with Silly Mode activated and defeat the Sand Witch by dropping her hit points and have the option of having their way with her. A special third(?) option appears that begins the encounter. The idea is that it breaks the 4th wall and gives the player the impression that they've stumbled upon a glitchy, incomplete scene. As a special note to anyone who does coding: all code tags (anything like \" + describeCock(player, player.body.cocks.get(0)) + \" but not my usual {code brackets} for example) are meant to be printed in game exactly as they were written on this document, pushing the idea that the player \"broke the game\".
@@ -933,9 +942,9 @@ function laySomeEggsInThatWitchFinally(player: Character): NextScreenChoices {
     // Give her ze eggs!
     if (player.body.ovipositor.fertilizedEggs > 0) {
         if (player.canOvipositBee())
-            pregnancy.knockUpForce(PregnancyType.BEE_EGGS, 192);
+            SandWitchFlags.WOMB.knockUp(PregnancyType.BEE_EGGS, 192);
         else
-            pregnancy.knockUpForce(PregnancyType.DRIDER_EGGS, 192);
+            SandWitchFlags.WOMB.knockUp(PregnancyType.DRIDER_EGGS, 192);
     }
     player.body.ovipositor.dumpEggs();
     player.orgasm();
@@ -1029,7 +1038,7 @@ function sandwitchBirthsYourMonstrosities(player: Character): NextScreenChoices 
 
     // [(corr >= 60)
     if (player.stats.cor >= 60) CView.text("\n\n\"<i>Just, use your common sense next time.</i>\"");
-    pregnancy.knockUpForce(); // Clear Pregnancy
+    SandWitchFlags.WOMB.clear(); // Clear Pregnancy
     return { next: passTime(1) };
 }
 
@@ -1044,7 +1053,7 @@ export function witchBirfsSomeBees(player: Character): NextScreenChoices {
     CView.text("; likely it was just waiting for someone to find their mother before taking off in the general direction of the forest.  The weak voice of the desert vixen fills the air as she speaks to you.  \"<i>That... was the best.  I can't believe I'm a mother!</i>\"  She gives you a look of appreciation for showing her how pleasurable being a host can be.  Seeing she needs her rest, you give a nod and turn to leave... only to feel a hand grasp at your [leg].  \"<i>I would be disappointed if you didn't come around and 'say hello' more often; keep that in mind " + mf(player, "handsome", "beautiful") + ".</i>\"  She coos, before drifting off to sleep.  She'll be fine in this shady part of the desert while she rests, the dune currently obstructing the sun and keeping her from being burned from the sun's rays.");
 
     CView.text("\n\nContent with how things turned out, you head back to camp and decide on the next course of action for today.");
-    pregnancy.knockUpForce(); // Clear Pregnancy
+    SandWitchFlags.WOMB.clear(); // Clear Pregnancy
     return { next: passTime(1) };
 }
 

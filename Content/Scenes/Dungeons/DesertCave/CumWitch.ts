@@ -16,7 +16,7 @@ class DungeonCumWitchEndScenes extends EndScenes {
     }
 
     protected defeatScene?(howYouLost: DefeatType, enemy: Character): NextScreenChoices {
-        return cumWitchDefeated(enemy, this.char);
+        return cumWitchDefeated(enemy, this.char, true);
     }
 }
 

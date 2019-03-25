@@ -19,7 +19,7 @@ import { displayStretchButt } from 'Content/Modifiers/ButtModifier';
 import { displayStretchVagina } from 'Content/Modifiers/VaginaModifier';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
 import { IncubationTime } from 'Content/Body/Pregnancy/IncubationTime';
-import { describeNipple, describeAllBreasts } from 'Content/Descriptors/BreastDescriptor';
+import { describeAllBreasts } from 'Content/Descriptors/BreastDescriptor';
 import { Cock } from 'Engine/Body/Cock';
 import { describeSkin } from 'Content/Descriptors/SkinDescriptor';
 import { describeBalls } from 'Content/Descriptors/BallsDescriptor';
@@ -28,8 +28,9 @@ import { SkinType } from 'Engine/Body/Skin';
 import { gameOverMenu } from 'Content/Menus/InGame/GameOverMenu';
 import { Pregnancy } from 'Engine/Body/Pregnancy/Pregnancy';
 import { Encounter } from 'Content/Combat/Encounter';
-import { SandTrap } from 'Content/Scenes/Areas/Desert/SandTrap';
+import { SandTrap, trapLevel } from 'Content/Scenes/Areas/Desert/SandTrap';
 import { ArmorName } from 'Content/Items/ArmorName';
+import { SandTrapPregEvent } from 'Content/Scenes/Pregnancy/SandTrap';
 
 export const SandTrapFlags = Flags.register("SandTrap", {
     SANDTRAP_LOSS_REPEATS: 0,
@@ -104,7 +105,7 @@ function saveTheSandTarps(player: Character): NextScreenChoices {
         CView.text("\n\n\"<i>You made it all too easy for me, little ant,</i>\" it says pityingly.  \"<i>Did no one warn you about sandtraps?</i>\"  Slowly it sinks downwards, and whilst it fondles your face you feel its other set of hands cup your [butt].  \"<i>Never mind,</i>\" the insect monster sighs into your forehead in its fluttery voice.  \"<i>I'll teach you everything there is to know.</i>\"");
     }
     const sandTrap = new SandTrap();
-    sandTrap.effects.getByName(EffectType.Level).value1 = 2;
+    sandTrap.effects.getByName(EffectType.Level)!.values.level! = 2;
     return CombatManager.beginBattle(new Encounter(player, sandTrap));
 }
 
@@ -149,7 +150,7 @@ export function sandtrapmentLoss(player: Character, sandTrap: Character, clear: 
     if (clear) CView.clear();
     else CView.text("\n\n");
     CView.sprite(SpriteName.SandTrap); // 97;
-    if (sandTrap.trapLevel() === 1) CView.text("You are sunk to your belly in the depthless sand at the bottom of the pit, and are still falling fast.  The sun above you is blotted out by a shape which leans downwards towards you, smiling triumphantly.  Desperately, you try to keep your arms free so you can swing a blow at it, but with consummate ease, the sandtrap grabs your wrists with one set of hands while pushing you downwards with the others.  Within moments you are up to your armpits in the stuff, staring helplessly up at the strange androgynous creature which has you entirely at its mercy.");
+    if (trapLevel(sandTrap) === 1) CView.text("You are sunk to your belly in the depthless sand at the bottom of the pit, and are still falling fast.  The sun above you is blotted out by a shape which leans downwards towards you, smiling triumphantly.  Desperately, you try to keep your arms free so you can swing a blow at it, but with consummate ease, the sandtrap grabs your wrists with one set of hands while pushing you downwards with the others.  Within moments you are up to your armpits in the stuff, staring helplessly up at the strange androgynous creature which has you entirely at its mercy.");
     // PC lust loss:
     else CView.text("You feel as radiant and molten as the sun above you... you just want to sink into the warm sand surrounding you forever.  Why are you struggling against it again?  You can't remember; with a sigh, you fall backwards onto the soft powder and allow yourself to be carried right down to the bottom.  The sandtrap chuckles softly as it envelopes you in its waiting arms.  \"<i>Good " + mf(player, "boy", "girl") + "...</i>\"");
 
@@ -322,45 +323,6 @@ function sandTrapPregChance(player: Character, sandTrap: Character) {
         player.body.buttWomb.knockUp(new Pregnancy(PregnancyType.SANDTRAP_FERTILE, IncubationTime.SANDTRAP), SandTrapPregEvent, 1, true);
     else
         player.body.buttWomb.knockUp(new Pregnancy(PregnancyType.SANDTRAP, IncubationTime.SANDTRAP), SandTrapPregEvent, 1, true);
-}
-
-export function birfSandTarps(player: Character) {
-    CView.sprite(SpriteName.SandTrap); // 97;
-    CView.text("\nYour eyes widen as a gout of oil suddenly gushes from your ass.  Before panic can set in, an incredible light-headedness overtakes you.  Dreamily, you discard your [armor] and squat.  More oil oozes out of you, and in your hazy euphoria, you scoop some of it up and rub it dreamily into your " + describeNipple(player, player.body.chest.get(0)) + "s.  Part of you is disgusted at yourself, questioning what you are doing, but that is one voice in a million-strong chorus crooning you into total relaxation... the oil clings to your skin and seems to radiate warmth and softness.  Something round stretches your rectum wide, but in your state the sensation is practically orgasmic.");
-    // [Male:
-    if (player.gender === 1) {
-        CView.text("  You roll your eyes to the sky and moan, [eachCock] growing hard as you push out the egg.");
-        // [(mans and qualified horses only)]
-        if (!player.body.legs.isTaur() || (player.body.tallness * (5 / 6) < player.body.cocks.sort(Cock.Longest).get(0)!.length)) CView.text("  Your oily hands descend upon your cock, and you massage your shaft as you feel the pressure in your bowels intensify again.");
-    }
-    // Female:
-    else if (player.gender === 2) {
-        CView.text("  You roll your eyes to the sky and moan, your " + describeVagina(player, player.body.vaginas.get(0)) + " moistening as you push out the egg.");
-        // [(no fukken horses from here)]
-        if (!player.body.legs.isTaur()) CView.text("  Your oily hands push softly into your cleft, fingering your needy " + describeClit(player) + " as you feel the pressure in your bowels intensify again.");
-    }
-    // Herm:
-    else if (player.gender === 3) {
-        CView.text("  You roll your eyes to the sky and moan, [eachCock] growing hard and your [vagina] moistening as you push out the egg.");
-        // [(no horses)]
-        if (!player.body.legs.isTaur()) CView.text("  Your oily hands descend upon your genitals and you begin to slowly pump your shaft and finger your needy " + describeClit(player) + " as you feel the pressure in your bowels intensify again.");
-    }
-    CView.text("\n\nYou nearly cum as egg number two squeezes out.  You DO cum when egg number three stretches you wide, blowing your mind into the empty sky.  Each egg seems to come out closer on the heels of the one before, and each time your conscious mind loses more of its ability to do anything but wallow in oil and pleasure.");
-
-    CView.text("\n\nYou are brought to your senses by something flitting past your eyes.  You wearily brush your face and pick yourself up.  Behind you, leaking and lying in a translucent ooze, is a multitude of black, oily eggshells.  Of more note are the pale blurs which keep zipping past your head.  They look rather like the fairies which inhabit the forest, except they have six black eyes, are flat-chested and are male... no, female...?  No, male... you can't tell.  They are lithe and beautiful and have tiny, undeveloped insect abdomens hanging above their trim butts and below their dragonfly wings.  They whirr in place for a moment before keeling around and about each other excitedly like hoverflies, chattering to each other in a tongue so fast it is beyond your comprehension.");
-
-    // Libido <30:
-    if (player.stats.lib < 33) CView.text("\n\nYou pick yourself up wearily, flap the flytraps you have birthed away and make your way back to camp.  This whole experience has been deeply unnerving, and you vow to make sure you don't have to repeat it.");
-    // Libido 30-65:
-    else if (player.stats.lib < 66) CView.text("\n\nYou spend a moment enjoying your post-natal haze, then haul yourself out of it, flap the flytraps you have birthed away, and make your way back to camp.  Though this experience has been deeply unnerving, you can't help but acknowledge it has also been incredibly erotic.");
-    // Libido >65:
-    else CView.text("\n\nYou smile lazily, then lie back and glory in the sensual haze the oil has left you in.  After you have spent many minutes lying listening to the happy twittering of your flytrap children above you, you reluctantly get up.  You only hope that you get to experience the unearthly wonder of birthing these strange creatures again, and again, and again.");
-    displayStretchButt(player, 25, true, true, false);
-    CView.text("\n");
-    player.orgasm();
-    player.stats.lib += 1;
-    player.stats.sens += 4;
-
 }
 
 // \"<i>Hands</i>\" (Z)
