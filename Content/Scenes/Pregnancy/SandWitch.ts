@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 import { BreastRow } from 'Engine/Body/BreastRow';
 import { boostLactation } from 'Content/Modifiers/BreastModifier';

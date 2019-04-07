@@ -10,7 +10,7 @@ import { FaceType } from 'Engine/Body/Face';
 import { LegType } from 'Engine/Body/Legs';
 import { SkinType } from 'Engine/Body/Skin';
 import { Tail, TailType } from 'Engine/Body/Tail';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeCock, nounCock, describeCocksLight } from 'Content/Descriptors/CockDescriptor';

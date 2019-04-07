@@ -1,6 +1,6 @@
 import { IPhysicalAction } from 'Content/Combat/Actions/IPhysicalAction';
 import { EffectType } from 'Content/Effects/EffectType';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
 import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';
 

@@ -1,7 +1,7 @@
 import { CView } from 'Engine/Display/ContentView';
 import { Flags } from 'Engine/Flags';
 import { SpriteName } from 'Content/Display/SpriteName';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { NextScreenChoices, ScreenChoice, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { EyeType } from 'Engine/Body/Eyes';
 import { WingType } from 'Engine/Body/Wings';

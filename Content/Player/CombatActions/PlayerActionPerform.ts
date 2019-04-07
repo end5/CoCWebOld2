@@ -9,7 +9,7 @@ import { PhysicalSpecials } from './PerformActions/PhysicalSpecials';
 import { MagicalSpecials } from './PerformActions/MagicalSpecials';
 import { Wait } from './PerformActions/Wait';
 import { Fantasize } from './PerformActions/Fantasize';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { randomChoice } from 'Engine/Utilities/SMath';
 
 /*

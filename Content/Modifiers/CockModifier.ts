@@ -1,6 +1,6 @@
 ﻿import { BreastCup, BreastRow } from 'Engine/Body/BreastRow';
 import { Cock, CockType } from 'Engine/Body/Cock';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { CockSockName } from 'Content/Items/CockSockName';
 import { numToCardinalText } from 'Content/Utilities/NumToText';

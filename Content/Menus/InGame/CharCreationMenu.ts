@@ -12,7 +12,7 @@ import { ButtRating } from 'Engine/Body/Butt';
 import { HipRating } from 'Engine/Body/Hips';
 import { describeHair } from 'Content/Descriptors/HairDescriptor';
 import { EffectType } from 'Content/Effects/EffectType';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CharDict } from 'Engine/CharDict';
 import { playerMenu } from './PlayerMenu';
 

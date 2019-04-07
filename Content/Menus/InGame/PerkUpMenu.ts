@@ -1,7 +1,7 @@
 import { ButtonElement } from 'Engine/Display/ButtonElement';
 import { UnorderedListElement } from 'Engine/Display/Elements/UnorderedListElement';
 import { MainScreen } from 'Engine/Display/MainScreen';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { Effect } from 'Engine/Effects/Effect';
 import { EffectType } from 'Content/Effects/EffectType';
 import { displayNextScreenChoices, NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';

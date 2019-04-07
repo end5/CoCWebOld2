@@ -3,9 +3,9 @@ import { IDrop } from './IDrop';
 export class ChainedDrop<T> implements IDrop<T> {
     private items: T[] = [];
     private probs: number[] = [];
-    private defaultItem: T;
+    private defaultItem: T | undefined;
 
-    constructor(defaultItem: T) {
+    constructor(defaultItem?: T) {
         this.defaultItem = defaultItem;
     }
 
@@ -23,7 +23,7 @@ export class ChainedDrop<T> implements IDrop<T> {
         return this;
     }
 
-    public roll(): T {
+    public roll(): T | undefined {
         for (let i = 0; i < this.items.length; i++) {
             if (Math.random() < this.probs[i]) return this.items[i];
         }

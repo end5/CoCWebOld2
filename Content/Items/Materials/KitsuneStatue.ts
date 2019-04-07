@@ -1,6 +1,6 @@
 import { Material } from 'Engine/Items/Material';
 import { MaterialName } from '../MaterialName';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { CView } from 'Engine/Display/ContentView';
 

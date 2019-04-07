@@ -1,7 +1,7 @@
 ﻿import { percentChance, randomChoice } from 'Engine/Utilities/SMath';
 import { HairType } from 'Engine/Body/Hair';
 import { SkinType } from 'Engine/Body/Skin';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 
 export function hairOrFur(character: Character): string {
     if (character.body.skin.type === SkinType.FUR)

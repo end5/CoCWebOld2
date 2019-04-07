@@ -1,6 +1,6 @@
 ﻿import { randInt } from 'Engine/Utilities/SMath';
 import { ButtLooseness } from 'Engine/Body/Butt';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { describeButthole } from 'Content/Descriptors/ButtDescriptor';
 import { CView } from 'Engine/Display/ContentView';

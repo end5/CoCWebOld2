@@ -6,7 +6,7 @@ import { AntennaeType } from 'Engine/Body/Antennae';
 import { LegType } from 'Engine/Body/Legs';
 import { TongueType } from 'Engine/Body/Tongue';
 import { WingType } from 'Engine/Body/Wings';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeFaceShort } from 'Content/Descriptors/FaceDescriptor';

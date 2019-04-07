@@ -1,7 +1,7 @@
 import { Consumable } from 'Engine/Items/Consumable';
 import { ConsumableName } from '../ConsumableName';
 import { BreastRow } from 'Engine/Body/BreastRow';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeLegs } from 'Content/Descriptors/LegDescriptor';
 import { CView } from 'Engine/Display/ContentView';

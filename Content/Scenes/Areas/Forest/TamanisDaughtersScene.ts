@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { Flags } from 'Engine/Flags';
 import { Time } from 'Engine/Utilities/Time';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';

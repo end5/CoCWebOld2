@@ -10,7 +10,7 @@ import { HairType } from 'Engine/Body/Hair';
 import { LegType } from 'Engine/Body/Legs';
 import { SkinType } from 'Engine/Body/Skin';
 import { Tail, TailType } from 'Engine/Body/Tail';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeCock } from 'Content/Descriptors/CockDescriptor';
 import { ReptilumFlags } from './Reptilum';

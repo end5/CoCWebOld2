@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { randInt } from 'Engine/Utilities/SMath';
 import { EndScenes } from 'Engine/Combat/EndScenes';

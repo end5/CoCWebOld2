@@ -1,5 +1,5 @@
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { randInt } from 'Engine/Utilities/SMath';
 import { CView } from 'Engine/Display/ContentView';
 import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';

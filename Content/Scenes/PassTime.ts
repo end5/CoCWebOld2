@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ClickFunction } from 'Engine/Display/ScreenDisplay';
 import { Time } from 'Engine/Utilities/Time';
 import { TimeEvents } from 'Engine/TimeEvents';

@@ -13,7 +13,7 @@ import { cumWitchDefeated } from 'Content/Scenes/Areas/Desert/CumWitchScene';
 import { sandMotherStuffGOA } from 'Content/Scenes/Dungeons/DesertCave/SandMotherScene';
 import { CombatManager } from 'Engine/Combat/CombatManager';
 import { Encounter } from 'Content/Combat/Encounter';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { essyWitchVictory, approachTrappedEssy, EssrayleFlags } from 'Content/Scenes/Areas/Forest/Essrayle';
 import { CumWitch } from 'Content/Scenes/Areas/Desert/CumWitch';
 import { SandWitchMob } from 'Content/Scenes/Dungeons/DesertCave/SandWitchMob';

@@ -2,7 +2,7 @@ import { ArmorName } from '../ArmorName';
 import { Armor } from 'Engine/Items/Armor';
 import { BreastRow } from 'Engine/Body/BreastRow';
 import { Cock } from 'Engine/Body/Cock';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeBalls } from 'Content/Descriptors/BallsDescriptor';

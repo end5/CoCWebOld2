@@ -2,7 +2,7 @@ import { Consumable } from 'Engine/Items/Consumable';
 import { ConsumableName } from '../ConsumableName';
 import { randInt } from 'Engine/Utilities/SMath';
 import { SkinType } from 'Engine/Body/Skin';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { CView } from 'Engine/Display/ContentView';
 import { growCock, displayLengthChange } from 'Content/Modifiers/CockModifier';

@@ -1,6 +1,6 @@
 import { Armor } from 'Engine/Items/Armor';
 import { ArmorName } from '../ArmorName';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeCocksLight } from 'Content/Descriptors/CockDescriptor';
 import { Gender } from 'Engine/Body/GenderIdentity';

@@ -1,5 +1,5 @@
 import { randInt } from 'Engine/Utilities/SMath';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { describeVagina } from 'Content/Descriptors/VaginaDescriptor';
 import { CView } from 'Engine/Display/ContentView';
 import { Effect } from 'Engine/Effects/Effect';

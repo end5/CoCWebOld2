@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 import { IPregnancyEvent } from 'Engine/Body/Pregnancy/IPregnancyEvent';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';

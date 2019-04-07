@@ -1,5 +1,5 @@
 import { Flags } from 'Engine/Flags';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { sceneNotImplimented } from 'Content/Scenes/NotImplemented';
 

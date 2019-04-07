@@ -6,7 +6,7 @@ import { Cock } from 'Engine/Body/Cock';
 import { EyeType } from 'Engine/Body/Eyes';
 import { VaginaType } from 'Engine/Body/Vagina';
 import { WingType } from 'Engine/Body/Wings';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { numToCardinalText } from 'Content/Utilities/NumToText';
 import { ItemDesc } from 'Engine/Items/ItemDesc';

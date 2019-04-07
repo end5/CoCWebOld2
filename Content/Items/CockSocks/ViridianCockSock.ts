@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { CockSock } from 'Engine/Items/CockSock';
 import { CockSockName } from 'Content/Items/CockSockName';

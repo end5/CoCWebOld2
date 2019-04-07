@@ -1,5 +1,5 @@
 import { PlayerSpellAction } from './PlayerSpellAction';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { PlayerFlags } from '../PlayerFlags';
 import { CView } from 'Engine/Display/ContentView';

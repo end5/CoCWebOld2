@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { ItemsOnFloor } from 'Content/Scenes/ItemsOnFloor';
 import { Effect } from 'Engine/Effects/Effect';
 

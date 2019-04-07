@@ -1,6 +1,6 @@
 ﻿import { randInt } from 'Engine/Utilities/SMath';
 import { BreastRow } from 'Engine/Body/BreastRow';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { breastCup, describeBreastRow } from 'Content/Descriptors/BreastDescriptor';
 import { CView } from 'Engine/Display/ContentView';

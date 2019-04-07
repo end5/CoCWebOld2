@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { EffectType } from 'Content/Effects/EffectType';

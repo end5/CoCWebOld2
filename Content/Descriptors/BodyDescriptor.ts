@@ -1,6 +1,6 @@
 ﻿import { BreastRow } from 'Engine/Body/BreastRow';
 import * as RaceScore from 'Content/Body/RaceScore';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { Gender } from 'Engine/Body/GenderIdentity';
 import { mf } from './GenderDescriptor';
 import { describeVagina } from './VaginaDescriptor';

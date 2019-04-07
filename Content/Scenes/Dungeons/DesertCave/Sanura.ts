@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { NextScreenChoices, ScreenChoice, choiceWrap, ClickFunction } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
 import { openZeDoorToParadize, leaveBoobsDungeon } from 'Content/Scenes/Dungeons/DesertCave/RoomScene';

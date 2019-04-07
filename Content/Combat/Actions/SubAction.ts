@@ -1,5 +1,5 @@
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { randomChoice } from 'Engine/Utilities/SMath';
 
 export abstract class SubAction extends CombatAction {

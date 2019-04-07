@@ -5,7 +5,7 @@ import {
     ButtRating,
     ButtWetness
     } from 'Engine/Body/Butt';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 
 /**
  * Gives a full description of a Character's butt.

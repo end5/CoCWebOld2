@@ -1,5 +1,5 @@
 import { CView } from 'Engine/Display/ContentView';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { NextScreenChoices, ScreenChoice } from 'Engine/Display/ScreenDisplay';
 import { skinFurScales } from 'Content/Descriptors/SkinDescriptor';
 import { describeCocksLight, describeCock } from 'Content/Descriptors/CockDescriptor';

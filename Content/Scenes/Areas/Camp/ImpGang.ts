@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { Cock, CockType } from 'Engine/Body/Cock';
 import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';

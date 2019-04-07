@@ -1,4 +1,4 @@
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 
 export interface ISpellAction {
     readonly baseCost: number;

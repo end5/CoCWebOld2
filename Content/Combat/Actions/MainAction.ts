@@ -1,6 +1,6 @@
 import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
 import { BasicAttack } from './BasicAttack';
-import { Character } from 'Engine/Character/Character';
+import { Character } from 'Content/Character/Character';
 import { randomChoice } from 'Engine/Utilities/SMath';
 
 export class MainAction extends CombatAction {
