@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { playerMenu } from 'Content/Menus/InGame/PlayerMenu';
 import { passTime } from 'Content/Scenes/PassTime';
 import { NextScreenChoices, ClickFunction, ScreenChoice, choiceWrap } from 'Engine/Display/ScreenDisplay';

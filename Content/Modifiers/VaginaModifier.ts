@@ -1,6 +1,6 @@
 ﻿import { randInt } from 'Engine/Utilities/SMath';
 import { Vagina, VaginaLooseness } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { describeVagina } from 'Content/Descriptors/VaginaDescriptor';
 import { CView } from 'Engine/Display/ContentView';

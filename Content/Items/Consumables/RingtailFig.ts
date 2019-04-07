@@ -6,7 +6,7 @@ import { FaceType } from 'Engine/Body/Face';
 import { LegType } from 'Engine/Body/Legs';
 import { SkinType } from 'Engine/Body/Skin';
 import { Tail, TailType } from 'Engine/Body/Tail';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { skinFurScales } from 'Content/Descriptors/SkinDescriptor';
 import { describeHair } from 'Content/Descriptors/HairDescriptor';

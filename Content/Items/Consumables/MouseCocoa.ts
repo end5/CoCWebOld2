@@ -8,7 +8,7 @@ import { IncubationTime } from 'Content/Body/Pregnancy/IncubationTime';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
 import { SkinType } from 'Engine/Body/Skin';
 import { Tail, TailType } from 'Engine/Body/Tail';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeHair } from 'Content/Descriptors/HairDescriptor';

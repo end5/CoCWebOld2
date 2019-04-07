@@ -4,7 +4,7 @@ import { Cock, CockType } from 'Engine/Body/Cock';
 import { Gender } from 'Engine/Body/GenderIdentity';
 import { Tail, TailType } from 'Engine/Body/Tail';
 import { Vagina } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { fatigueRecovery } from 'Content/Combat/CombatUtils';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ArmorName } from 'Content/Items/ArmorName';

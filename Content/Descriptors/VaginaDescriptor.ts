@@ -6,7 +6,7 @@ import {
     VaginaType,
     VaginaWetness
     } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 
 export function describeVagina(character: Character, vagina?: Vagina): string {
     let description: string = "";

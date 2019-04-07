@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { CView } from 'Engine/Display/ContentView';
 import { Effect } from 'Engine/Effects/Effect';

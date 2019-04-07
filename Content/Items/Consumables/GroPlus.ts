@@ -3,7 +3,7 @@ import { ConsumableName } from '../ConsumableName';
 import { randInt } from 'Engine/Utilities/SMath';
 import { BreastRow } from 'Engine/Body/BreastRow';
 import { Cock } from 'Engine/Body/Cock';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ClickOption, NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeSack, describeBallsShort } from 'Content/Descriptors/BallsDescriptor';

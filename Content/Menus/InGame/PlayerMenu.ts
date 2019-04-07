@@ -1,5 +1,5 @@
 import { MainScreen } from 'Engine/Display/MainScreen';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CombatManager } from 'Engine/Combat/CombatManager';
 import { clickFuncWrapper, NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { mainMenu } from '../MainMenu';

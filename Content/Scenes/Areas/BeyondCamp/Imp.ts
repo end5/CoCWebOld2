@@ -1,6 +1,6 @@
 import { EndScenes } from 'Engine/Combat/EndScenes';
 import { CharacterType } from 'Content/Character/CharacterType';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
 import { describeCocksLight, describeCock } from 'Content/Descriptors/CockDescriptor';

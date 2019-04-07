@@ -1,6 +1,6 @@
 import { Armor } from 'Engine/Items/Armor';
 import { ArmorName } from '../ArmorName';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { Piercing } from 'Engine/Items/Piercing';
 import { CView } from 'Engine/Display/ContentView';

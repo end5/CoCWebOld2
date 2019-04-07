@@ -1,5 +1,5 @@
 import { Flags } from 'Engine/Flags';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, ScreenChoice } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
 import { playerMenu } from 'Content/Menus/InGame/PlayerMenu';

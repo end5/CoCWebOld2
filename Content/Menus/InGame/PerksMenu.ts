@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { NextScreenChoices, ScreenChoice } from 'Engine/Display/ScreenDisplay';
 import { numToCardinalText } from 'Content/Utilities/NumToText';

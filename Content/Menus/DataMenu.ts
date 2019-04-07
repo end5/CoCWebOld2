@@ -1,6 +1,6 @@
 import { AnchorElement } from 'Engine/Display/Elements/AnchorElement';
 import { SaveManager } from 'Engine/Save/SaveManager';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { generateSave, loadFromSave } from 'Engine/Save/SaveFile';
 import { displayNextScreenChoices, NextScreenChoices, ScreenChoice } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';

@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { BeeGirlFlags, BeeGirl } from './BeeGirl';
 import { NextScreenChoices, choiceWrap, ClickFunction } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';

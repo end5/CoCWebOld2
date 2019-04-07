@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { Effect } from 'Engine/Effects/Effect';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ArmorName } from 'Content/Items/ArmorName';

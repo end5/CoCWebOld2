@@ -2,7 +2,7 @@ import { randInt } from 'Engine/Utilities/SMath';
 import { fatigueRecovery } from 'Content/Combat/CombatUtils';
 import { EffectType } from 'Content/Effects/EffectType';
 import { CombatAction, IActionDamage } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { PlayerFlags } from 'Content/Player/PlayerFlags';
 import { CView } from 'Engine/Display/ContentView';
 import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';

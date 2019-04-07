@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { EquipSlot } from 'Engine/Inventory/EquipSlot';
 import { CockSockName } from 'Content/Items/CockSockName';

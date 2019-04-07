@@ -1,6 +1,6 @@
 ﻿import { randomChoice } from 'Engine/Utilities/SMath';
 import { LegType } from 'Engine/Body/Legs';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 
 export function describeLeg(character: Character): string {
     switch (character.body.legs.type) {

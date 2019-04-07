@@ -1,5 +1,5 @@
 ﻿import { Tail, TailType } from 'Engine/Body/Tail';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 
 export const TailNameTable =
     [

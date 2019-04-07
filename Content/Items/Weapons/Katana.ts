@@ -1,7 +1,7 @@
 import { Weapon } from 'Engine/Items/Weapon';
 import { WeaponName } from '../WeaponName';
 import { WeaponPerkType } from 'Content/Items/WeaponPerks';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 
 export class Katana extends Weapon {

@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { Gender } from 'Engine/Body/GenderIdentity';
 import { EffectType } from 'Content/Effects/EffectType';
 import { randInt } from 'Engine/Utilities/SMath';

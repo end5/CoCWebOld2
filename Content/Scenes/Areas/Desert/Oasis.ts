@@ -1,5 +1,5 @@
 import { CView } from 'Engine/Display/ContentView';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { SpriteName } from 'Content/Display/SpriteName';
 import { describeLegs } from 'Content/Descriptors/LegDescriptor';

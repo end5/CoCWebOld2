@@ -3,7 +3,7 @@ import { ConsumableName } from '../ConsumableName';
 import { randInt, randomChoice } from 'Engine/Utilities/SMath';
 import { BreastRow } from 'Engine/Body/BreastRow';
 import { SkinType } from 'Engine/Body/Skin';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeButt } from 'Content/Descriptors/ButtDescriptor';
 import { describeHips } from 'Content/Descriptors/HipDescriptor';

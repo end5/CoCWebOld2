@@ -1,6 +1,6 @@
 import { CView } from 'Engine/Display/ContentView';
 import { SpriteName } from 'Content/Display/SpriteName';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { ExgartuanFlags } from 'Content/Scenes/NPCs/Exgartuan';
 import { Flags } from 'Engine/Flags';

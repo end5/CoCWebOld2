@@ -9,7 +9,7 @@ import { LegType } from 'Engine/Body/Legs';
 import { SkinType } from 'Engine/Body/Skin';
 import { Tail, TailType } from 'Engine/Body/Tail';
 import { VaginaType } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { numToCardinalText, numToOrdinalText } from 'Content/Utilities/NumToText';
 import { ItemDesc } from 'Engine/Items/ItemDesc';

@@ -1,6 +1,6 @@
 import { randInt } from 'Engine/Utilities/SMath';
 import { BreastRow } from 'Engine/Body/BreastRow';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
 import { CView } from 'Engine/Display/ContentView';
 import { describeBalls } from 'Content/Descriptors/BallsDescriptor';

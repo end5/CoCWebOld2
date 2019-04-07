@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { Effect } from 'Engine/Effects/Effect';
 import { EffectDesc } from 'Engine/Effects/EffectDesc';

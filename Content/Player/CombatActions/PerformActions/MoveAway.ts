@@ -1,5 +1,5 @@
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { Release } from './Release';
 import { Run } from './Run';
 import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';

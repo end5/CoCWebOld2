@@ -1,5 +1,5 @@
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { Approach } from './Approach';
 import { Recover } from './Recover';
 import { Squeeze } from './Squeeze';

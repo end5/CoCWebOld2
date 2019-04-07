@@ -1,5 +1,5 @@
 import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 import { randInt } from 'Engine/Utilities/SMath';
 import { CharacterType } from 'Content/Character/CharacterType';

@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, ScreenChoice, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { CombatManager } from 'Engine/Combat/CombatManager';
 import { Encounter } from 'Content/Combat/Encounter';

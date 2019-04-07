@@ -1,5 +1,5 @@
 import { Flags } from 'Engine/Flags';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { EffectType } from 'Content/Effects/EffectType';

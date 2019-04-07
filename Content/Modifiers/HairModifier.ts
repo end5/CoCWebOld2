@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { describeHair } from 'Content/Descriptors/HairDescriptor';
 import { CView } from 'Engine/Display/ContentView';
 

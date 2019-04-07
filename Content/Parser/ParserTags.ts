@@ -16,7 +16,7 @@ import { BreastRow } from 'Engine/Body/BreastRow';
 import { Time } from 'Engine/Utilities/Time';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
 import { Cock } from 'Engine/Body/Cock';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 
 type ParserFunc = (...args: any[]) => string | number | boolean;
 

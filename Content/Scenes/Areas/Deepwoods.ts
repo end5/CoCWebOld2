@@ -1,5 +1,5 @@
 import { Flags } from 'Engine/Flags';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { TamaniFlags, encounterTamani } from './Forest/TamaniScene';
 import { randInt } from 'Engine/Utilities/SMath';

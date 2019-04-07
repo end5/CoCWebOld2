@@ -1,6 +1,6 @@
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { playerMenu } from './PlayerMenu';
 import { PlayerFlags } from 'Content/Player/PlayerFlags';
 import { TamaniFlags } from 'Content/Scenes/Areas/Forest/TamaniScene';

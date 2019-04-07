@@ -1,7 +1,7 @@
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
 import { ISpellAction } from 'Content/Combat/Actions/ISpellAction';
 import { EffectType } from 'Content/Effects/EffectType';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 
 export abstract class PlayerSpellAction extends CombatAction implements ISpellAction {
     public canUse(character: Character, monster: Character): CanUseResult {

@@ -1,6 +1,6 @@
 import { Consumable } from 'Engine/Items/Consumable';
 import { ConsumableName } from '../ConsumableName';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 
 export class MarbleMilk extends Consumable {

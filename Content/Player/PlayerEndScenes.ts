@@ -2,7 +2,7 @@ import { randInt } from 'Engine/Utilities/SMath';
 import { DefeatType } from 'Engine/Combat/DefeatEvent';
 import { EndScenes } from 'Engine/Combat/EndScenes';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CView } from 'Engine/Display/ContentView';
 import { passTime } from 'Content/Scenes/PassTime';
 

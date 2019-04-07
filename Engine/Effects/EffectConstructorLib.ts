@@ -1,5 +1,8 @@
 import { Dictionary } from 'Engine/Utilities/Dictionary';
-import { Effect, IEffectValue } from './Effect';
+import { IEffectValues } from './EffectValues';
+import { Effect } from './Effect';
 
-type EffectConstructor = new(type: string, values?: IEffectValue) => Effect;
+interface EffectConstructor {
+    new(type: string, values?: IEffectValues): Effect;
+}
 export const EffectConstructorLib = new Dictionary<string, EffectConstructor>();

@@ -13,7 +13,7 @@ import { Tail, TailType } from 'Engine/Body/Tail';
 import { TongueType } from 'Engine/Body/Tongue';
 import { VaginaType } from 'Engine/Body/Vagina';
 import { WingType } from 'Engine/Body/Wings';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 
 export function demonRaceScore(character: Character): number {

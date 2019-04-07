@@ -1,7 +1,7 @@
 import { Consumable } from 'Engine/Items/Consumable';
 import { ConsumableName } from '../ConsumableName';
 import { BreastRow } from 'Engine/Body/BreastRow';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { CView } from 'Engine/Display/ContentView';
 import { boostLactation } from 'Content/Modifiers/BreastModifier';

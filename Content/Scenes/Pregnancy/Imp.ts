@@ -2,7 +2,7 @@ import { IPregnancyEvent } from 'Engine/Body/Pregnancy/IPregnancyEvent';
 import { CView } from 'Engine/Display/ContentView';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { Vagina, VaginaLooseness, VaginaWetness } from 'Engine/Body/Vagina';
 import { randInt } from 'Engine/Utilities/SMath';

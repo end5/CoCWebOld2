@@ -1,5 +1,5 @@
 import { randInt } from 'Engine/Utilities/SMath';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { CView } from 'Engine/Display/ContentView';
 import { Effect } from 'Engine/Effects/Effect';

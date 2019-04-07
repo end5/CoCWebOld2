@@ -2,7 +2,7 @@ import { Armor } from 'Engine/Items/Armor';
 import { ArmorName } from '../ArmorName';
 import { BreastCup, BreastRow } from 'Engine/Body/BreastRow';
 import { Vagina } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeCocksLight, describeCockShort, describeCockHead } from 'Content/Descriptors/CockDescriptor';

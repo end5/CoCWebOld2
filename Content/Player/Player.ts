@@ -8,7 +8,7 @@ import { Armor } from 'Engine/Items/Armor';
 import { ArmorName } from 'Content/Items/ArmorName';
 import { Weapon } from 'Engine/Items/Weapon';
 import { WeaponName } from 'Content/Items/WeaponName';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';

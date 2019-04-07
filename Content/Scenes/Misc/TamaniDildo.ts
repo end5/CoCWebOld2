@@ -1,5 +1,5 @@
 import { CView } from 'Engine/Display/ContentView';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { passTime } from 'Content/Scenes/PassTime';
 import { WeaponName } from 'Content/Items/WeaponName';

@@ -3,7 +3,7 @@ import { BreastRow } from 'Engine/Body/BreastRow';
 import { EarType } from 'Engine/Body/Ears';
 import { Tail, TailType } from 'Engine/Body/Tail';
 import { EffectType } from 'Content/Effects/EffectType';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CombatAction } from 'Engine/Combat/Actions/CombatAction';
 import { CView } from 'Engine/Display/ContentView';
 import { describeLegs } from 'Content/Descriptors/LegDescriptor';

@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices } from 'Engine/Display/ScreenDisplay';
 import { randInt, randomChoice } from 'Engine/Utilities/SMath';
 import { CView } from 'Engine/Display/ContentView';

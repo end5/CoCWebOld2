@@ -14,7 +14,7 @@ import { HornType } from 'Engine/Body/Horns';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { CView } from 'Engine/Display/ContentView';
 import { CharacterType } from 'Content/Character/CharacterType';

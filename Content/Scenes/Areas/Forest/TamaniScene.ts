@@ -1,7 +1,7 @@
 import { NextScreenChoices, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { Flags } from 'Engine/Flags';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { randInt } from 'Engine/Utilities/SMath';
 import { CView } from 'Engine/Display/ContentView';
 import { SpriteName } from 'Content/Display/SpriteName';

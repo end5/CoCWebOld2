@@ -1,4 +1,4 @@
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { CombatAction, CanUseResult } from 'Engine/Combat/Actions/CombatAction';
 import { Item } from 'Engine/Items/Item';
 import { ItemStack } from 'Engine/Inventory/ItemStack';

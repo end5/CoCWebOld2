@@ -1,5 +1,5 @@
 import { NextScreenChoices, choiceWrap, ClickFunction, ScreenChoice } from 'Engine/Display/ScreenDisplay';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { Flags } from 'Engine/Flags';
 import { CView } from 'Engine/Display/ContentView';
 import { SpriteName } from 'Content/Display/SpriteName';

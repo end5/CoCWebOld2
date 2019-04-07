@@ -1,6 +1,6 @@
 import { Flags } from 'Engine/Flags';
 import { CView } from 'Engine/Display/ContentView';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, ScreenChoice, choiceWrap } from 'Engine/Display/ScreenDisplay';
 import { passTime } from 'Content/Scenes/PassTime';
 import { BreastRow } from 'Engine/Body/BreastRow';

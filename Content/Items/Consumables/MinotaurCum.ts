@@ -2,7 +2,7 @@ import { Consumable } from 'Engine/Items/Consumable';
 import { ConsumableName } from '../ConsumableName';
 import { randInt } from 'Engine/Utilities/SMath';
 import { VaginaWetness } from 'Engine/Body/Vagina';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeCocksLight } from 'Content/Descriptors/CockDescriptor';

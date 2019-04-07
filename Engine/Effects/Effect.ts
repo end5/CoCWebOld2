@@ -1,35 +1,30 @@
 import { EffectDesc } from './EffectDesc';
 import { ISerializable } from 'Engine/Utilities/ISerializable';
+import { IEffectValues } from './EffectValues';
 import { EffectDescLib } from './EffectDescLib';
 import { Character } from 'Engine/Character/Character';
-import { CombatActionType } from 'Engine/Combat/Actions/CombatActionType';
 
-export interface IEffectValue {
-    blockedTypes?: CombatActionType;
-    [key: string]: any;
+export interface IEffect {
+    type: string;
+    values?: IEffectValues;
 }
 
-export interface IEffect<T = string, V extends IEffectValue = {}> {
-    type: T;
-    values?: V;
-}
-
-export class Effect<T extends string = string, V extends IEffectValue = {}> implements ISerializable<IEffect<T, V>> {
-    private effectType: T;
+export class Effect implements ISerializable<IEffect> {
+    private effectType: string;
     public readonly desc: EffectDesc;
-    private effectValues: V;
+    private effectValues: IEffectValues;
 
-    public constructor(type: T, values?: V) {
+    public constructor(type: string, values?: IEffectValues) {
         this.effectType = type;
         this.desc = EffectDescLib.get(name);
-        this.effectValues = values ? values : {} as V;
+        this.effectValues = values ? values : {};
     }
 
     public get values() {
         return this.effectValues;
     }
 
-    public get type(): T {
+    public get type(): string {
         return this.effectType;
     }
 
@@ -38,7 +33,7 @@ export class Effect<T extends string = string, V extends IEffectValue = {}> impl
     public combatTurnEnd(char: Character, ...enemies: Character[]): void { }
     public combatEnd(char: Character): void { }
 
-    public serialize(): IEffect<T, V> {
+    public serialize(): IEffect {
         if (Object.keys(this.values).length > 0)
             return {
                 type: this.effectType,
@@ -48,7 +43,7 @@ export class Effect<T extends string = string, V extends IEffectValue = {}> impl
             return { type: this.effectType };
     }
 
-    public deserialize(saveObject: IEffect<T, V>) {
+    public deserialize(saveObject: IEffect) {
         this.effectType = saveObject.type;
         if (saveObject.values)
             this.effectValues = saveObject.values;

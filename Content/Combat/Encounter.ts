@@ -1,6 +1,6 @@
 import { CombatParty } from 'Engine/Combat/CombatParty';
 import { DefeatType } from 'Engine/Combat/DefeatEvent';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { NextScreenChoices, choiceWrapWithChar, ScreenChoice } from 'Engine/Display/ScreenDisplay';
 import { awardPlayer } from 'Content/Combat/CombatDrops';
 import { CharDict } from 'Engine/CharDict';

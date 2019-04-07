@@ -1,7 +1,7 @@
 ﻿import { randInt, randomChoice } from 'Engine/Utilities/SMath';
 import { BreastCup, BreastRow } from 'Engine/Body/BreastRow';
 import { Chest } from 'Engine/Body/Chest';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { PiercingName } from 'Content/Items/PiercingName';
 

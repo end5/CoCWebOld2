@@ -1,6 +1,6 @@
 import { Armor } from 'Engine/Items/Armor';
 import { ArmorName } from '../ArmorName';
-import { Character } from 'Content/Character/Character';
+import { Character } from 'Engine/Character/Character';
 import { EffectType } from 'Content/Effects/EffectType';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
 import { describeNipple } from 'Content/Descriptors/BreastDescriptor';
