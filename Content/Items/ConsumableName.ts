@@ -2,6 +2,7 @@ export enum ConsumableName {
     BeeHoneySpecial = "SpHoney",
     BeeHoneyPure = "PurHony",
     BeeHoney = "BeeHony",
+    BimboChampagne = "BimboCh",
     BimboLiqueur = "BimboLq",
     BlackCatBeer = "BC Beer",
     BlackSpellbook = "B. Book",

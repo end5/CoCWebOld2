@@ -53,8 +53,8 @@ export function exploreDesert(player: Character): NextScreenChoices {
     if (HelFlags.PC_PROMISED_HEL_MONOGAMY_FUCKS === 1 && HelFlags.HEL_RAPED_TODAY === 0 && randInt(10) === 0 && player.gender > 0 && !followerHel()) {
         return helSexualAmbush();
     }
-    if ((DesertFlags.TIMES_EXPLORED === 20 && !player.effects.has(EffectType.TelAdre)) || (randInt(20) === 0 && TelAdreFlags.Value1 === 0)) {
-        return discoverTelAdre();
+    if ((DesertFlags.TIMES_EXPLORED === 20 && !player.effects.has(EffectType.TelAdre)) || (randInt(20) === 0 && TelAdreFlags.ALLOWED_IN === 0)) {
+        return discoverTelAdre(player);
     }
     if (SandWitchFlags.WOMB.pregnancy && SandWitchFlags.WOMB.event === 2 && randInt(4) === 0) {
         if (SandWitchFlags.WOMB.pregnancy.type === PregnancyType.DRIDER_EGGS) return sammitchBirthsDriders(player);

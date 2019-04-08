@@ -49,4 +49,7 @@ export interface EffectValueMap {
     [EffectType.UmasMassage]: { type: number, bonusValue: number, duration: number };
     [EffectType.BirthedImps]: { amount: number };
     [EffectType.Blind]: { combatExpire: number };
+    [EffectType.Feeder]: { value1: number, value2: number };
+    [EffectType.BimboChampagne]: { value1: number, value2: number, value3: number, value4: number };
+    [EffectType.BlackCatBeer]: { value1: number, value2: number };
 }
