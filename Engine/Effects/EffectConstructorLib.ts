@@ -1,8 +1,5 @@
 import { Dictionary } from 'Engine/Utilities/Dictionary';
-import { IEffectValues } from './EffectValues';
-import { Effect } from './Effect';
+import { Effect, IEffectValue } from './Effect';
 
-interface EffectConstructor {
-    new(type: string, values?: IEffectValues): Effect;
-}
+type EffectConstructor<T extends string = string, V extends IEffectValue | {} = {}> = new (type: T, values?: V) => Effect<T, V>;
 export const EffectConstructorLib = new Dictionary<string, EffectConstructor>();

@@ -17,6 +17,7 @@ import { WingType } from 'Engine/Body/Wings';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
 import { randInt } from 'Engine/Utilities/SMath';
 import { EffectType } from 'Content/Effects/EffectType';
+import { EffectValueMap } from 'Content/Effects/EffectMap';
 
 export interface ICharacter {
     type: string;
@@ -55,7 +56,7 @@ export abstract class Character implements ISerializable<ICharacter> {
 
     public body = new Body();
     public stats = new Stats();
-    public readonly effects = new EffectList();
+    public readonly effects = new EffectList<EffectType, EffectValueMap>();
     public hoursSinceCum = 0;
 
     public constructor(type: string) {
@@ -152,7 +153,7 @@ export abstract class Character implements ISerializable<ICharacter> {
                 percent += 0.15;
             if (this.effects.has(EffectType.FerasBoonAlpha))
                 percent += 0.10;
-            const elvenBounty =  this.effects.getByName(EffectType.ElvenBounty);
+            const elvenBounty = this.effects.getByName(EffectType.ElvenBounty);
             if (elvenBounty && elvenBounty.values.virility && elvenBounty.values.virility > 0)
                 percent += 0.05;
             if (this.effects.has(EffectType.FertilityPlus))

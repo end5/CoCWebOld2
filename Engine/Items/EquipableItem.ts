@@ -2,10 +2,12 @@ import { Item } from './Item';
 import { EquipSlot } from 'Engine/Inventory/EquipSlot';
 import { Character } from 'Engine/Character/Character';
 import { EffectList } from 'Engine/Effects/EffectList';
+import { EffectValueMap } from 'Content/Effects/EffectMap';
+import { EffectType } from 'Content/Effects/EffectType';
 
 export abstract class EquipableItem extends Item {
     protected slot: EquipSlot<EquipableItem> | undefined;
-    public readonly effects = new EffectList();
+    public readonly effects = new EffectList<EffectType, EffectValueMap>();
     /**
      * Called when this item is being equipped by the character.
      * Can return a new item to be equipped.
