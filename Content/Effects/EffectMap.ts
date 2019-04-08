@@ -52,4 +52,5 @@ export interface EffectValueMap {
     [EffectType.Feeder]: { value1: number, value2: number };
     [EffectType.BimboChampagne]: { value1: number, value2: number, value3: number, value4: number };
     [EffectType.BlackCatBeer]: { value1: number, value2: number };
+    [EffectType.Infested]: { value1: number, value2: number };
 }

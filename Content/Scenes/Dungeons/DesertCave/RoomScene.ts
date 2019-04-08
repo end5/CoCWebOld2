@@ -75,7 +75,7 @@ export function takeBarrenPills(player: Character): NextScreenChoices {
         if (player.body.wombs.find(Womb.Pregnant)) CView.text("  Of course, you're already pregnant, and this doesn't seem to be doing anything about THAT.");
         CView.text("  You do feel an emptiness in your midsection, reassuring you that the pill did its job.");
         if (player.body.vaginas.length <= 0) CView.text("  Now if you ever re-grow a vagina, you should be fine.");
-        player.effects.create(EffectType.Contraceptives);
+        player.effects.create(EffectType.Contraceptives, { combatExpire: 0 });
     }
     return { next: playerMenu };
 }

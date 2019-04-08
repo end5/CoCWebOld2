@@ -21,7 +21,6 @@ import { describeHips } from 'Content/Descriptors/HipDescriptor';
 import { PregnancyType } from 'Content/Body/Pregnancy/PregnancyType';
 import { IncubationTime } from 'Content/Body/Pregnancy/IncubationTime';
 import { VaginaLooseness, Vagina } from 'Engine/Body/Vagina';
-import { combatMenu } from 'Content/Menus/InGame/PlayerCombatMenu';
 import { CombatManager } from 'Engine/Combat/CombatManager';
 import { Encounter } from 'Content/Combat/Encounter';
 import { Minotaur } from 'Content/Scenes/Areas/Mountains/Minotaur';
@@ -34,6 +33,7 @@ import { ArmorName } from 'Content/Items/ArmorName';
 import { minoCumAddiction } from 'Content/Items/Consumables/MinotaurCum';
 import { WeaponName } from 'Content/Items/WeaponName';
 import { MinotaurPregEvent } from 'Content/Scenes/Pregnancy/Minotaur';
+import { sceneNotImplimented } from 'Content/Scenes/NotImplemented';
 
 export const MinotaurFlags = Flags.register("Minotaur", {
     MINOTAUR_CUM_ADDICTION_STATE: 0,
@@ -481,38 +481,6 @@ function minotaurGetsRapedByHerms(player: Character, minotaur: Character): NextS
     return { next: passTime(1) };
 }
 
-export function minoPheromones(player: Character): NextScreenChoices {
-    CView.sprite(SpriteName.Minotaur); // 44;
-    CView.text("The minotaur smiles at you and lifts his loincloth, flicking it at you.  Thick ropes of pre-cum fly through the air, ");
-    // sometimes get hit with the pre for stronger effect!
-    if (randInt(3) === 0) {
-        CView.text("slapping into your face before you can react!  You wipe the slick snot-like stuff out of your eyes and nose, ");
-        if (player.stats.lust > 75) {
-            CView.text("swallowing it into your mouth without thinking.  ");
-            player.stats.lust += 10 + player.stats.lib / 10;
-
-        }
-        else {
-            CView.text("feeling your heart beat with desire as your tongue licks the residue from your lips.  ");
-            player.stats.lust += 5 + player.stats.lib / 20;
-
-        }
-    }
-    else CView.text("right past your head.  ");
-    CView.text("The animalistic scent of it seems to get inside you, the musky aroma burning a path of liquid heat to your groin.");
-    player.stats.lust += 10 + player.stats.lib / 20;
-
-    if (player.effects.has(EffectType.MinotaurCumAddict) || MinotaurFlags.MINOTAUR_CUM_ADDICTION_STATE == 2) {
-        if (randInt(2) === 0) CView.text("\n<b>You shiver with need, wanting nothing more than to bury your face under that loincloth and slurp out every drop of goopey goodness.</b>");
-        else CView.text("\n<b>You groan and lick your lips over and over, craving the taste of him in your mouth.</b>");
-        player.stats.lust += 5 + randInt(5);
-
-    }
-    // YOU LOSE!
-    if (player.stats.lust >= 100)
-        return { next: endLustLoss };
-    else return { next: combatMenu };
-}
 export function getRapedByMinotaur(player: Character, minotaur: Character, autoRape: boolean = false): NextScreenChoices {
     CView.sprite(SpriteName.Minotaur); // 44;
     player.slimeFeed();
@@ -634,8 +602,7 @@ export function getRapedByMinotaur(player: Character, minotaur: Character, autoR
     CView.text("The bull-man relaxes for a moment, then shoves you off of him and to the cold ground. You pass out as a strange sense of euphoria washes over you while copious quantities of monstrous cum escape your distended ");
     if (player.body.vaginas.length > 0) CView.text("pussy.");
     else CView.text("asshole.");
-    if (inCombat) return { next: passTime(1) };
-    else return { next: passTime(4) };
+    return { next: passTime(1) };
 }
 
 function getOralRapedByMinotaur(player: Character, minotaur: Character): NextScreenChoices {
@@ -671,8 +638,7 @@ function getOralRapedByMinotaur(player: Character, minotaur: Character): NextScr
     player.stats.sens += 1;
 
     minoCumAddiction(10);
-    if (inCombat) return { next: passTime(1) };
-    else return { next: passTime(4) };
+    return { next: passTime(1) };
 }
 
 function minoGetsTitFucked(player: Character, minotaur: Character): NextScreenChoices {
@@ -854,7 +820,8 @@ export function minoAddictionFuck(player: Character): NextScreenChoices {
     // (Max lust, load minotaur dicks & balls into monster stats and throw to rape-scenes.)
     player.stats.lust += 3000;
 
-    return { next: endLustLoss };
+    return sceneNotImplimented();
+    // return { next: endLustLoss };
 }
 
 // [Optional Bad-End For Uber-Addicted]
@@ -941,8 +908,11 @@ function minotaurDrinksMilkNewsAtEleven(player: Character): NextScreenChoices {
     player.stats.lust += -50;
 
     // You've now been milked, reset the timer for that
-    player.effects.getByName(EffectType.Feeder).value1 += 1;
-    player.effects.getByName(EffectType.Feeder).value2 = 0;
+    const feeder = player.effects.getByName(EffectType.Feeder);
+    if (feeder) {
+        feeder.values.value1 += 1;
+        feeder.values.value2 = 0;
+    }
     return { next: passTime(1) };
 }
 

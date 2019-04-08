@@ -88,7 +88,7 @@ export class GoblinTeaseAttack extends CombatAction {
 }
 
 class GoblinEndScenes extends EndScenes {
-    protected victoryScene?(howYouWon: DefeatType, enemy: Character): NextScreenChoices {
+    protected victoryScene(howYouWon: DefeatType, enemy: Character): NextScreenChoices {
         if (enemy.gender === 0) {
             CView.text("You collapse in front of the goblin, too wounded to fight.  She giggles and takes out a tube of lipstick smearing it whorishly on your face.  You pass into unconsciousness immediately.  It must have been drugged.");
             return { next: passTime(1) };
