@@ -13,7 +13,6 @@ import { LegType } from 'Engine/Body/Legs';
 import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
 import { WingType } from 'Engine/Body/Wings';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Weapon } from 'Engine/Items/Weapon';
@@ -87,11 +86,14 @@ class ImpLordEndScenes extends EndScenes {
 }
 
 export class ImpLord extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.ImpLord);
+        super({
+            type: CharacterType.ImpLord,
+            unarmedWeapon: new Weapon("fist" as WeaponName, new ItemDesc("fist"), "fist", "punch", 10),
+            baseArmor: new Armor("leathery skin" as ArmorName, new ItemDesc("leathery skin"), "leathery skin", 5)
+        });
         this.description = new CharacterDescription(this, "the ", "imp lord", "The greater imp has an angular face, complete with curved nose and burnt red skin typical of imps.  He has no hair on his head, leaving his cold, lust-clouded, black eyes unobstructed.  Just above his long pointed ears are two curved bovine horns.  While still short, he's much taller then the average imp, being nearly four feet tall, and extremely well-muscled.  A pair of powerful wings extends out from his shoulders, however, you suspect he wouldn't be able to fly for long due to his extreme bulk.  A thick coating of fur starts at his well toned hips and works its way down his powerful legs.  His legs end in a pair of oddly jointed, demonic hooves.  His demonic figure is completed by a thin tail that has an arrowhead shaped tip.\n\nThe greater imp, like most imps wear very little clothing; only a simple loincloth and satchel hang from his waist.  You also note that the imp has two barbell piercings in his nipples. The creature doesn't seem to have any weapons, aside from his sharp black finger nails.");
 
         // Imps now only have demon dicks.
@@ -123,11 +125,6 @@ export class ImpLord extends Character {
         this.stats.level = 7;
         this.stats.maxHP = 100;
         this.stats.HP = this.stats.maxHP;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("fist" as WeaponName, new ItemDesc("fist"), "fist", "punch", 10),
-            new Armor("leathery skin" as ArmorName, new ItemDesc("leathery skin"), "leathery skin", 5)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

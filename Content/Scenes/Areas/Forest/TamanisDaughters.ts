@@ -11,7 +11,6 @@ import { ButtLooseness, ButtWetness, ButtRating } from 'Engine/Body/Butt';
 import { HipRating } from 'Engine/Body/Hips';
 import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { CharacterType } from 'Content/Character/CharacterType';
@@ -162,11 +161,14 @@ class TamanisDaughtersEndScenes extends EndScenes {
 }
 
 export class TamanisDaughters extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.TamanisDaughters);
+        super({
+            type: CharacterType.TamanisDaughters,
+            unarmedWeapon: new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
+            baseArmor: new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
+        });
         this.description = new CharacterDescription(this, "the group of ", "Tamani's daughters", "A large grouping of goblin girls has gathered around you, surrounding you on all sides.  Most have varying shades of green skin, though a few have yellowish or light blue casts to their skin.  All are barely clothed, exposing as much of their flesh as possible in order to excite a potential mate.  Their hairstyles are as varied as their clothing and skin-tones, and the only things they seem to have in common are cute faces and curvy forms.  It looks like they want something from you.", true);
         this.body.vaginas.add(new Vagina(VaginaWetness.DROOLING, VaginaLooseness.TIGHT, false));
         this.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 40 });
@@ -193,11 +195,6 @@ export class TamanisDaughters extends Character {
         this.stats.lust = 30;
         this.stats.lustVuln = .65;
         this.stats.level = 8 + (Math.floor(TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 20));
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
-            new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

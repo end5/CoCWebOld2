@@ -30,7 +30,7 @@ export function mainMenu(): NextScreenChoices {
 
     if (Settings.debug)
         CView.text("\n\n<b>DEBUG MODE ENABLED:  ITEMS WILL NOT BE CONSUMED BY USE.</b>");
-    if (Settings.showSprites)
+    if (!Settings.showSprites)
         CView.text("\n\n<b>Sprites disabled.</b>");
     if (Settings.easyMode)
         CView.text("\n\n<b>Easy Mode On:  Bad-ends can be ignored.</b>");

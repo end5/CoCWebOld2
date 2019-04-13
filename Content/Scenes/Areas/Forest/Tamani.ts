@@ -13,7 +13,6 @@ import { HipRating } from 'Engine/Body/Hips';
 import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
 import { TamaniFlags, tamaniChest, tamaniSexLost, tamaniSexLetHer, getRapedByTamaniYouHypnoSlut, tamaniAnalShits, tamaniBeaten, tamaniSexWon } from './TamaniScene';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { CharacterType } from 'Content/Character/CharacterType';
@@ -193,11 +192,14 @@ class TamaniEndScenes extends EndScenes {
 }
 
 export class Tamani extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.Tamani);
+        super({
+            type: CharacterType.Tamani,
+            unarmedWeapon: new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
+            baseArmor: new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
+        });
         this.description = new CharacterDescription(this, "", "Tamani", "She keeps her arms folded across her " + tamaniChest() + " and glares at you.  The little thing is only about four feet tall, with pink and black dyed hair cut into a cute little 'do.  The greenish-gray skin of her breasts bulges out around her arms, supported by a few leather straps, amplifying her cleavage.  Her cunt lips are pierced multiple times, inflamed, and slightly parted.  There really isn't any clothing on her to hide them, just more of the ever-present straps wrapping around her thighs.");
         this.body.vaginas.add(new Vagina(VaginaWetness.DROOLING, VaginaLooseness.NORMAL, false));
         this.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 55 });
@@ -224,11 +226,6 @@ export class Tamani extends Character {
         this.stats.lust = 40;
         this.stats.lustVuln = 0.9;
         this.stats.level = 4;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
-            new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
-        );
 
         this.combatContainer = new CombatContainer(this, {
             mainAction: new MainAction(),

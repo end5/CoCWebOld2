@@ -10,7 +10,6 @@ import { Weapon } from 'Engine/Items/Weapon';
 import { WeaponName } from 'Content/Items/WeaponName';
 import { Character } from 'Engine/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { randInt } from 'Engine/Utilities/SMath';
 import { PlayerResponses } from './PlayerResponses';
@@ -23,10 +22,13 @@ class BlankEndScenes extends EndScenes { }
 
 export class Player extends Character {
     protected description: CharacterDescription = new CharacterDescription(this, "", "", "");
-    public inventory: CharacterInventory;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.Player);
+        super({
+            type: CharacterType.Player,
+            unarmedWeapon: ItemDict.getByName(WeaponName.Fists) as Weapon,
+            baseArmor: ItemDict.getByName(ArmorName.ComfortUndercloth) as Armor,
+        });
         this.body = new PlayerBody(this);
         this.stats = new PlayerStats(this);
         this.desc.isPlayer = true;
@@ -51,7 +53,6 @@ export class Player extends Character {
         this.body.butt.wetness = ButtWetness.DRY;
 
         // Inventory
-        this.inventory = new CharacterInventory(this, ItemDict.getByName(WeaponName.Fists) as Weapon, ItemDict.getByName(ArmorName.ComfortUndercloth) as Armor);
         this.inventory.items.unlock(6);
 
         // Combat

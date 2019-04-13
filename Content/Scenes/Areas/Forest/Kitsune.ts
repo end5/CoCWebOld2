@@ -16,7 +16,6 @@ import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
 import { TailType, Tail } from 'Engine/Body/Tail';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { Weapon } from 'Engine/Items/Weapon';
 import { WeaponName } from 'Content/Items/WeaponName';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
@@ -222,11 +221,14 @@ class KitsuneEndScenes extends EndScenes {
 }
 
 export class Kitsune extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor(hairColor: "red" | "blonde" | "black") {
-        super(CharacterType.Kitsune);
+        super({
+            type: CharacterType.Kitsune,
+            unarmedWeapon: new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "punch", 1),
+            baseArmor: new Armor("skin" as ArmorName, new ItemDesc("skin"), "skin", 1),
+        });
 
         if (randInt(3) !== 2) KitsuneFlags.redheadIsFuta = 1;
         this.description = new CharacterDescription(this, "a ", "kitsune", "A kitsune stands in front of you, about five and a half feet tall.  She has a head of " +
@@ -271,11 +273,6 @@ export class Kitsune extends Character {
         this.stats.lust = 20;
         this.stats.lustVuln = 0.9;
         this.stats.level = 6;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "punch", 1),
-            new Armor("skin" as ArmorName, new ItemDesc("skin"), "skin", 1),
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

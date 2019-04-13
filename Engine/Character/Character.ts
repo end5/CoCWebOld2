@@ -17,6 +17,8 @@ import { WingType } from 'Engine/Body/Wings';
 import { Womb } from 'Engine/Body/Pregnancy/Womb';
 import { randInt } from 'Engine/Utilities/SMath';
 import { EffectType } from 'Content/Effects/EffectType';
+import { Weapon } from 'Engine/Items/Weapon';
+import { Armor } from 'Engine/Items/Armor';
 
 export interface ICharacter {
     type: string;
@@ -30,9 +32,15 @@ export interface ICharacter {
     hoursSinceCum: number;
 }
 
+interface ICharacterConstruction {
+    type: string;
+    unarmedWeapon: Weapon;
+    baseArmor: Armor;
+}
+
 export abstract class Character implements ISerializable<ICharacter> {
     public charType: string;
-    public abstract readonly inventory: CharacterInventory;
+    public readonly inventory: CharacterInventory;
 
     private UUID: string;
     public get uuid(): string {
@@ -58,12 +66,13 @@ export abstract class Character implements ISerializable<ICharacter> {
     public readonly effects = new EffectList();
     public hoursSinceCum = 0;
 
-    public constructor(type: string) {
-        this.charType = type;
-        if (type !== CharacterType.Player) {
+    public constructor(values: ICharacterConstruction) {
+        this.charType = values.type;
+        if (values.type !== CharacterType.Player) {
             this.stats.XP = this.totalXP();
         }
         this.UUID = generateUUID();
+        this.inventory = new CharacterInventory(this, values.unarmedWeapon, values.baseArmor);
     }
 
     public get gender(): Gender {

@@ -11,7 +11,6 @@ import { ButtLooseness, ButtWetness, ButtRating } from 'Engine/Body/Butt';
 import { HipRating } from 'Engine/Body/Hips';
 import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Weapon } from 'Engine/Items/Weapon';
@@ -109,11 +108,14 @@ class GoblinEndScenes extends EndScenes {
 }
 
 export class Goblin extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.Goblin);
+        super({
+            type: CharacterType.Goblin,
+            unarmedWeapon: new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
+            baseArmor: new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
+        });
         this.description = new CharacterDescription(this, "the ", "goblin", "The goblin before you is a typical example of her species, with dark green skin, pointed ears, and purple hair that would look more at home on a punk-rocker.  She's only about three feet tall, but makes up for it with her curvy body, sporting hips and breasts that would entice any of the men in your village were she full-size.  There isn't a single scrap of clothing on her, just lewd leather straps and a few clinking pouches.  She does sport quite a lot of piercings – the most noticeable being large studs hanging from her purple nipples.  Her eyes are fiery red, and practically glow with lust.  This one isn't going to be satisfied until she has her way with you.  It shouldn't be too hard to subdue such a little creature, right?");
         this.body.vaginas.add(new Vagina(VaginaWetness.DROOLING, VaginaLooseness.NORMAL, false));
         this.effects.create(EffectType.BonusVCapacity, { vaginalCapacity: 40 });
@@ -138,11 +140,6 @@ export class Goblin extends Character {
         this.stats.HP = this.stats.maxHP;
         this.stats.lust = 50;
         this.stats.level = 1;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("fists" as WeaponName, new ItemDesc("fists"), "fists", "tiny punch", 0),
-            new Armor("leather straps" as ArmorName, new ItemDesc("leather straps"), "leather straps", 0)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {
