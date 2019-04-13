@@ -16,7 +16,7 @@ define(["require", "exports", "Engine/Display/MainScreen", "Engine/Display/Scree
         ContentView_1.CView.text("<b>Corruption of Champions Web Edition Framework Test</b>\n");
         if (Settings_1.Settings.debug)
             ContentView_1.CView.text("\n\n<b>DEBUG MODE ENABLED:  ITEMS WILL NOT BE CONSUMED BY USE.</b>");
-        if (Settings_1.Settings.showSprites)
+        if (!Settings_1.Settings.showSprites)
             ContentView_1.CView.text("\n\n<b>Sprites disabled.</b>");
         if (Settings_1.Settings.easyMode)
             ContentView_1.CView.text("\n\n<b>Easy Mode On:  Bad-ends can be ignored.</b>");

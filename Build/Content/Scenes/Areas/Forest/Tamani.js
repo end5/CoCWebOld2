@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Engine/Display/ScreenDisplay", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Engine/Body/Cock", "Content/Scenes/PassTime", "Engine/Body/Vagina", "Content/Effects/EffectType", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "./TamaniScene", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Content/Character/CharacterType", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "Engine/Combat/Actions/CombatAction", "../BeyondCamp/Goblin", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ScreenDisplay_1, SMath_1, ContentView_1, CockDescriptor_1, Cock_1, PassTime_1, Vagina_1, EffectType_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, TamaniScene_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, CharacterType_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, DefeatEvent_1, CombatAction_1, Goblin_1, MainAction_1) {
+define(["require", "exports", "Engine/Character/Character", "Engine/Display/ScreenDisplay", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Engine/Body/Cock", "Content/Scenes/PassTime", "Engine/Body/Vagina", "Content/Effects/EffectType", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "./TamaniScene", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Content/Character/CharacterType", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "Engine/Combat/Actions/CombatAction", "../BeyondCamp/Goblin", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ScreenDisplay_1, SMath_1, ContentView_1, CockDescriptor_1, Cock_1, PassTime_1, Vagina_1, EffectType_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, TamaniScene_1, CharacterDescription_1, CombatContainer_1, CharacterType_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, DefeatEvent_1, CombatAction_1, Goblin_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // New Tease option:
@@ -200,7 +200,11 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Scre
     }
     class Tamani extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.Tamani);
+            super({
+                type: CharacterType_1.CharacterType.Tamani,
+                unarmedWeapon: new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0),
+                baseArmor: new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "", "Tamani", "She keeps her arms folded across her " + TamaniScene_1.tamaniChest() + " and glares at you.  The little thing is only about four feet tall, with pink and black dyed hair cut into a cute little 'do.  The greenish-gray skin of her breasts bulges out around her arms, supported by a few leather straps, amplifying her cleavage.  Her cunt lips are pierced multiple times, inflamed, and slightly parted.  There really isn't any clothing on her to hide them, just more of the ever-present straps wrapping around her thighs.");
             this.body.vaginas.add(new Vagina_1.Vagina(Vagina_1.VaginaWetness.DROOLING, Vagina_1.VaginaLooseness.NORMAL, false));
             this.effects.create(EffectType_1.EffectType.BonusVCapacity, { vaginalCapacity: 55 });
@@ -226,7 +230,6 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Scre
             this.stats.lust = 40;
             this.stats.lustVuln = 0.9;
             this.stats.level = 4;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0), new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new TamaniEndScenes(this),

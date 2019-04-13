@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Combat/EndScenes", "Content/Character/CharacterType", "Engine/Character/Character", "Engine/Display/ScreenDisplay", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Engine/Body/Vagina", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Body/Cock", "Engine/Utilities/SMath", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Wings", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/Actions/CombatAction", "./ImpScene", "Content/Descriptors/VaginaDescriptor", "Content/Effects/EffectType", "Content/Combat/Actions/MainAction"], function (require, exports, EndScenes_1, CharacterType_1, Character_1, ScreenDisplay_1, ContentView_1, CockDescriptor_1, Vagina_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, Cock_1, SMath_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, Wings_1, Weapon_1, ItemDesc_1, Armor_1, CombatAction_1, ImpScene_1, VaginaDescriptor_1, EffectType_1, MainAction_1) {
+define(["require", "exports", "Engine/Combat/EndScenes", "Content/Character/CharacterType", "Engine/Character/Character", "Engine/Display/ScreenDisplay", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Engine/Body/Vagina", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Body/Cock", "Engine/Utilities/SMath", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Wings", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/Actions/CombatAction", "./ImpScene", "Content/Descriptors/VaginaDescriptor", "Content/Effects/EffectType", "Content/Combat/Actions/MainAction"], function (require, exports, EndScenes_1, CharacterType_1, Character_1, ScreenDisplay_1, ContentView_1, CockDescriptor_1, Vagina_1, CharacterDescription_1, CombatContainer_1, Cock_1, SMath_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, Wings_1, Weapon_1, ItemDesc_1, Armor_1, CombatAction_1, ImpScene_1, VaginaDescriptor_1, EffectType_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class ImpMagicLustAttack extends CombatAction_1.CombatAction {
@@ -65,7 +65,11 @@ define(["require", "exports", "Engine/Combat/EndScenes", "Content/Character/Char
     }
     class Imp extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.Imp);
+            super({
+                type: CharacterType_1.CharacterType.Imp,
+                unarmedWeapon: new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "claw-slash", 0),
+                baseArmor: new Armor_1.Armor("leathery skin", new ItemDesc_1.ItemDesc("leathery skin"), "leathery skin", 0)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "the ", "imp", "An imp is short, only a few feet tall.  An unkempt mane of shaggy black hair hangs from his head, parted by two short curved horns.  His eyes are solid black, save for tiny red irises which glow with evil intent.  His skin is bright red, and unencumbered by clothing or armor, save for a small loincloth at his belt.  His feet are covered by tiny wooden sandals, and his hands tipped with sharp claws.  A pair of tiny but functional wings occasionally flap from his back.");
             this.body.cocks.add(new Cock_1.Cock(SMath_1.randInt(2) + 11, 2.5, Cock_1.CockType.DEMON));
             this.body.balls.count = 2;
@@ -89,7 +93,6 @@ define(["require", "exports", "Engine/Combat/EndScenes", "Content/Character/Char
             this.stats.HP = this.stats.maxHP;
             this.stats.lust = 40;
             this.stats.level = 1;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "claw-slash", 0), new Armor_1.Armor("leathery skin", new ItemDesc_1.ItemDesc("leathery skin"), "leathery skin", 0));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new ImpEndScenes(this),

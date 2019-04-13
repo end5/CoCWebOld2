@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Engine/Display/ContentView", "Content/Descriptors/LegDescriptor", "Content/Effects/EffectType", "Engine/Utilities/SMath", "Content/Settings", "Content/Character/CharacterType", "Engine/Body/Cock", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Content/Descriptors/BreastDescriptor", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Tail", "Engine/Character/CharacterDescription", "Engine/Inventory/CharacterInventory", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/CombatContainer", "Engine/Utilities/Dictionary", "Engine/Combat/EndScenes", "./KitsuneScene", "Engine/Combat/Actions/CombatAction", "Content/Combat/Actions/BasicAttack", "Engine/Combat/Actions/CombatActionType"], function (require, exports, Character_1, ContentView_1, LegDescriptor_1, EffectType_1, SMath_1, Settings_1, CharacterType_1, Cock_1, Vagina_1, BreastRow_1, BreastDescriptor_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, Tail_1, CharacterDescription_1, CharacterInventory_1, Weapon_1, ItemDesc_1, Armor_1, CombatContainer_1, Dictionary_1, EndScenes_1, KitsuneScene_1, CombatAction_1, BasicAttack_1, CombatActionType_1) {
+define(["require", "exports", "Engine/Character/Character", "Engine/Display/ContentView", "Content/Descriptors/LegDescriptor", "Content/Effects/EffectType", "Engine/Utilities/SMath", "Content/Settings", "Content/Character/CharacterType", "Engine/Body/Cock", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Content/Descriptors/BreastDescriptor", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Tail", "Engine/Character/CharacterDescription", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/CombatContainer", "Engine/Utilities/Dictionary", "Engine/Combat/EndScenes", "./KitsuneScene", "Engine/Combat/Actions/CombatAction", "Content/Combat/Actions/BasicAttack", "Engine/Combat/Actions/CombatActionType"], function (require, exports, Character_1, ContentView_1, LegDescriptor_1, EffectType_1, SMath_1, Settings_1, CharacterType_1, Cock_1, Vagina_1, BreastRow_1, BreastDescriptor_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, Tail_1, CharacterDescription_1, Weapon_1, ItemDesc_1, Armor_1, CombatContainer_1, Dictionary_1, EndScenes_1, KitsuneScene_1, CombatAction_1, BasicAttack_1, CombatActionType_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // Combat Abilities:
@@ -219,7 +219,11 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Cont
     }
     class Kitsune extends Character_1.Character {
         constructor(hairColor) {
-            super(CharacterType_1.CharacterType.Kitsune);
+            super({
+                type: CharacterType_1.CharacterType.Kitsune,
+                unarmedWeapon: new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "punch", 1),
+                baseArmor: new Armor_1.Armor("skin", new ItemDesc_1.ItemDesc("skin"), "skin", 1),
+            });
             if (SMath_1.randInt(3) !== 2)
                 KitsuneScene_1.KitsuneFlags.redheadIsFuta = 1;
             this.description = new CharacterDescription_1.CharacterDescription(this, "a ", "kitsune", "A kitsune stands in front of you, about five and a half feet tall.  She has a head of " +
@@ -263,7 +267,6 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Cont
             this.stats.lust = 20;
             this.stats.lustVuln = 0.9;
             this.stats.level = 6;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "punch", 1), new Armor_1.Armor("skin", new ItemDesc_1.ItemDesc("skin"), "skin", 1));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new KitsuneMainAction(),
                 reactions: KitsuneReactions,

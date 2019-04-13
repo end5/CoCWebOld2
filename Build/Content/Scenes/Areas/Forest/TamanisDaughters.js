@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Content/Descriptors/LegDescriptor", "Content/Effects/EffectType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Content/Character/CharacterType", "./TamanisDaughtersScene", "./TamaniScene", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/Actions/CombatAction", "Content/Descriptors/BallsDescriptor", "Content/Combat/Actions/BasicAttack", "./Tamani", "../BeyondCamp/Goblin"], function (require, exports, Character_1, SMath_1, ContentView_1, CockDescriptor_1, LegDescriptor_1, EffectType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, CharacterType_1, TamanisDaughtersScene_1, TamaniScene_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, CombatAction_1, BallsDescriptor_1, BasicAttack_1, Tamani_1, Goblin_1) {
+define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Descriptors/CockDescriptor", "Content/Descriptors/LegDescriptor", "Content/Effects/EffectType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Content/Character/CharacterType", "./TamanisDaughtersScene", "./TamaniScene", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/Actions/CombatAction", "Content/Descriptors/BallsDescriptor", "Content/Combat/Actions/BasicAttack", "./Tamani", "../BeyondCamp/Goblin"], function (require, exports, Character_1, SMath_1, ContentView_1, CockDescriptor_1, LegDescriptor_1, EffectType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, CharacterDescription_1, CombatContainer_1, CharacterType_1, TamanisDaughtersScene_1, TamaniScene_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, CombatAction_1, BallsDescriptor_1, BasicAttack_1, Tamani_1, Goblin_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function midRoundMadness(player) {
@@ -140,7 +140,11 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SM
     }
     class TamanisDaughters extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.TamanisDaughters);
+            super({
+                type: CharacterType_1.CharacterType.TamanisDaughters,
+                unarmedWeapon: new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0),
+                baseArmor: new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "the group of ", "Tamani's daughters", "A large grouping of goblin girls has gathered around you, surrounding you on all sides.  Most have varying shades of green skin, though a few have yellowish or light blue casts to their skin.  All are barely clothed, exposing as much of their flesh as possible in order to excite a potential mate.  Their hairstyles are as varied as their clothing and skin-tones, and the only things they seem to have in common are cute faces and curvy forms.  It looks like they want something from you.", true);
             this.body.vaginas.add(new Vagina_1.Vagina(Vagina_1.VaginaWetness.DROOLING, Vagina_1.VaginaLooseness.TIGHT, false));
             this.effects.create(EffectType_1.EffectType.BonusVCapacity, { vaginalCapacity: 40 });
@@ -166,7 +170,6 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SM
             this.stats.lust = 30;
             this.stats.lustVuln = .65;
             this.stats.level = 8 + (Math.floor(TamaniScene_1.TamaniFlags.TAMANI_NUMBER_OF_DAUGHTERS / 20));
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0), new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new TamanisDaughtersMainAction(),
                 endScenes: new TamanisDaughtersEndScenes(this),

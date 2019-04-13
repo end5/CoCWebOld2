@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Engine/Display/ContentView", "Content/Effects/EffectType", "Engine/Utilities/SMath", "Content/Character/CharacterType", "Engine/Body/Cock", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Skin", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Tail", "Engine/Character/CharacterDescription", "Engine/Inventory/CharacterInventory", "Engine/Items/Weapon", "Engine/Items/Armor", "Content/Items/WeaponName", "Engine/Items/ItemDesc", "Engine/Combat/CombatContainer", "Engine/Combat/Actions/CombatAction", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "./AkbalScenes", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ContentView_1, EffectType_1, SMath_1, CharacterType_1, Cock_1, BreastRow_1, Butt_1, Hips_1, Skin_1, WeightedDrop_1, ConsumableName_1, Tail_1, CharacterDescription_1, CharacterInventory_1, Weapon_1, Armor_1, WeaponName_1, ItemDesc_1, CombatContainer_1, CombatAction_1, EndScenes_1, DefeatEvent_1, AkbalScenes_1, MainAction_1) {
+define(["require", "exports", "Engine/Character/Character", "Engine/Display/ContentView", "Content/Effects/EffectType", "Engine/Utilities/SMath", "Content/Character/CharacterType", "Engine/Body/Cock", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Skin", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Tail", "Engine/Character/CharacterDescription", "Engine/Items/Weapon", "Engine/Items/Armor", "Content/Items/WeaponName", "Engine/Items/ItemDesc", "Engine/Combat/CombatContainer", "Engine/Combat/Actions/CombatAction", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "./AkbalScenes", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ContentView_1, EffectType_1, SMath_1, CharacterType_1, Cock_1, BreastRow_1, Butt_1, Hips_1, Skin_1, WeightedDrop_1, ConsumableName_1, Tail_1, CharacterDescription_1, Weapon_1, Armor_1, WeaponName_1, ItemDesc_1, CombatContainer_1, CombatAction_1, EndScenes_1, DefeatEvent_1, AkbalScenes_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Attack extends CombatAction_1.CombatAction {
@@ -158,7 +158,11 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Cont
     }
     class Akbal extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.Akbal);
+            super({
+                type: CharacterType_1.CharacterType.Akbal,
+                unarmedWeapon: new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "claw-slash", 5),
+                baseArmor: new Armor_1.Armor("shimmering pelt", new ItemDesc_1.ItemDesc("shimmering pelt"), "shimmering pelt", 5)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "", "Akbal", "Akbal, 'God of the Terrestrial Fire', circles around you. His sleek yet muscular body is covered in tan fur, with dark spots that seem to dance around as you look upon them.  His mouth holds two ivory incisors that glint in the sparse sunlight as his lips tremble to the sound of an unending growl.  Each paw conceals lethal claws capable of shredding men and demons to ribbons.  His large and sickeningly alluring bright green eyes promise unbearable agony as you look upon them.");
             this.body.cocks.add(new Cock_1.Cock(15, 2.5, Cock_1.CockType.DOG));
             this.body.balls.count = 2;
@@ -190,7 +194,6 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Display/Cont
             this.stats.maxHP = 20;
             this.stats.HP = this.stats.maxHP;
             this.stats.level = 6;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("claws", new ItemDesc_1.ItemDesc("claws"), "claws", "claw-slash", 5), new Armor_1.Armor("shimmering pelt", new ItemDesc_1.ItemDesc("shimmering pelt"), "shimmering pelt", 5));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new AkbalEndScenes(this),

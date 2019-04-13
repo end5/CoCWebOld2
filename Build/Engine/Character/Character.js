@@ -1,18 +1,19 @@
-define(["require", "exports", "Engine/Body/GenderIdentity", "Engine/Body/Body", "./Stats", "Engine/Effects/Effect", "Engine/Utilities/Uuid", "Engine/Effects/EffectList", "Content/Character/CharacterType", "Engine/Body/Tail", "Engine/Body/Legs", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Wings", "Engine/Body/Pregnancy/Womb", "Engine/Utilities/SMath", "Content/Effects/EffectType"], function (require, exports, GenderIdentity_1, Body_1, Stats_1, Effect_1, Uuid_1, EffectList_1, CharacterType_1, Tail_1, Legs_1, Vagina_1, BreastRow_1, Wings_1, Womb_1, SMath_1, EffectType_1) {
+define(["require", "exports", "Engine/Body/GenderIdentity", "Engine/Body/Body", "./Stats", "Engine/Effects/Effect", "Engine/Inventory/CharacterInventory", "Engine/Utilities/Uuid", "Engine/Effects/EffectList", "Content/Character/CharacterType", "Engine/Body/Tail", "Engine/Body/Legs", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Wings", "Engine/Body/Pregnancy/Womb", "Engine/Utilities/SMath", "Content/Effects/EffectType"], function (require, exports, GenderIdentity_1, Body_1, Stats_1, Effect_1, CharacterInventory_1, Uuid_1, EffectList_1, CharacterType_1, Tail_1, Legs_1, Vagina_1, BreastRow_1, Wings_1, Womb_1, SMath_1, EffectType_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Character {
-        constructor(type) {
+        constructor(values) {
             this.genderManager = new GenderIdentity_1.GenderIdentity(this);
             this.body = new Body_1.Body();
             this.stats = new Stats_1.Stats();
             this.effects = new EffectList_1.EffectList();
             this.hoursSinceCum = 0;
-            this.charType = type;
-            if (type !== CharacterType_1.CharacterType.Player) {
+            this.charType = values.type;
+            if (values.type !== CharacterType_1.CharacterType.Player) {
                 this.stats.XP = this.totalXP();
             }
             this.UUID = Uuid_1.generateUUID();
+            this.inventory = new CharacterInventory_1.CharacterInventory(this, values.unarmedWeapon, values.baseArmor);
         }
         get uuid() {
             return this.UUID;

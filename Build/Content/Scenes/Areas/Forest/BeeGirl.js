@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Flags", "Engine/Character/Character", "Engine/Display/ContentView", "Engine/Display/ScreenDisplay", "Content/Effects/EffectType", "Content/Scenes/PassTime", "Engine/Utilities/SMath", "Content/Character/CharacterType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Legs", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Content/Items/MaterialName", "Engine/Body/Antennae", "Engine/Body/Wings", "Engine/Body/Tail", "Engine/Combat/EndScenes", "./BeeGirlScene", "Engine/Combat/DefeatEvent", "Engine/Character/CharacterDescription", "Engine/Inventory/CharacterInventory", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/CombatContainer", "Engine/Combat/Actions/CombatAction", "./TamaniScene", "Content/Combat/Actions/MainAction"], function (require, exports, Flags_1, Character_1, ContentView_1, ScreenDisplay_1, EffectType_1, PassTime_1, SMath_1, CharacterType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, Legs_1, WeightedDrop_1, ConsumableName_1, MaterialName_1, Antennae_1, Wings_1, Tail_1, EndScenes_1, BeeGirlScene_1, DefeatEvent_1, CharacterDescription_1, CharacterInventory_1, Weapon_1, ItemDesc_1, Armor_1, CombatContainer_1, CombatAction_1, TamaniScene_1, MainAction_1) {
+define(["require", "exports", "Engine/Flags", "Engine/Character/Character", "Engine/Display/ContentView", "Engine/Display/ScreenDisplay", "Content/Effects/EffectType", "Content/Scenes/PassTime", "Engine/Utilities/SMath", "Content/Character/CharacterType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Legs", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Content/Items/MaterialName", "Engine/Body/Antennae", "Engine/Body/Wings", "Engine/Body/Tail", "Engine/Combat/EndScenes", "./BeeGirlScene", "Engine/Combat/DefeatEvent", "Engine/Character/CharacterDescription", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/CombatContainer", "Engine/Combat/Actions/CombatAction", "./TamaniScene", "Content/Combat/Actions/MainAction"], function (require, exports, Flags_1, Character_1, ContentView_1, ScreenDisplay_1, EffectType_1, PassTime_1, SMath_1, CharacterType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, Legs_1, WeightedDrop_1, ConsumableName_1, MaterialName_1, Antennae_1, Wings_1, Tail_1, EndScenes_1, BeeGirlScene_1, DefeatEvent_1, CharacterDescription_1, Weapon_1, ItemDesc_1, Armor_1, CombatContainer_1, CombatAction_1, TamaniScene_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.BeeGirlFlags = Flags_1.Flags.register("BeeGirl", {
@@ -128,7 +128,11 @@ define(["require", "exports", "Engine/Flags", "Engine/Character/Character", "Eng
     }
     class BeeGirl extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.BeeGirl);
+            super({
+                type: CharacterType_1.CharacterType.BeeGirl,
+                unarmedWeapon: new Weapon_1.Weapon("chitin-plated fist", new ItemDesc_1.ItemDesc("chitin-plated fist"), "chitin-plated fist", "armored punch", 1),
+                baseArmor: new Armor_1.Armor("chitin", new ItemDesc_1.ItemDesc("chitin"), "chitin", 9)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "a ", "bee-girl", "A bee-girl buzzes around you, filling the air with intoxicatingly sweet scents and a buzz that gets inside your head.  She has a humanoid face with small antennae, black chitin on her arms and legs that looks like shiny gloves and boots, sizable breasts, and a swollen abdomen tipped with a gleaming stinger.");
             this.body.vaginas.add(new Vagina_1.Vagina(Vagina_1.VaginaWetness.SLAVERING, Vagina_1.VaginaLooseness.GAPING, false));
             this.body.chest.firstRow.rating = BreastRow_1.BreastCup.DD;
@@ -155,7 +159,6 @@ define(["require", "exports", "Engine/Flags", "Engine/Character/Character", "Eng
             this.stats.lust = 20 + SMath_1.randInt(40);
             this.stats.lustVuln = 0.9;
             this.stats.level = 4;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("chitin-plated fist", new ItemDesc_1.ItemDesc("chitin-plated fist"), "chitin-plated fist", "armored punch", 1), new Armor_1.Armor("chitin", new ItemDesc_1.ItemDesc("chitin"), "chitin", 9));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new BeeGirlEndScenes(this),

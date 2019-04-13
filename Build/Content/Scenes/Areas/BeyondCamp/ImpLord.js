@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "./ImpLordScene", "Engine/Display/ContentView", "Engine/Utilities/SMath", "Content/Combat/CombatUtils", "Engine/Combat/EndScenes", "Engine/Body/Cock", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Legs", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Wings", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Content/Character/CharacterType", "Engine/Combat/Actions/CombatAction", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ImpLordScene_1, ContentView_1, SMath_1, CombatUtils_1, EndScenes_1, Cock_1, Butt_1, Hips_1, Legs_1, WeightedDrop_1, ConsumableName_1, Wings_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, Weapon_1, ItemDesc_1, Armor_1, CharacterType_1, CombatAction_1, MainAction_1) {
+define(["require", "exports", "Engine/Character/Character", "./ImpLordScene", "Engine/Display/ContentView", "Engine/Utilities/SMath", "Content/Combat/CombatUtils", "Engine/Combat/EndScenes", "Engine/Body/Cock", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Legs", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Body/Wings", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Content/Character/CharacterType", "Engine/Combat/Actions/CombatAction", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, ImpLordScene_1, ContentView_1, SMath_1, CombatUtils_1, EndScenes_1, Cock_1, Butt_1, Hips_1, Legs_1, WeightedDrop_1, ConsumableName_1, Wings_1, CharacterDescription_1, CombatContainer_1, Weapon_1, ItemDesc_1, Armor_1, CharacterType_1, CombatAction_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     // Special Attack 1
@@ -72,7 +72,11 @@ define(["require", "exports", "Engine/Character/Character", "./ImpLordScene", "E
     }
     class ImpLord extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.ImpLord);
+            super({
+                type: CharacterType_1.CharacterType.ImpLord,
+                unarmedWeapon: new Weapon_1.Weapon("fist", new ItemDesc_1.ItemDesc("fist"), "fist", "punch", 10),
+                baseArmor: new Armor_1.Armor("leathery skin", new ItemDesc_1.ItemDesc("leathery skin"), "leathery skin", 5)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "the ", "imp lord", "The greater imp has an angular face, complete with curved nose and burnt red skin typical of imps.  He has no hair on his head, leaving his cold, lust-clouded, black eyes unobstructed.  Just above his long pointed ears are two curved bovine horns.  While still short, he's much taller then the average imp, being nearly four feet tall, and extremely well-muscled.  A pair of powerful wings extends out from his shoulders, however, you suspect he wouldn't be able to fly for long due to his extreme bulk.  A thick coating of fur starts at his well toned hips and works its way down his powerful legs.  His legs end in a pair of oddly jointed, demonic hooves.  His demonic figure is completed by a thin tail that has an arrowhead shaped tip.\n\nThe greater imp, like most imps wear very little clothing; only a simple loincloth and satchel hang from his waist.  You also note that the imp has two barbell piercings in his nipples. The creature doesn't seem to have any weapons, aside from his sharp black finger nails.");
             // Imps now only have demon dicks.
             // Not sure if I agree with this, I can imagine the little fuckers abusing the
@@ -102,7 +106,6 @@ define(["require", "exports", "Engine/Character/Character", "./ImpLordScene", "E
             this.stats.level = 7;
             this.stats.maxHP = 100;
             this.stats.HP = this.stats.maxHP;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("fist", new ItemDesc_1.ItemDesc("fist"), "fist", "punch", 10), new Armor_1.Armor("leathery skin", new ItemDesc_1.ItemDesc("leathery skin"), "leathery skin", 5));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new ImpLordEndScenes(this),

@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Effects/EffectType", "Content/Scenes/PassTime", "Content/Character/CharacterType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/Actions/CombatAction", "./GoblinScene", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, SMath_1, ContentView_1, EffectType_1, PassTime_1, CharacterType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, CombatAction_1, GoblinScene_1, MainAction_1) {
+define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SMath", "Engine/Display/ContentView", "Content/Effects/EffectType", "Content/Scenes/PassTime", "Content/Character/CharacterType", "Engine/Body/Vagina", "Engine/Body/BreastRow", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Utilities/Drops/WeightedDrop", "Content/Items/ConsumableName", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/Actions/CombatAction", "./GoblinScene", "Content/Combat/Actions/MainAction"], function (require, exports, Character_1, SMath_1, ContentView_1, EffectType_1, PassTime_1, CharacterType_1, Vagina_1, BreastRow_1, Butt_1, Hips_1, WeightedDrop_1, ConsumableName_1, CharacterDescription_1, CombatContainer_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, CombatAction_1, GoblinScene_1, MainAction_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class DrugAttack extends CombatAction_1.CombatAction {
@@ -95,7 +95,11 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SM
     }
     class Goblin extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.Goblin);
+            super({
+                type: CharacterType_1.CharacterType.Goblin,
+                unarmedWeapon: new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0),
+                baseArmor: new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "the ", "goblin", "The goblin before you is a typical example of her species, with dark green skin, pointed ears, and purple hair that would look more at home on a punk-rocker.  She's only about three feet tall, but makes up for it with her curvy body, sporting hips and breasts that would entice any of the men in your village were she full-size.  There isn't a single scrap of clothing on her, just lewd leather straps and a few clinking pouches.  She does sport quite a lot of piercings – the most noticeable being large studs hanging from her purple nipples.  Her eyes are fiery red, and practically glow with lust.  This one isn't going to be satisfied until she has her way with you.  It shouldn't be too hard to subdue such a little creature, right?");
             this.body.vaginas.add(new Vagina_1.Vagina(Vagina_1.VaginaWetness.DROOLING, Vagina_1.VaginaLooseness.NORMAL, false));
             this.effects.create(EffectType_1.EffectType.BonusVCapacity, { vaginalCapacity: 40 });
@@ -119,7 +123,6 @@ define(["require", "exports", "Engine/Character/Character", "Engine/Utilities/SM
             this.stats.HP = this.stats.maxHP;
             this.stats.lust = 50;
             this.stats.level = 1;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("fists", new ItemDesc_1.ItemDesc("fists"), "fists", "tiny punch", 0), new Armor_1.Armor("leather straps", new ItemDesc_1.ItemDesc("leather straps"), "leather straps", 0));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new MainAction_1.MainAction(),
                 endScenes: new GoblinEndScenes(this),

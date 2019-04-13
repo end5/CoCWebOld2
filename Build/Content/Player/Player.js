@@ -1,11 +1,15 @@
-define(["require", "exports", "Engine/Combat/EndScenes", "Engine/Body/Butt", "Engine/Body/Face", "Engine/Body/Skin", "Engine/Body/Tongue", "Engine/Combat/CombatContainer", "Content/Items/ArmorName", "Content/Items/WeaponName", "Engine/Character/Character", "Content/Character/CharacterType", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Utilities/SMath", "./PlayerResponses", "./CombatActions/PlayerActionPerform", "Engine/Items/ItemDict", "Content/Player/PlayerStats", "Content/Player/PlayerBody"], function (require, exports, EndScenes_1, Butt_1, Face_1, Skin_1, Tongue_1, CombatContainer_1, ArmorName_1, WeaponName_1, Character_1, CharacterType_1, CharacterInventory_1, CharacterDescription_1, SMath_1, PlayerResponses_1, PlayerActionPerform_1, ItemDict_1, PlayerStats_1, PlayerBody_1) {
+define(["require", "exports", "Engine/Combat/EndScenes", "Engine/Body/Butt", "Engine/Body/Face", "Engine/Body/Skin", "Engine/Body/Tongue", "Engine/Combat/CombatContainer", "Content/Items/ArmorName", "Content/Items/WeaponName", "Engine/Character/Character", "Content/Character/CharacterType", "Engine/Character/CharacterDescription", "Engine/Utilities/SMath", "./PlayerResponses", "./CombatActions/PlayerActionPerform", "Engine/Items/ItemDict", "Content/Player/PlayerStats", "Content/Player/PlayerBody"], function (require, exports, EndScenes_1, Butt_1, Face_1, Skin_1, Tongue_1, CombatContainer_1, ArmorName_1, WeaponName_1, Character_1, CharacterType_1, CharacterDescription_1, SMath_1, PlayerResponses_1, PlayerActionPerform_1, ItemDict_1, PlayerStats_1, PlayerBody_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class BlankEndScenes extends EndScenes_1.EndScenes {
     }
     class Player extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.Player);
+            super({
+                type: CharacterType_1.CharacterType.Player,
+                unarmedWeapon: ItemDict_1.ItemDict.getByName(WeaponName_1.WeaponName.Fists),
+                baseArmor: ItemDict_1.ItemDict.getByName(ArmorName_1.ArmorName.ComfortUndercloth),
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "", "", "");
             this.body = new PlayerBody_1.PlayerBody(this);
             this.stats = new PlayerStats_1.PlayerStats(this);
@@ -29,7 +33,6 @@ define(["require", "exports", "Engine/Combat/EndScenes", "Engine/Body/Butt", "En
             this.body.butt.looseness = Butt_1.ButtLooseness.VIRGIN;
             this.body.butt.wetness = Butt_1.ButtWetness.DRY;
             // Inventory
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, ItemDict_1.ItemDict.getByName(WeaponName_1.WeaponName.Fists), ItemDict_1.ItemDict.getByName(ArmorName_1.ArmorName.ComfortUndercloth));
             this.inventory.items.unlock(6);
             // Combat
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {

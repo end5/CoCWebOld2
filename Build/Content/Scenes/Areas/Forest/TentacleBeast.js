@@ -1,4 +1,4 @@
-define(["require", "exports", "Engine/Character/Character", "Content/Character/CharacterType", "Engine/Display/ScreenDisplay", "Engine/Display/ContentView", "Content/Effects/EffectType", "Content/Descriptors/LegDescriptor", "Content/Descriptors/CockDescriptor", "Content/Descriptors/VaginaDescriptor", "Content/Descriptors/ButtDescriptor", "Content/Scenes/PassTime", "Engine/Utilities/SMath", "Engine/Inventory/CharacterInventory", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Body/Cock", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Skin", "Engine/Utilities/Drops/WeightedDrop", "Engine/Body/Tail", "Engine/Body/GenderIdentity", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "Engine/Combat/Actions/CombatAction", "./TentacleBeastScene"], function (require, exports, Character_1, CharacterType_1, ScreenDisplay_1, ContentView_1, EffectType_1, LegDescriptor_1, CockDescriptor_1, VaginaDescriptor_1, ButtDescriptor_1, PassTime_1, SMath_1, CharacterInventory_1, CharacterDescription_1, CombatContainer_1, Cock_1, Butt_1, Hips_1, Skin_1, WeightedDrop_1, Tail_1, GenderIdentity_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, DefeatEvent_1, CombatAction_1, TentacleBeastScene_1) {
+define(["require", "exports", "Engine/Character/Character", "Content/Character/CharacterType", "Engine/Display/ScreenDisplay", "Engine/Display/ContentView", "Content/Effects/EffectType", "Content/Descriptors/LegDescriptor", "Content/Descriptors/CockDescriptor", "Content/Descriptors/VaginaDescriptor", "Content/Descriptors/ButtDescriptor", "Content/Scenes/PassTime", "Engine/Utilities/SMath", "Engine/Character/CharacterDescription", "Engine/Combat/CombatContainer", "Engine/Body/Cock", "Engine/Body/Butt", "Engine/Body/Hips", "Engine/Body/Skin", "Engine/Utilities/Drops/WeightedDrop", "Engine/Body/Tail", "Engine/Body/GenderIdentity", "Engine/Items/Weapon", "Engine/Items/ItemDesc", "Engine/Items/Armor", "Engine/Combat/EndScenes", "Engine/Combat/DefeatEvent", "Engine/Combat/Actions/CombatAction", "./TentacleBeastScene"], function (require, exports, Character_1, CharacterType_1, ScreenDisplay_1, ContentView_1, EffectType_1, LegDescriptor_1, CockDescriptor_1, VaginaDescriptor_1, ButtDescriptor_1, PassTime_1, SMath_1, CharacterDescription_1, CombatContainer_1, Cock_1, Butt_1, Hips_1, Skin_1, WeightedDrop_1, Tail_1, GenderIdentity_1, Weapon_1, ItemDesc_1, Armor_1, EndScenes_1, DefeatEvent_1, CombatAction_1, TentacleBeastScene_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     class Attack extends CombatAction_1.CombatAction {
@@ -96,7 +96,11 @@ define(["require", "exports", "Engine/Character/Character", "Content/Character/C
     }
     class TentacleBeast extends Character_1.Character {
         constructor() {
-            super(CharacterType_1.CharacterType.TentacleBeast);
+            super({
+                type: CharacterType_1.CharacterType.TentacleBeast,
+                unarmedWeapon: new Weapon_1.Weapon("whip-tendril", new ItemDesc_1.ItemDesc("whip-tendril"), "whip-tendril", "thorny tendril", 1),
+                baseArmor: new Armor_1.Armor("rubbery skin", new ItemDesc_1.ItemDesc("rubbery skin"), "rubbery skin", 1)
+            });
             this.description = new CharacterDescription_1.CharacterDescription(this, "the ", "tentacle beast", "You see the massive, shambling form of the tentacle beast before you.  Appearing as a large shrub, it shifts its bulbous mass and reveals a collection of thorny tendrils and cephalopodic limbs.");
             this.genderPref = GenderIdentity_1.Gender.NONE;
             this.body.cocks.add(new Cock_1.Cock(40, 1.5));
@@ -129,7 +133,6 @@ define(["require", "exports", "Engine/Character/Character", "Content/Character/C
             this.stats.lust = 10;
             this.stats.lustVuln = 0.8;
             this.stats.level = 6;
-            this.inventory = new CharacterInventory_1.CharacterInventory(this, new Weapon_1.Weapon("whip-tendril", new ItemDesc_1.ItemDesc("whip-tendril"), "whip-tendril", "thorny tendril", 1), new Armor_1.Armor("rubbery skin", new ItemDesc_1.ItemDesc("rubbery skin"), "rubbery skin", 1));
             this.combatContainer = new CombatContainer_1.CombatContainer(this, {
                 mainAction: new TentacleBeastMainAction(),
                 endScenes: new TentacleBeastEndScenes(this),

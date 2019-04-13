@@ -7,7 +7,7 @@ define(["require", "exports", "Engine/Flags"], function (require, exports, Flags
         hyperHappy: false,
         debug: false,
         easyMode: false,
-        showSprites: false,
+        showSprites: true,
         sillyMode: false,
     });
 });
