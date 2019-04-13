@@ -6,7 +6,6 @@ import { CView } from 'Engine/Display/ContentView';
 import { describeCocksLight, describeCock } from 'Content/Descriptors/CockDescriptor';
 import { VaginaWetness } from 'Engine/Body/Vagina';
 import { DefeatType } from 'Engine/Combat/DefeatEvent';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Cock, CockType } from 'Engine/Body/Cock';
@@ -87,11 +86,14 @@ class ImpEndScenes extends EndScenes {
 }
 
 export class Imp extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.Imp);
+        super({
+            type: CharacterType.Imp,
+            unarmedWeapon: new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "claw-slash", 0),
+            baseArmor: new Armor("leathery skin" as ArmorName, new ItemDesc("leathery skin"), "leathery skin", 0)
+        });
         this.description = new CharacterDescription(this, "the ", "imp", "An imp is short, only a few feet tall.  An unkempt mane of shaggy black hair hangs from his head, parted by two short curved horns.  His eyes are solid black, save for tiny red irises which glow with evil intent.  His skin is bright red, and unencumbered by clothing or armor, save for a small loincloth at his belt.  His feet are covered by tiny wooden sandals, and his hands tipped with sharp claws.  A pair of tiny but functional wings occasionally flap from his back.");
         this.body.cocks.add(new Cock(randInt(2) + 11, 2.5, CockType.DEMON));
         this.body.balls.count = 2;
@@ -116,11 +118,6 @@ export class Imp extends Character {
         this.stats.HP = this.stats.maxHP;
         this.stats.lust = 40;
         this.stats.level = 1;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "claw-slash", 0),
-            new Armor("leathery skin" as ArmorName, new ItemDesc("leathery skin"), "leathery skin", 0)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

@@ -21,7 +21,6 @@ import { EndScenes } from 'Engine/Combat/EndScenes';
 import { beeRapesYou, beeGirlsGetsDildoed, milkAndHoneyAreKindaFunny, rapeTheBeeGirl } from './BeeGirlScene';
 import { DefeatType } from 'Engine/Combat/DefeatEvent';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { Weapon } from 'Engine/Items/Weapon';
 import { WeaponName } from 'Content/Items/WeaponName';
 import { ItemDesc } from 'Engine/Items/ItemDesc';
@@ -154,11 +153,14 @@ class BeeSting extends CombatAction {
 }
 
 export class BeeGirl extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.BeeGirl);
+        super({
+            type: CharacterType.BeeGirl,
+            unarmedWeapon: new Weapon("chitin-plated fist" as WeaponName, new ItemDesc("chitin-plated fist"), "chitin-plated fist", "armored punch", 1),
+            baseArmor: new Armor("chitin" as ArmorName, new ItemDesc("chitin"), "chitin", 9)
+        });
         this.description = new CharacterDescription(this, "a ", "bee-girl", "A bee-girl buzzes around you, filling the air with intoxicatingly sweet scents and a buzz that gets inside your head.  She has a humanoid face with small antennae, black chitin on her arms and legs that looks like shiny gloves and boots, sizable breasts, and a swollen abdomen tipped with a gleaming stinger.");
         this.body.vaginas.add(new Vagina(VaginaWetness.SLAVERING, VaginaLooseness.GAPING, false));
         this.body.chest.firstRow.rating = BreastCup.DD;
@@ -186,11 +188,6 @@ export class BeeGirl extends Character {
         this.stats.lust = 20 + randInt(40);
         this.stats.lustVuln = 0.9;
         this.stats.level = 4;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("chitin-plated fist" as WeaponName, new ItemDesc("chitin-plated fist"), "chitin-plated fist", "armored punch", 1),
-            new Armor("chitin" as ArmorName, new ItemDesc("chitin"), "chitin", 9)
-        );
 
         this.combatContainer = new CombatContainer(this, {
             mainAction: new MainAction(),

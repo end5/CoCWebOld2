@@ -13,7 +13,6 @@ import { WeightedDrop } from 'Engine/Utilities/Drops/WeightedDrop';
 import { ConsumableName } from 'Content/Items/ConsumableName';
 import { TailType, Tail } from 'Engine/Body/Tail';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { Weapon } from 'Engine/Items/Weapon';
 import { Armor } from 'Engine/Items/Armor';
 import { WeaponName } from 'Content/Items/WeaponName';
@@ -179,11 +178,14 @@ class AkbalEndScenes extends EndScenes {
 }
 
 export class Akbal extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.Akbal);
+        super({
+            type: CharacterType.Akbal,
+            unarmedWeapon: new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "claw-slash", 5),
+            baseArmor: new Armor("shimmering pelt" as ArmorName, new ItemDesc("shimmering pelt"), "shimmering pelt", 5)
+        });
         this.description = new CharacterDescription(this, "", "Akbal", "Akbal, 'God of the Terrestrial Fire', circles around you. His sleek yet muscular body is covered in tan fur, with dark spots that seem to dance around as you look upon them.  His mouth holds two ivory incisors that glint in the sparse sunlight as his lips tremble to the sound of an unending growl.  Each paw conceals lethal claws capable of shredding men and demons to ribbons.  His large and sickeningly alluring bright green eyes promise unbearable agony as you look upon them.");
         this.body.cocks.add(new Cock(15, 2.5, CockType.DOG));
         this.body.balls.count = 2;
@@ -216,11 +218,6 @@ export class Akbal extends Character {
         this.stats.maxHP = 20;
         this.stats.HP = this.stats.maxHP;
         this.stats.level = 6;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("claws" as WeaponName, new ItemDesc("claws"), "claws", "claw-slash", 5),
-            new Armor("shimmering pelt" as ArmorName, new ItemDesc("shimmering pelt"), "shimmering pelt", 5)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

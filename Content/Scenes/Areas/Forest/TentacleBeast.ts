@@ -9,7 +9,6 @@ import { describeClit } from 'Content/Descriptors/VaginaDescriptor';
 import { describeButthole } from 'Content/Descriptors/ButtDescriptor';
 import { passTime } from 'Content/Scenes/PassTime';
 import { randInt } from 'Engine/Utilities/SMath';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Cock } from 'Engine/Body/Cock';
@@ -115,11 +114,14 @@ class TentacleBeastEndScenes extends EndScenes {
 }
 
 export class TentacleBeast extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.TentacleBeast);
+        super({
+            type: CharacterType.TentacleBeast,
+            unarmedWeapon: new Weapon("whip-tendril" as WeaponName, new ItemDesc("whip-tendril"), "whip-tendril", "thorny tendril", 1),
+            baseArmor: new Armor("rubbery skin" as ArmorName, new ItemDesc("rubbery skin"), "rubbery skin", 1)
+        });
         this.description = new CharacterDescription(this, "the ", "tentacle beast", "You see the massive, shambling form of the tentacle beast before you.  Appearing as a large shrub, it shifts its bulbous mass and reveals a collection of thorny tendrils and cephalopodic limbs.");
         this.genderPref = Gender.NONE;
 
@@ -154,11 +156,6 @@ export class TentacleBeast extends Character {
         this.stats.lust = 10;
         this.stats.lustVuln = 0.8;
         this.stats.level = 6;
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("whip-tendril" as WeaponName, new ItemDesc("whip-tendril"), "whip-tendril", "thorny tendril", 1),
-            new Armor("rubbery skin" as ArmorName, new ItemDesc("rubbery skin"), "rubbery skin", 1)
-        );
 
         this.combatContainer = new CombatContainer(this,
             {

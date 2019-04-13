@@ -6,6 +6,6 @@ export const Settings = Flags.register('Settings', {
     hyperHappy: false,
     debug: false,
     easyMode: false,
-    showSprites: false,
+    showSprites: true,
     sillyMode: false,
 });

@@ -1,7 +1,6 @@
 import { Character } from 'Engine/Character/Character';
 import { CharacterType } from 'Content/Character/CharacterType';
 import { Cock, CockType } from 'Engine/Body/Cock';
-import { CharacterInventory } from 'Engine/Inventory/CharacterInventory';
 import { CharacterDescription } from 'Engine/Character/CharacterDescription';
 import { CombatContainer } from 'Engine/Combat/CombatContainer';
 import { Weapon } from 'Engine/Items/Weapon';
@@ -21,11 +20,14 @@ class ImpGangDesc extends CharacterDescription {
 class ImpGangEndScenes extends EndScenes {}
 
 export class ImpGang extends Character {
-    public inventory: CharacterInventory;
     protected description: CharacterDescription;
     protected combatContainer: CombatContainer;
     public constructor() {
-        super(CharacterType.ImpGang);
+        super({
+            type: CharacterType.ImpGang,
+            unarmedWeapon: new Weapon("" as WeaponName, new ItemDesc(""), "", "", 0),
+            baseArmor: new Armor("" as ArmorName, new ItemDesc(""), "", 0)
+        });
         this.description = new ImpGangDesc(this, "a mob of imps", "imp gang", "");
         this.body.cocks.add(new Cock(12, 1.5));
         this.body.cocks.add(new Cock(25, 2.5));
@@ -33,11 +35,6 @@ export class ImpGang extends Character {
         this.body.balls.count = 2;
         this.body.balls.size = 3;
         this.body.skin.tone = "imp mob";
-
-        this.inventory = new CharacterInventory(this,
-            new Weapon("" as WeaponName, new ItemDesc(""), "", "", 0),
-            new Armor("" as ArmorName, new ItemDesc(""), "", 0)
-        );
 
         this.combatContainer = new CombatContainer(this, {
             mainAction: new MainAction(),
