@@ -4,7 +4,7 @@
   "description": "Here lies the web edition of Corruption of Champions.",
   "main": "index.js",
   "dependencies": {
-    "codemirror": "^5.44.0"
+    "codemirror": "^5.58.2"
   },
   "devDependencies": {
     "@types/codemirror": "0.0.72",
